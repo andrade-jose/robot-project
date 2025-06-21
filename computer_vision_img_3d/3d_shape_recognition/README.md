@@ -20,6 +20,7 @@ Um projeto completo para classificação de formas geométricas 3D usando **vis�
 │   ├── training/         # 🧠 Treinamento do modelo  
 │   ├── inference/        # 🔮 Predição em tempo real  
 │   └── utils/            # 🛠️ Funções auxiliares  
+│   └── bases/            # 🛠️ arquivos de origem  
 ├── tests/                # 🧪 Testes unitários  
 ├── docs/                 # 📚 Documentação adicional  
 ├── requirements.txt      # 📜 Dependências do Python  
