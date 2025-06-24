@@ -14,7 +14,7 @@ characters = ['cubo', 'esfera', 'cone', 'cilindro', 'paralelepipedo',
               'piramide']
 
 # Carregar modelo treinado
-model = load_model('best_model.h5')
+model = load_model(r'C:\Venv\OpenCv\computer-vision-studies\computer_vision_img_3d\3d_shape_recognition\logs\basic_cnn_train\basic_cnn_20250623_121317.h5')
 
 # Função para preparar a imagem
 def prepare(img):
@@ -27,7 +27,7 @@ def prepare(img):
 
 
 # Caminho da imagem a ser testada
-test_path = r'C:\Venv\OpenCv\datasets\shapes_3d\esfera\esfera_000.png'
+test_path = r'C:\Venv\OpenCv\computer-vision-studies\datasets\shapes_3d\cone\cone_000.png'
 img = cv.imread(test_path)
 
 # Fazer predição
