@@ -1,0 +1,11 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Launch TensorBoard",
+      "type": "shell",
+      "command": "tensorboard --logdir=./logs --port=6006",
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,436 @@
+2025-06-27 09:46:51,124 [INFO] 
+==================================================
+2025-06-27 09:46:51,149 [INFO] Arquitetura: ADVANCED
+2025-06-27 09:46:51,150 [INFO] Pré-treinado: False
+2025-06-27 09:46:51,150 [INFO] Épocas: 50
+2025-06-27 09:46:51,150 [INFO] Batch size: 32
+2025-06-27 09:46:51,150 [INFO] Learning rate: 0.001
+2025-06-27 09:46:51,150 [INFO] Otimizador: SGD
+2025-06-27 09:46:51,150 [INFO] ==================================================
+
+2025-06-27 09:46:51,152 [INFO] [1/5] Carregando dados...
+2025-06-27 09:55:34,473 [INFO] 
+==================================================
+2025-06-27 09:55:34,489 [INFO] Arquitetura: ADVANCED
+2025-06-27 09:55:34,489 [INFO] Pré-treinado: False
+2025-06-27 09:55:34,489 [INFO] Épocas: 50
+2025-06-27 09:55:34,490 [INFO] Batch size: 32
+2025-06-27 09:55:34,490 [INFO] Learning rate: 0.001
+2025-06-27 09:55:34,491 [INFO] Otimizador: SGD
+2025-06-27 09:55:34,491 [INFO] ==================================================
+
+2025-06-27 09:55:34,491 [INFO] [1/5] Carregando dados...
+2025-06-27 09:56:41,818 [INFO] 
+==================================================
+2025-06-27 09:56:41,818 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 09:56:41,818 [INFO] Arquitetura: ADVANCED
+2025-06-27 09:56:41,818 [INFO] Pré-treinado: False
+2025-06-27 09:56:41,818 [INFO] Épocas: 50
+2025-06-27 09:56:41,818 [INFO] Batch size: 32
+2025-06-27 09:56:41,819 [INFO] Learning rate: 0.001
+2025-06-27 09:56:41,819 [INFO] Otimizador: SGD
+2025-06-27 09:56:41,819 [INFO] ==================================================
+
+2025-06-27 09:56:41,819 [INFO] [1/5] Carregando dados...
+2025-06-27 10:47:50,402 [INFO] 
+==================================================
+2025-06-27 10:47:50,402 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 10:47:50,402 [INFO] Arquitetura: ADVANCED
+2025-06-27 10:47:50,402 [INFO] Pré-treinado: False
+2025-06-27 10:47:50,402 [INFO] Épocas: 50
+2025-06-27 10:47:50,402 [INFO] Batch size: 16
+2025-06-27 10:47:50,403 [INFO] Learning rate: 0.001
+2025-06-27 10:47:50,403 [INFO] Otimizador: SGD
+2025-06-27 10:47:50,404 [INFO] ==================================================
+
+2025-06-27 10:47:50,404 [INFO] [1/4] Carregando dados...
+2025-06-27 10:47:50,449 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 10:47:50,970 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 10:47:51,237 [INFO] [4/5] Compilando modelo...
+2025-06-27 10:47:51,243 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 10:47:51,276 [INFO] 
+ Erro durante o treinamento: OpenCV(4.11.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:199: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2025-06-27 11:10:25,079 [INFO] 
+==================================================
+2025-06-27 11:10:25,079 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:10:25,079 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:10:25,079 [INFO] Pré-treinado: False
+2025-06-27 11:10:25,080 [INFO] Épocas: 50
+2025-06-27 11:10:25,080 [INFO] Batch size: 16
+2025-06-27 11:10:25,080 [INFO] Learning rate: 0.001
+2025-06-27 11:10:25,080 [INFO] Otimizador: SGD
+2025-06-27 11:10:25,080 [INFO] ==================================================
+
+2025-06-27 11:10:25,080 [INFO] [1/4] Carregando dados...
+2025-06-27 11:10:25,111 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:10:25,527 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:10:25,700 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:10:25,706 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:10:25,713 [INFO] 
+ Erro durante o treinamento: OpenCV(4.11.0) D:\a\opencv-python\opencv-python\opencv\modules\imgproc\src\color.cpp:199: error: (-215:Assertion failed) !_src.empty() in function 'cv::cvtColor'
+
+2025-06-27 11:17:53,468 [INFO] 
+==================================================
+2025-06-27 11:17:53,468 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:17:53,468 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:17:53,468 [INFO] Pré-treinado: False
+2025-06-27 11:17:53,468 [INFO] Épocas: 50
+2025-06-27 11:17:53,469 [INFO] Batch size: 16
+2025-06-27 11:17:53,469 [INFO] Learning rate: 0.001
+2025-06-27 11:17:53,469 [INFO] Otimizador: SGD
+2025-06-27 11:17:53,469 [INFO] ==================================================
+
+2025-06-27 11:17:53,469 [INFO] [1/4] Carregando dados...
+2025-06-27 11:17:53,496 [INFO] 
+ Erro durante o treinamento: type object 'ShapeMultiViewLoader' has no attribute 'model_names'
+2025-06-27 11:21:57,309 [INFO] 
+==================================================
+2025-06-27 11:21:57,309 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:21:57,309 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:21:57,309 [INFO] Pré-treinado: False
+2025-06-27 11:21:57,309 [INFO] Épocas: 50
+2025-06-27 11:21:57,309 [INFO] Batch size: 16
+2025-06-27 11:21:57,309 [INFO] Learning rate: 0.001
+2025-06-27 11:21:57,309 [INFO] Otimizador: SGD
+2025-06-27 11:21:57,309 [INFO] ==================================================
+
+2025-06-27 11:21:57,309 [INFO] [1/4] Carregando dados...
+2025-06-27 11:21:57,349 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:21:57,820 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:21:57,981 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:21:57,986 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:21:57,993 [INFO] 
+ Erro durante o treinamento: cannot access local variable 'rgb_path' where it is not associated with a value
+2025-06-27 11:24:52,807 [INFO] 
+==================================================
+2025-06-27 11:24:52,807 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:24:52,807 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:24:52,807 [INFO] Pré-treinado: False
+2025-06-27 11:24:52,807 [INFO] Épocas: 50
+2025-06-27 11:24:52,807 [INFO] Batch size: 16
+2025-06-27 11:24:52,807 [INFO] Learning rate: 0.001
+2025-06-27 11:24:52,807 [INFO] Otimizador: SGD
+2025-06-27 11:24:52,807 [INFO] ==================================================
+
+2025-06-27 11:24:52,807 [INFO] [1/4] Carregando dados...
+2025-06-27 11:24:52,842 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:24:53,273 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:24:53,431 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:24:53,437 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:28:26,996 [INFO] 
+==================================================
+2025-06-27 11:28:26,999 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:28:26,999 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:28:26,999 [INFO] Pré-treinado: False
+2025-06-27 11:28:26,999 [INFO] Épocas: 50
+2025-06-27 11:28:26,999 [INFO] Batch size: 16
+2025-06-27 11:28:26,999 [INFO] Learning rate: 0.001
+2025-06-27 11:28:26,999 [INFO] Otimizador: SGD
+2025-06-27 11:28:26,999 [INFO] ==================================================
+
+2025-06-27 11:28:26,999 [INFO] [1/4] Carregando dados...
+2025-06-27 11:28:27,038 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:28:27,659 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:28:27,865 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:28:27,920 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:28:27,924 [INFO] 
+ Erro durante o treinamento: Arquivo RGB não encontrado: C:\Venv\OpenCv\datasets\renders\prism_0024\prism_0024\prism_0024_view01.png
+2025-06-27 11:30:30,845 [INFO] 
+==================================================
+2025-06-27 11:30:30,845 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:30:30,845 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:30:30,845 [INFO] Pré-treinado: False
+2025-06-27 11:30:30,845 [INFO] Épocas: 50
+2025-06-27 11:30:30,845 [INFO] Batch size: 16
+2025-06-27 11:30:30,846 [INFO] Learning rate: 0.001
+2025-06-27 11:30:30,846 [INFO] Otimizador: SGD
+2025-06-27 11:30:30,846 [INFO] ==================================================
+
+2025-06-27 11:30:30,847 [INFO] [1/4] Carregando dados...
+2025-06-27 11:30:30,878 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:30:31,408 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:30:31,628 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:30:31,643 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:30:31,651 [INFO] 
+ Erro durante o treinamento: Arquivo RGB não encontrado: C:\Venv\OpenCv\datasets\renders\cube_0159\cube_0159\cube_0159_view01.png
+2025-06-27 11:30:47,704 [INFO] 
+==================================================
+2025-06-27 11:30:47,704 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:30:47,704 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:30:47,704 [INFO] Pré-treinado: False
+2025-06-27 11:30:47,704 [INFO] Épocas: 50
+2025-06-27 11:30:47,704 [INFO] Batch size: 16
+2025-06-27 11:30:47,704 [INFO] Learning rate: 0.001
+2025-06-27 11:30:47,704 [INFO] Otimizador: SGD
+2025-06-27 11:30:47,704 [INFO] ==================================================
+
+2025-06-27 11:30:47,704 [INFO] [1/4] Carregando dados...
+2025-06-27 11:30:47,732 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:30:48,125 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:30:48,303 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:30:48,309 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:30:48,313 [INFO] 
+ Erro durante o treinamento: Arquivo RGB não encontrado: C:\Venv\OpenCv\datasets\renders\cylinder_0044\cylinder_0044\cylinder_0044_view01.png
+2025-06-27 11:42:47,694 [INFO] 
+==================================================
+2025-06-27 11:42:47,694 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:42:47,694 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:42:47,694 [INFO] Pré-treinado: False
+2025-06-27 11:42:47,694 [INFO] Épocas: 50
+2025-06-27 11:42:47,694 [INFO] Batch size: 16
+2025-06-27 11:42:47,694 [INFO] Learning rate: 0.001
+2025-06-27 11:42:47,694 [INFO] Otimizador: SGD
+2025-06-27 11:42:47,694 [INFO] ==================================================
+
+2025-06-27 11:42:47,694 [INFO] [1/4] Carregando dados...
+2025-06-27 11:42:47,764 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:42:48,217 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:42:48,383 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:42:48,388 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:42:48,394 [INFO] 
+ Erro durante o treinamento: Arquivo RGB não encontrado: C:\Venv\OpenCv\datasets\renders\cylinder_0156\cylinder_0156\cylinder_0156_view01.png
+2025-06-27 11:47:16,132 [INFO] 
+==================================================
+2025-06-27 11:47:16,132 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:47:16,132 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:47:16,132 [INFO] Pré-treinado: False
+2025-06-27 11:47:16,132 [INFO] Épocas: 50
+2025-06-27 11:47:16,132 [INFO] Batch size: 16
+2025-06-27 11:47:16,132 [INFO] Learning rate: 0.001
+2025-06-27 11:47:16,132 [INFO] Otimizador: SGD
+2025-06-27 11:47:16,132 [INFO] ==================================================
+
+2025-06-27 11:47:16,132 [INFO] [1/4] Carregando dados...
+2025-06-27 11:47:16,165 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:47:16,616 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:47:16,787 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:47:16,792 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 11:53:30,363 [INFO] 
+==================================================
+2025-06-27 11:53:30,363 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 11:53:30,363 [INFO] Arquitetura: ADVANCED
+2025-06-27 11:53:30,363 [INFO] Pré-treinado: False
+2025-06-27 11:53:30,363 [INFO] Épocas: 50
+2025-06-27 11:53:30,363 [INFO] Batch size: 16
+2025-06-27 11:53:30,363 [INFO] Learning rate: 0.001
+2025-06-27 11:53:30,363 [INFO] Otimizador: SGD
+2025-06-27 11:53:30,363 [INFO] ==================================================
+
+2025-06-27 11:53:30,363 [INFO] [1/4] Carregando dados...
+2025-06-27 11:53:30,385 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 11:53:30,828 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 11:53:31,028 [INFO] [4/5] Compilando modelo...
+2025-06-27 11:53:31,032 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:04:57,126 [INFO] 
+==================================================
+2025-06-27 12:04:57,126 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:04:57,126 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:04:57,126 [INFO] Pré-treinado: False
+2025-06-27 12:04:57,126 [INFO] Épocas: 50
+2025-06-27 12:04:57,126 [INFO] Batch size: 16
+2025-06-27 12:04:57,126 [INFO] Learning rate: 0.001
+2025-06-27 12:04:57,126 [INFO] Otimizador: SGD
+2025-06-27 12:04:57,126 [INFO] ==================================================
+
+2025-06-27 12:04:57,126 [INFO] [1/4] Carregando dados...
+2025-06-27 12:04:57,162 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:04:57,599 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:04:57,744 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:04:57,744 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:26:55,480 [INFO] 
+==================================================
+2025-06-27 12:26:55,481 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:26:55,481 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:26:55,481 [INFO] Pré-treinado: False
+2025-06-27 12:26:55,481 [INFO] Épocas: 50
+2025-06-27 12:26:55,481 [INFO] Batch size: 16
+2025-06-27 12:26:55,481 [INFO] Learning rate: 0.001
+2025-06-27 12:26:55,481 [INFO] Otimizador: SGD
+2025-06-27 12:26:55,481 [INFO] ==================================================
+
+2025-06-27 12:26:55,482 [INFO] [1/4] Carregando dados...
+2025-06-27 12:26:55,513 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:26:55,961 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:26:56,128 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:26:56,134 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:26:56,200 [INFO] 
+ Erro durante o treinamento: OpenCV(4.11.0) D:\a\opencv-python\opencv-python\opencv\modules\imgcodecs\src\grfmt_exr.cpp:103: error: (-213:The function/feature is not implemented) imgcodecs: OpenEXR codec is disabled. You can enable it via 'OPENCV_IO_ENABLE_OPENEXR' option. Refer for details and cautions here: https://github.com/opencv/opencv/issues/21326 in function 'cv::initOpenEXR'
+
+2025-06-27 12:33:58,759 [INFO] 
+==================================================
+2025-06-27 12:33:58,759 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:33:58,759 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:33:58,759 [INFO] Pré-treinado: False
+2025-06-27 12:33:58,759 [INFO] Épocas: 50
+2025-06-27 12:33:58,760 [INFO] Batch size: 16
+2025-06-27 12:33:58,760 [INFO] Learning rate: 0.001
+2025-06-27 12:33:58,760 [INFO] Otimizador: SGD
+2025-06-27 12:33:58,760 [INFO] ==================================================
+
+2025-06-27 12:33:58,760 [INFO] [1/4] Carregando dados...
+2025-06-27 12:33:58,788 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:33:59,260 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:33:59,428 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:33:59,433 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:33:59,474 [INFO] 
+ Erro durante o treinamento: name 'img_depth_path' is not defined
+2025-06-27 12:35:24,033 [INFO] 
+==================================================
+2025-06-27 12:35:24,033 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:35:24,033 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:35:24,033 [INFO] Pré-treinado: False
+2025-06-27 12:35:24,033 [INFO] Épocas: 50
+2025-06-27 12:35:24,033 [INFO] Batch size: 16
+2025-06-27 12:35:24,034 [INFO] Learning rate: 0.001
+2025-06-27 12:35:24,034 [INFO] Otimizador: SGD
+2025-06-27 12:35:24,034 [INFO] ==================================================
+
+2025-06-27 12:35:24,034 [INFO] [1/4] Carregando dados...
+2025-06-27 12:35:24,060 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:35:24,479 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:35:24,634 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:35:24,639 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:35:24,949 [INFO] 
+ Erro durante o treinamento: name 'to_categorical' is not defined
+2025-06-27 12:35:59,843 [INFO] 
+==================================================
+2025-06-27 12:35:59,843 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:35:59,843 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:35:59,843 [INFO] Pré-treinado: False
+2025-06-27 12:35:59,844 [INFO] Épocas: 50
+2025-06-27 12:35:59,844 [INFO] Batch size: 16
+2025-06-27 12:35:59,844 [INFO] Learning rate: 0.001
+2025-06-27 12:35:59,844 [INFO] Otimizador: SGD
+2025-06-27 12:35:59,844 [INFO] ==================================================
+
+2025-06-27 12:35:59,844 [INFO] [1/4] Carregando dados...
+2025-06-27 12:35:59,873 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:36:00,289 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:36:00,457 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:36:00,462 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:36:00,787 [INFO] 
+ Erro durante o treinamento: 'float' object is not subscriptable
+2025-06-27 12:37:50,859 [INFO] 
+==================================================
+2025-06-27 12:37:50,860 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:37:50,860 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:37:50,860 [INFO] Pré-treinado: False
+2025-06-27 12:37:50,860 [INFO] Épocas: 50
+2025-06-27 12:37:50,860 [INFO] Batch size: 16
+2025-06-27 12:37:50,860 [INFO] Learning rate: 0.001
+2025-06-27 12:37:50,861 [INFO] Otimizador: SGD
+2025-06-27 12:37:50,861 [INFO] ==================================================
+
+2025-06-27 12:37:50,861 [INFO] [1/4] Carregando dados...
+2025-06-27 12:37:50,898 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:37:51,456 [WARNING] From C:\python_3_12_8\Lib\site-packages\keras\src\backend\tensorflow\core.py:232: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+2025-06-27 12:37:51,668 [INFO] [4/5] Compilando modelo...
+2025-06-27 12:37:51,674 [INFO] [5/5] Iniciando treinamento...
+
+2025-06-27 12:38:28,326 [INFO] 
+ Erro durante o treinamento: Exception encountered when calling TimeDistributed.call().
+
+[1mtf.function only supports singleton tf.Variables created on the first call. Make sure the tf.Variable is only created once or created outside tf.function. See https://www.tensorflow.org/guide/function#creating_tfvariables for more information.[0m
+
+Arguments received by TimeDistributed.call():
+  • inputs=tf.Tensor(shape=(None, 6, 125, 125, 3), dtype=float32)
+  • training=True
+  • mask=None
+2025-06-27 12:43:46,407 [INFO] 
+==================================================
+2025-06-27 12:43:46,407 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:43:46,407 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:43:46,408 [INFO] Pré-treinado: False
+2025-06-27 12:43:46,408 [INFO] Épocas: 50
+2025-06-27 12:43:46,408 [INFO] Batch size: 16
+2025-06-27 12:43:46,408 [INFO] Learning rate: 0.001
+2025-06-27 12:43:46,408 [INFO] Otimizador: SGD
+2025-06-27 12:43:46,409 [INFO] ==================================================
+
+2025-06-27 12:43:46,410 [INFO] [1/4] Carregando dados...
+2025-06-27 12:43:46,441 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:43:46,457 [INFO] 
+ Erro durante o treinamento: Exception encountered when calling TimeDistributed.call().
+
+[1mLayer RgbViewNet does not have a `compute_output_shape` method implemented. Should implement `def compute_output_shape(self, input_shape)`.[0m
+
+Arguments received by TimeDistributed.call():
+  • args=('<KerasTensor shape=(None, 6, 125, 125, 3), dtype=float32, sparse=False, ragged=False, name=rgb_input>',)
+  • kwargs={'mask': 'None'}
+2025-06-27 12:45:46,017 [INFO] 
+==================================================
+2025-06-27 12:45:46,017 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:45:46,017 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:45:46,017 [INFO] Pré-treinado: False
+2025-06-27 12:45:46,017 [INFO] Épocas: 50
+2025-06-27 12:45:46,018 [INFO] Batch size: 16
+2025-06-27 12:45:46,018 [INFO] Learning rate: 0.001
+2025-06-27 12:45:46,018 [INFO] Otimizador: SGD
+2025-06-27 12:45:46,018 [INFO] ==================================================
+
+2025-06-27 12:45:46,019 [INFO] [1/4] Carregando dados...
+2025-06-27 12:45:46,054 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:45:46,070 [INFO] 
+ Erro durante o treinamento: Exception encountered when calling TimeDistributed.call().
+
+[1mLayer RgbViewNet does not have a `compute_output_shape` method implemented. Should implement `def compute_output_shape(self, input_shape)`.[0m
+
+Arguments received by TimeDistributed.call():
+  • args=('<KerasTensor shape=(None, 6, 125, 125, 3), dtype=float32, sparse=False, ragged=False, name=rgb_input>',)
+  • kwargs={'mask': 'None'}
+2025-06-27 12:46:33,875 [INFO] 
+==================================================
+2025-06-27 12:46:33,875 [INFO] CONFIGURAÇÃO DO TREINAMENTO
+2025-06-27 12:46:33,875 [INFO] Arquitetura: ADVANCED
+2025-06-27 12:46:33,875 [INFO] Pré-treinado: False
+2025-06-27 12:46:33,875 [INFO] Épocas: 50
+2025-06-27 12:46:33,875 [INFO] Batch size: 16
+2025-06-27 12:46:33,876 [INFO] Learning rate: 0.001
+2025-06-27 12:46:33,876 [INFO] Otimizador: SGD
+2025-06-27 12:46:33,876 [INFO] ==================================================
+
+2025-06-27 12:46:33,876 [INFO] [1/4] Carregando dados...
+2025-06-27 12:46:33,904 [INFO] [2/4] Criando modelo ADVANCED...
+2025-06-27 12:46:33,990 [INFO] [3/4] Compilando modelo...
+2025-06-27 12:46:33,999 [INFO] [4/4] Iniciando treinamento...
+
+2025-06-27 12:46:44,641 [INFO] 
+ Erro durante o treinamento: Exception encountered when calling ResidualSEBlock.call().
+
+[1mInputs have incompatible shapes. Received shapes (125, 125, 64) and (125, 125, 3)[0m
+
+Arguments received by ResidualSEBlock.call():
+  • x=tf.Tensor(shape=(None, 125, 125, 3), dtype=float32)
+  • training=True

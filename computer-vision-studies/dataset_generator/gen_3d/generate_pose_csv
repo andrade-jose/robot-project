@@ -1,0 +1,86 @@
+import os
+import json
+import math
+import csv
+from pathlib import Path
+import numpy as np
+from scipy.spatial.transform import Rotation as R
+
+# CONFIGURAÇÃO
+PASTA_RENDERS = Path(r"C:\Venv\OpenCv\datasets\renders")
+ARQUIVO_CSV_SAIDA = PASTA_RENDERS / "camera_poses_dataset.csv"
+CAMERA_DISTANCE = 3.0
+
+def calcular_camera_pos_rot(angle_deg, height):
+    rad = math.radians(angle_deg)
+    pos_x = CAMERA_DISTANCE * math.cos(rad)
+    pos_y = CAMERA_DISTANCE * math.sin(rad)
+    pos_z = height
+    pos = np.array([pos_x, pos_y, pos_z])
+
+    target = np.array([0, 0, 0])
+    forward = target - pos
+    forward /= np.linalg.norm(forward)
+
+    up = np.array([0, 0, 1])
+    right = np.cross(up, forward)
+    right /= np.linalg.norm(right)
+    up = np.cross(forward, right)
+
+    rot_matrix = np.column_stack((right, up, -forward))
+
+    # 🧠 Corrigir matriz de rotação com determinante negativo
+    if np.linalg.det(rot_matrix) < 0:
+        rot_matrix[:, 0] *= -1  # inverte o eixo 'right'
+
+    quat = R.from_matrix(rot_matrix).as_quat()  # (x, y, z, w)
+    return pos_x, pos_y, pos_z, *quat
+
+# Abre arquivo CSV para escrita
+with open(ARQUIVO_CSV_SAIDA, "w", newline='', encoding="utf-8") as csvfile:
+    fieldnames = [
+        "model_name", "view_idx", "rgb_path", "depth_path",
+        "pos_x", "pos_y", "pos_z", "rot_x", "rot_y", "rot_z", "rot_w"
+    ]
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+    writer.writeheader()
+
+    # Varre subpastas
+    for subpasta in sorted(PASTA_RENDERS.iterdir()):
+        if not subpasta.is_dir():
+            continue
+
+        model_name = subpasta.name
+        json_path = subpasta / "views_info.json"
+
+        if not json_path.exists():
+            print(f"❌ JSON não encontrado: {json_path}")
+            continue
+
+        try:
+            with open(json_path, "r", encoding="utf-8") as f:
+                views = json.load(f)
+
+            for view in views:
+                angle = view.get("camera_angle", 0)
+                height = view.get("camera_height", 1.0)
+                pos_x, pos_y, pos_z, rot_x, rot_y, rot_z, rot_w = calcular_camera_pos_rot(angle, height)
+
+                writer.writerow({
+                    "model_name": model_name,
+                    "view_idx": view["view_idx"],
+                    "rgb_path": str(subpasta / Path(view["rgb_path"]).name),
+                    "depth_path": str(subpasta / Path(view["depth_path"]).name),
+                    "pos_x": pos_x,
+                    "pos_y": pos_y,
+                    "pos_z": pos_z,
+                    "rot_x": rot_x,
+                    "rot_y": rot_y,
+                    "rot_z": rot_z,
+                    "rot_w": rot_w,
+                })
+
+        except Exception as e:
+            print(f"⚠️ Erro ao processar {model_name}: {e}")
+
+print(f"\n✅ CSV gerado com sucesso: {ARQUIVO_CSV_SAIDA}")
