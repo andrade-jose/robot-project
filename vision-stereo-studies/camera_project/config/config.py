@@ -1,23 +1,25 @@
-# config/config.py
-
 from pathlib import Path
 
-# Caminhos base
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "filtered"
-LEFT_DIR = DATA_DIR / "left"
-RIGHT_DIR = DATA_DIR / "right"
-OUTPUT_DIR = PROJECT_ROOT / "output"
-CALIB_FILE = PROJECT_ROOT / "calibration_data" / "calibration.pkl"
+# Diretórios com caminhos absolutos
+LEFT_DIR = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\best_img\left"
+RIGHT_DIR = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\best_img\right"
+OUTPUT_DIR = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\output"
 
-# Calibração
-CHESSBOARD_SIZE = (8, 5)      # número de cantos internos (cols, rows)
-SQUARE_SIZE = 0.026           # em metros
+# Arquivo onde será salvo a calibração
+CALIB_FILE = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\output\calib.pkl"
 
-# Stereo Matching
-NUM_DISPARITIES = 16 * 5      # múltiplo de 16
-BLOCK_SIZE = 7                # ímpar entre 3 e 11
+# Imagens para teste de retificação
+LEFT_TEST_IMG = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\best_img\left\img_0002.png"
+RIGHT_TEST_IMG = r"C:\Venv\Robot_project\robot-project\vision-stereo-studies\camera_project\best_img\right\img_0002.png"
 
-# Visualização
-LINE_SPACING = 40             # espaçamento entre linhas horizontais
-LINE_COLOR = (0, 255, 0)      # cor verde
+# Parâmetros do tabuleiro para calibração
+CHESSBOARD_SIZE = (8, 5)   # número de cantos internos (colunas, linhas)
+SQUARE_SIZE = 0.031        # tamanho do quadrado em metros
+
+# Parâmetros para stereo matching
+NUM_DISPARITIES = 16 * 5   # deve ser múltiplo de 16
+BLOCK_SIZE = 7             # ímpar, entre 3 e 11
+
+# Visualização para retificação
+LINE_SPACING = 40          # espaçamento entre linhas horizontais
+LINE_COLOR = (0, 255, 0)   # cor verde para as linhas

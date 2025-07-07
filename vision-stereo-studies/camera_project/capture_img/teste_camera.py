@@ -6,13 +6,13 @@ import sys
 project_root = Path(__file__).resolve().parent.parent
 sys.path.append(str(project_root))
 
-from camera_project.stereo_vision.capture import StereoCameras
+from stereo_vision.capture import StereoCameras
 
 def main():
     print("[INFO] Iniciando teste das câmeras estéreo...")
 
     # Inicializa as câmeras com os IDs (ajuste se necessário)
-    cameras = StereoCameras(left_cam_id=1, right_cam_id=2)
+    cameras = StereoCameras(left_cam_id=0, right_cam_id=2)
 
     print("[INFO] Pressione ESC para encerrar.")
     while True:

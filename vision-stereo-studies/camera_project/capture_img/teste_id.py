@@ -1,6 +1,6 @@
 import cv2
 
-cam_id = 1  # troque para 1, 2, etc. e teste
+cam_id = 0  # troque para 1, 2, etc. e teste
 
 cap = cv2.VideoCapture(cam_id)
 if not cap.isOpened():

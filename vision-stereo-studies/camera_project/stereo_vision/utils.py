@@ -4,6 +4,7 @@ import os
 import cv2
 import numpy as np
 
+
 def draw_horizontal_lines(img, line_color=(0, 255, 0), thickness=1, spacing=40):
     """
     Desenha linhas horizontais na imagem para verificar o alinhamento.
@@ -60,3 +61,18 @@ def list_image_pairs(left_dir, right_dir):
         (os.path.join(left_dir, l), os.path.join(right_dir, r))
         for l, r in zip(left_imgs, right_imgs)
     ]
+
+def save_rectified_pair(rect_left, rect_right, out_dir, prefix="pair"):
+    """
+    Salva o par de imagens retificadas em disco.
+
+    Args:
+        rect_left (np.ndarray): imagem esquerda retificada.
+        rect_right (np.ndarray): imagem direita retificada.
+        out_dir (str): diretório de saída.
+        prefix (str): prefixo do nome dos arquivos.
+    """
+    os.makedirs(out_dir, exist_ok=True)
+    cv2.imwrite(os.path.join(out_dir, f"{prefix}_left.png"), rect_left)
+    cv2.imwrite(os.path.join(out_dir, f"{prefix}_right.png"), rect_right)
+

@@ -29,6 +29,12 @@ Classes:
 import os
 
 import cv2
+import sys
+from pathlib import Path
+
+# Configuração do caminho do projeto
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
 
 import numpy as np
 from stereovision.exceptions import ChessboardNotFoundError

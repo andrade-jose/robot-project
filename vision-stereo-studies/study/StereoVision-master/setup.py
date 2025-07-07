@@ -14,8 +14,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with StereoVision.  If not, see <http://www.gnu.org/licenses/>.
+import sys
+from pathlib import Path
+
+# Configuração do caminho do projeto
+project_root = Path(__file__).resolve().parent.parent
+sys.path.append(str(project_root))
 
 from setuptools import setup
+
 
 setup(name="StereoVision",
       version="1.0.3",
