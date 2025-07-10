@@ -1,0 +1,299 @@
+2025-07-07 14:39:22,163 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:45:16,001 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:46:47,255 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:46:55,122 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:46:55,122 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:48:10,993 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:48:10,993 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:48:11,048 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,080 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,114 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,142 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,167 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,194 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,236 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,262 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,291 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,317 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,340 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,363 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,392 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,425 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,448 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,492 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,531 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,559 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,594 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,631 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,659 - WARNING - Par 20 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,692 - WARNING - Par 21 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,720 - WARNING - Par 22 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,748 - WARNING - Par 23 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,779 - WARNING - Par 24 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,810 - WARNING - Par 25 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,837 - WARNING - Par 26 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,863 - WARNING - Par 27 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,893 - WARNING - Par 28 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,915 - WARNING - Par 29 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,948 - WARNING - Par 30 rejeitado - Cantos não detectados
+2025-07-07 14:48:11,977 - WARNING - Par 31 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,012 - WARNING - Par 32 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,037 - WARNING - Par 33 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,075 - WARNING - Par 34 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,098 - WARNING - Par 35 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,126 - WARNING - Par 36 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,160 - WARNING - Par 37 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,195 - WARNING - Par 38 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,214 - WARNING - Par 39 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,242 - WARNING - Par 40 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,259 - WARNING - Par 41 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,297 - WARNING - Par 42 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,332 - WARNING - Par 43 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,358 - WARNING - Par 44 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,381 - WARNING - Par 45 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,414 - WARNING - Par 46 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,442 - WARNING - Par 47 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,474 - WARNING - Par 48 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,499 - WARNING - Par 49 rejeitado - Cantos não detectados
+2025-07-07 14:48:12,499 - INFO - Processamento completo: 0 pares válidos
+2025-07-07 14:48:12,499 - ERROR - Poucos pares válidos para calibração.
+2025-07-07 14:49:23,021 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:49:23,021 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:49:23,076 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,110 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,131 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,161 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,189 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,224 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,271 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,292 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,330 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,359 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,406 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,445 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,474 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,489 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,530 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,556 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,578 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,606 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,639 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,675 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,695 - WARNING - Par 20 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,730 - WARNING - Par 21 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,761 - WARNING - Par 22 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,788 - WARNING - Par 23 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,811 - WARNING - Par 24 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,840 - WARNING - Par 25 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,856 - WARNING - Par 26 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,895 - WARNING - Par 27 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,923 - WARNING - Par 28 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,946 - WARNING - Par 29 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,976 - WARNING - Par 30 rejeitado - Cantos não detectados
+2025-07-07 14:49:23,992 - WARNING - Par 31 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,031 - WARNING - Par 32 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,055 - WARNING - Par 33 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,078 - WARNING - Par 34 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,108 - WARNING - Par 35 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,131 - WARNING - Par 36 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,156 - WARNING - Par 37 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,197 - WARNING - Par 38 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,228 - WARNING - Par 39 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,255 - WARNING - Par 40 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,280 - WARNING - Par 41 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,307 - WARNING - Par 42 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,346 - WARNING - Par 43 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,374 - WARNING - Par 44 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,410 - WARNING - Par 45 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,432 - WARNING - Par 46 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,463 - WARNING - Par 47 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,491 - WARNING - Par 48 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,511 - WARNING - Par 49 rejeitado - Cantos não detectados
+2025-07-07 14:49:24,511 - INFO - Processamento completo: 0 pares válidos
+2025-07-07 14:49:24,511 - ERROR - Poucos pares válidos para calibração.
+2025-07-07 14:50:36,321 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:50:36,321 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:50:36,403 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,443 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,470 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,494 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,520 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,554 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,592 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,620 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,643 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,670 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,692 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,725 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,743 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,775 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,804 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,826 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,858 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,888 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,909 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,943 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,970 - WARNING - Par 20 rejeitado - Cantos não detectados
+2025-07-07 14:50:36,988 - WARNING - Par 21 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,020 - WARNING - Par 22 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,053 - WARNING - Par 23 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,085 - WARNING - Par 24 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,108 - WARNING - Par 25 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,145 - WARNING - Par 26 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,174 - WARNING - Par 27 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,209 - WARNING - Par 28 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,245 - WARNING - Par 29 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,278 - WARNING - Par 30 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,304 - WARNING - Par 31 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,329 - WARNING - Par 32 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,354 - WARNING - Par 33 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,389 - WARNING - Par 34 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,410 - WARNING - Par 35 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,444 - WARNING - Par 36 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,477 - WARNING - Par 37 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,505 - WARNING - Par 38 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,544 - WARNING - Par 39 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,571 - WARNING - Par 40 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,588 - WARNING - Par 41 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,621 - WARNING - Par 42 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,670 - WARNING - Par 43 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,690 - WARNING - Par 44 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,724 - WARNING - Par 45 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,752 - WARNING - Par 46 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,775 - WARNING - Par 47 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,803 - WARNING - Par 48 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,828 - WARNING - Par 49 rejeitado - Cantos não detectados
+2025-07-07 14:50:37,828 - INFO - Processamento completo: 0 pares válidos
+2025-07-07 14:50:37,828 - ERROR - Poucos pares válidos para calibração.
+2025-07-07 14:54:17,760 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:54:17,766 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:54:17,812 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-07 14:54:17,844 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-07 14:54:17,886 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-07 14:54:17,918 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-07 14:54:17,961 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-07 14:54:17,998 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,049 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,078 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,127 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,161 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,194 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,231 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,265 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,301 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,334 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,367 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,403 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,448 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,483 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,517 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,560 - WARNING - Par 20 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,594 - WARNING - Par 21 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,631 - WARNING - Par 22 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,665 - WARNING - Par 23 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,699 - WARNING - Par 24 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,732 - WARNING - Par 25 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,797 - WARNING - Par 26 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,834 - WARNING - Par 27 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,878 - WARNING - Par 28 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,913 - WARNING - Par 29 rejeitado - Cantos não detectados
+2025-07-07 14:54:18,950 - WARNING - Par 30 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,019 - WARNING - Par 31 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,055 - WARNING - Par 32 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,077 - WARNING - Par 33 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,117 - WARNING - Par 34 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,155 - WARNING - Par 35 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,183 - WARNING - Par 36 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,228 - WARNING - Par 37 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,268 - WARNING - Par 38 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,299 - WARNING - Par 39 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,330 - WARNING - Par 40 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,363 - WARNING - Par 41 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,395 - WARNING - Par 42 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,442 - WARNING - Par 43 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,477 - WARNING - Par 44 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,526 - WARNING - Par 45 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,563 - WARNING - Par 46 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,594 - WARNING - Par 47 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,630 - WARNING - Par 48 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,665 - WARNING - Par 49 rejeitado - Cantos não detectados
+2025-07-07 14:54:19,665 - INFO - Processamento completo: 0 pares válidos
+2025-07-07 14:54:19,665 - ERROR - Poucos pares válidos para calibração.
+2025-07-07 14:55:44,649 - INFO - Iniciando calibração para tabuleiro (8, 5)
+2025-07-07 14:55:44,649 - INFO - Carregados 60 pares de imagens
+2025-07-07 14:55:44,727 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,761 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,792 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,831 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,873 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,906 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-07 14:55:44,949 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,007 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,063 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,099 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,147 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,196 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,226 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,328 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,374 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,414 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,464 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,512 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,547 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,591 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,644 - WARNING - Par 20 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,679 - WARNING - Par 21 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,735 - WARNING - Par 22 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,811 - WARNING - Par 23 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,858 - WARNING - Par 24 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,899 - WARNING - Par 25 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,927 - WARNING - Par 26 rejeitado - Cantos não detectados
+2025-07-07 14:55:45,985 - WARNING - Par 27 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,029 - WARNING - Par 28 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,081 - WARNING - Par 29 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,131 - WARNING - Par 30 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,168 - WARNING - Par 31 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,208 - WARNING - Par 32 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,244 - WARNING - Par 33 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,281 - WARNING - Par 34 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,312 - WARNING - Par 35 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,347 - WARNING - Par 36 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,392 - WARNING - Par 37 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,427 - WARNING - Par 38 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,468 - WARNING - Par 39 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,502 - WARNING - Par 40 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,536 - WARNING - Par 41 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,562 - WARNING - Par 42 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,627 - WARNING - Par 43 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,659 - WARNING - Par 44 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,752 - WARNING - Par 45 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,807 - WARNING - Par 46 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,864 - WARNING - Par 47 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,908 - WARNING - Par 48 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,947 - WARNING - Par 49 rejeitado - Cantos não detectados
+2025-07-07 14:55:46,948 - INFO - Processamento completo: 0 pares válidos
+2025-07-07 14:55:46,948 - ERROR - Poucos pares válidos para calibração.
+2025-07-08 08:51:27,174 - INFO - Inicializando calibração para tabuleiro (11, 7)
+2025-07-08 08:51:27,186 - INFO - Carregados 20 pares de imagens
+2025-07-08 08:51:27,271 - WARNING - Par 0 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,331 - WARNING - Par 1 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,376 - WARNING - Par 2 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,426 - WARNING - Par 3 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,475 - WARNING - Par 4 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,520 - WARNING - Par 5 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,574 - WARNING - Par 6 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,626 - WARNING - Par 7 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,675 - WARNING - Par 8 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,754 - WARNING - Par 9 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,821 - WARNING - Par 10 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,878 - WARNING - Par 11 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,920 - WARNING - Par 12 rejeitado - Cantos não detectados
+2025-07-08 08:51:27,971 - WARNING - Par 13 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,035 - WARNING - Par 14 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,106 - WARNING - Par 15 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,171 - WARNING - Par 16 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,241 - WARNING - Par 17 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,289 - WARNING - Par 18 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,337 - WARNING - Par 19 rejeitado - Cantos não detectados
+2025-07-08 08:51:28,337 - INFO - Detecção concluída: 0 pares válidos encontrados
+2025-07-08 08:51:28,338 - ERROR - Número insuficiente de pares válidos para calibração (mínimo 10).

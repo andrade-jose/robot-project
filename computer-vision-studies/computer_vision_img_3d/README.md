@@ -1,192 +1,164 @@
 
-```markdown
-# **Sistema de Reconhecimento de Formas 3D**
+# 🧠 Multiview CNN 3D Shape Recognition
 
-Este projeto implementa um sistema completo de reconhecimento de formas geométricas 3D com **visão computacional** e **deep learning**. São disponibiladas **duas versões distintas** de pipeline de dados e modelo:
-
-- **Modelo A**: baseado em imagens geradas com Blender, organizadas em pastas por classe.
-- **Modelo B**: baseado em datasets definidos via CSV, com suporte a múltiplas arquiteturas e datasets externos.
+Este projeto implementa uma arquitetura de rede neural profunda baseada em visão multiview para reconhecimento de formas 3D a partir de imagens RGB, mapas de profundidade e variáveis auxiliares (ex: cor do fundo e material). Ele inclui pipeline completo de pré-processamento, augmentação, treinamento, validação, callbacks e salvamento de modelos.
 
 ---
 
-## 📦 Estrutura do Projeto
-```
+## 📁 Estrutura do Projeto
 
-3d\_shape\_recognition/
-├── bases/                       # 📂 Arquivos de origem e referência
+```
+.
+├── architectures/
+│   └── advanced_cnn.py      # Arquitetura Multiview CNN com SE Blocks e LSTM
+├── config/
+│   └── config_advanced.py   # Configurações gerais do projeto
 ├── data/
-│   ├── raw/                     # ⚠️ Dados brutos
-│   ├── processed/               # ⚠️ Dados pré-processados
-│   └── samples/                 # 📸 Amostras de teste
-├── docs/                        # 📚 Documentação
-├── models/
-│   ├── logs/                    # 📊 Logs de treinamento (TensorBoard)
-│   ├── train/                   # 📈 Resultados do treinamento
-│   ├── validation/              # ✅ Validações do modelo
-│   └── trained/                 # 🧠 Modelos salvos (.h5)
-├── src/
-│   ├── bases/                   # 🛠️ Arquivos de origem comuns
-│   ├── data\_generation/         # 🌀 Geração de dados no Blender (modelo A)
-│   ├── data\_processing\_a/       # 🔄 Pré-processamento para o modelo A
-│   ├── data\_processing\_b/       # 🔄 Pré-processamento para o modelo B (via CSV)
-│   ├── inference/               # \[OBSOLETO] (inferência real-time desativada)
-│   ├── training\_model\_a/        # 🧠 Treinamento versão A (dados do Blender)
-│   ├── training\_model\_b/        # 🧠 Treinamento versão B (flexível e avançado)
-│   └── utils/                   # 🧩 Funções auxiliares
-├── tests/                       # 🧪 Testes unitários
-├── requirements.txt             # 📜 Dependências do Python
-└── README.md                    # 📘 Este arquivo
+│   ├── loading_csv.py       # DataLoader compatível com CSV + EXR
+│   └── preprocessing.py     # Augmentações com imgaug
+├── training/
+│   └── callbacks.py         # Callbacks Keras para treino avançado
+├── train_advanced.py        # Script principal de treinamento
+└── README.md
+```
 
-````
+---
 
-## 🚀 Como Usar
+## 🧠 Modelo Multiview
 
-### 1️⃣ Instalação
+A arquitetura principal (`Multiview_CNN`) é composta por:
+
+* **Módulos Residual SE Blocks** para extração de características por vista (RGB).
+* **Processamento 1D de mapas de profundidade**.
+* **Concatenação com variáveis auxiliares** (opcional).
+* **Bidirectional LSTM** para modelar dependência entre vistas.
+* **Classificação final por Dense + softmax**.
+
+### Entradas:
+
+* `rgb_input`: Tensor (batch, 6, H, W, 3)
+* `depth_input`: Tensor (batch, 6, H, W, 1)
+* `aux_input`: Tensor (batch, 6, 6) *(opcional)*
+
+---
+
+## ⚙️ Configuração
+
+As configurações gerais são definidas em `config/config_advanced.py`, incluindo:
+
+* Tamanho de imagem: `IMG_SIZE = (125, 125)`
+* Número de classes: `NUM_CLASSES = 7`
+* Diretórios de dados, logs e modelos
+* Parâmetros de augmentação e divisão de dados
+* Uso de GPU e mixed precision (automático)
+
+---
+
+## 🧪 Dataset
+
+* Espera-se que as imagens estejam organizadas com caminhos registrados em um arquivo `dataset.csv`.
+
+* Cada modelo 3D deve possuir **6 vistas** com colunas:
+
+  * `model_name`, `view_idx`, `rgb_path`, `depth_path`, `shape_type`, `background_color`, `material_color`
+
+* Os **depth maps** devem estar no formato **.EXR** com canal `'R'`.
+
+---
+
+## 🧼 Augmentações
+
+Em `data/preprocessing.py`, as imagens RGB e mapas de profundidade são aumentadas simultaneamente usando:
+
+* Flips, rotações, shear, escala
+* Ruído gaussiano, contraste, brilho
+
+---
+
+## 🚀 Treinamento
+
+### Comando:
+
 ```bash
-git clone https://github.com/seu-usuario/3d-shape-recognition.git
-cd 3d-shape-recognition
+python train_advanced.py --optimizer adam --lr 0.001 --epochs 50 --batch_size 16
+```
+
+### Argumentos principais:
+
+| Argumento           | Descrição                                             |
+| ------------------- | ----------------------------------------------------- |
+| `--optimizer`       | Escolha entre: `adam`, `adamw`, `sgd`, `rmsprop`      |
+| `--lr`              | Taxa de aprendizado inicial                           |
+| `--epochs`          | Número de épocas de treino                            |
+| `--batch_size`      | Tamanho do lote                                       |
+| `--use_pretrained`  | Usa backbone pré-treinado (não habilitado atualmente) |
+| `--freeze_backbone` | Congela o backbone (caso `use_pretrained`)            |
+
+---
+
+## 🧩 Callbacks
+
+Fornecidos por `training/callbacks.py`:
+
+* `EarlyStopping`
+* `ModelCheckpoint`
+* `ReduceLROnPlateau`
+* `TensorBoard`
+* `CSVLogger`
+* Agendador de LR com decaimento exponencial
+
+---
+
+## 📈 Logs e Modelos
+
+* Modelos são salvos em `models/trained/`
+* Logs e históricos em `models/logs/`
+* Históricos em `.csv` e `.npy`
+
+---
+
+## 📊 Métricas
+
+Durante o treino são monitoradas:
+
+* `accuracy`
+* `top3_accuracy`
+* `top5_accuracy`
+* `val_loss`
+
+---
+
+## ✅ Requisitos
+
+* Python 3.8+
+* TensorFlow 2.8+
+* OpenCV
+* OpenEXR e Imath
+* imgaug
+* pandas, numpy
+
+Instale com:
+
+```bash
 pip install -r requirements.txt
-````
-
----
-
-## 🧩 Estruturas de Dados
-
-### 📁 Modelo A (via Blender)
-
-* Imagens geradas com `blender_generator.py`.
-* Organização em pastas por classe:
-
-  ```
-  data/raw/
-  ├── cube/
-  ├── sphere/
-  ├── cone/
-  └── ...
-  ```
-* Pré-processamento: `src/data_processing_a/`
-
-### 📄 Modelo B (via CSV)
-
-* Arquivo CSV define caminhos de imagens e rótulos.
-* Suporta datasets externos (ex: Kaggle, personalizados).
-* Pré-processamento: `src/data_processing_b/`
-* Exemplo:
-
-  ```csv
-  filepath,label
-  /path/to/image1.png,cube
-  /path/to/image2.png,sphere
-  ```
-
----
-
-## 🧠 Treinamento de Modelos
-
-### ✅ Modelo A
-
-```python
-# Código em: src/training_model_a/
 ```
 
-* Otimizado para datasets gerados com Blender.
-* Arquitetura única, simples e funcional.
-
-### ✅ Modelo B — CLI Avançada e Várias Arquiteturas
-
-```bash
-# Exemplo: modelo básico
-python src/training_model_b/train_model.py --architecture basic
-
-# Modelo avançado com parâmetros customizados
-python src/training_model_b/train_model.py --architecture advanced --epochs 50 --batch_size 64 --lr 0.001
-
-# Modelo híbrido
-python src/training_model_b/train_model.py --architecture hybrid
-```
-
-#### 🛠 Recursos do Modelo B:
-
-* **Múltiplas arquiteturas disponíveis:**
-
-  * `basic`: CNN leve para dispositivos com baixa capacidade
-  * `advanced`: baseada em EfficientNet + SE Blocks
-  * `hybrid`: ensemble de modelos
-  * *(outros modelos podem ser adicionados com facilidade)*
-* **CLI poderosa:**
-
-  ```bash
-  --architecture {basic,advanced,hybrid}
-  --batch_size INT
-  --lr FLOAT
-  --epochs INT
-  ```
-* **Treinamento inteligente:**
-
-  * Early stopping adaptativo
-  * Redução automática da taxa de aprendizado
-  * Checkpoints com versionamento automático de nomes
-
----
-
-## 🔧 Dependências e Requisitos
-
-### ✔️ Requisitos do sistema
-
-* Python 3.8 ou superior
-* 4GB+ de RAM (recomendado 8GB)
-* GPU (opcional, mas recomendado para treinar modelos avançados)
-* Blender (apenas para o Modelo A)
-
-### 📦 Principais bibliotecas
+Exemplo de `requirements.txt`:
 
 ```txt
-tensorflow>=2.11.0
+tensorflow>=2.8
 opencv-python
-numpy
+imgaug
+openexr
+imath
 pandas
-scikit-learn
-matplotlib
-caer
-albumentations
-```
-
-Para gerar dados com Blender:
-
-* Blender 2.9 ou superior
-* Executar via CLI:
-
-  ```bash
-  blender --background --python src/data_generation/blender_generator.py
-  ```
-
-Instale todas as dependências com:
-
-```bash
-pip install -r requirements.txt
+numpy
 ```
 
 ---
 
-## 📜 Licença
+## 🧪 Avaliação
 
-MIT License. Veja o arquivo `LICENSE` para mais detalhes.
+Após o treino, o script executa avaliação no conjunto de teste com logging detalhado e salvamento automático do melhor modelo.
 
----
 
-## 📎 Links Úteis
-
-* [Documentação](docs/)
-* [Relatório de Treinamento](docs/training_report.md)
-* [Exemplo de Dataset](https://www.kaggle.com/...)
-
----
-
-Feito por \[Seu Nome] | [GitHub](https://github.com/seu-usuario)
-
-```
-
----
-
-Se quiser, posso salvar isso diretamente como `README.md` e gerar o link de download. Deseja o arquivo pronto?
-```

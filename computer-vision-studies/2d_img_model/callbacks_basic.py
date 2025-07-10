@@ -7,7 +7,7 @@ from tensorflow.keras.callbacks import (
     ReduceLROnPlateau,
     TensorBoard
 )
-from config.config_advanced import config
+from config_basic import config
 from datetime import datetime
 
 def lr_schedule(epoch):

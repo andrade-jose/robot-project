@@ -4,7 +4,7 @@ from tensorflow.keras.layers import (
     BatchNormalization, ReLU, GlobalAveragePooling2D
 )
 from tensorflow.keras.regularizers import l2
-from config.config_basic import config
+from config_basic import config
 
 def build_basic_cnn(input_shape,num_classes, dropout_rate=0.5):
     model = Sequential([

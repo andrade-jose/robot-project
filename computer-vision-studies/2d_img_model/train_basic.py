@@ -14,11 +14,11 @@ current_dir = Path(__file__).parent
 project_root = current_dir.parent.parent
 sys.path.append(str(project_root))
 
-from data.loading_dir import prepare_data
-from architectures.basic_cnn import build_basic_cnn
-from training.callbacks_basic import get_training_callbacks
-from data.preprocessing_dir import create_data_generators
-from config.config_basic import config
+from loading_dir import prepare_data
+from basic_cnn import build_basic_cnn
+from callbacks_basic import get_training_callbacks
+from preprocessing_dir import create_data_generators
+from config_basic import config
 
 try:
     # --- Preparar dados ---

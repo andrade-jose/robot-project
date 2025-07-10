@@ -1,5 +1,5 @@
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from config.config_basic import config
+from config_basic import config
 
 def get_augmentation_generators():
     """Configura os geradores de aumento de dados"""

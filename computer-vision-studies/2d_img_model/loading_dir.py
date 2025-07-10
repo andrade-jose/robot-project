@@ -3,7 +3,7 @@ import gc
 import caer
 import numpy as np
 from tensorflow.keras.utils import to_categorical
-from config.config_basic import config
+from config_basic import config
 
 char_path = r'C:\Venv\OpenCv\computer-vision-studies\datasets\shapes_3d'
 

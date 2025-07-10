@@ -1,416 +1,564 @@
 import cv2
 import numpy as np
 import glob
-import os
 import pickle
+import os
+import sys
 import logging
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
-from logging.handlers import RotatingFileHandler
-from config.config import LEFT_DIR, RIGHT_DIR
-
+from pathlib import Path
+import argparse
 
 class StereoCalibration:
-    def __init__(self, chessboard_size=(8, 5), square_size=0.031):
+    def __init__(self, chessboard_size=(11, 7), square_size=0.030):
         self.chessboard_size = chessboard_size
         self.square_size = square_size
-        self._setup_logging()
-        self._reset_calibration_data()
-        self.logger.info(f"Inicializando calibração para tabuleiro {self.chessboard_size}")
-
-    def _setup_logging(self):
-        self.logger = logging.getLogger('StereoCalibration')
-        self.logger.setLevel(logging.DEBUG)
-
-        formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
-
-        file_handler = RotatingFileHandler('calibration.log', maxBytes=1_000_000, backupCount=3)
-        file_handler.setFormatter(formatter)
-
-        console_handler = logging.StreamHandler()
-        console_handler.setFormatter(formatter)
-
-        if not self.logger.hasHandlers():
-            self.logger.addHandler(file_handler)
-            self.logger.addHandler(console_handler)
-
-    def _reset_calibration_data(self):
         self.objpoints = []
         self.imgpoints_left = []
         self.imgpoints_right = []
+        self.mtx_left = None
+        self.dist_left = None
+        self.mtx_right = None
+        self.dist_right = None
+        self.R = None
+        self.T = None
+        self.E = None
+        self.F = None
+        self.P1 = None
+        self.P2 = None
+        self.Q = None
+        self.left_map1 = None
+        self.left_map2 = None
+        self.right_map1 = None
+        self.right_map2 = None
         self.image_size = None
-        self.calibration_flags = (
-            cv2.CALIB_RATIONAL_MODEL +
-            cv2.CALIB_THIN_PRISM_MODEL +
-            cv2.CALIB_FIX_S1_S2_S3_S4
-        )
-
-    def load_images(self, left_dir=LEFT_DIR, right_dir=RIGHT_DIR):
-        """Carrega imagens dos diretórios, verificando consistência."""
-        patterns = ['*.png', '*.jpg', '*.jpeg', '*.bmp']
-        left_images, right_images = [], []
-
-        for p in patterns:
-            left_images.extend(sorted(glob.glob(os.path.join(left_dir, p))))
-            right_images.extend(sorted(glob.glob(os.path.join(right_dir, p))))
-
-        if len(left_images) != len(right_images):
-            self.logger.error(f"Número diferente de imagens: {len(left_images)} esquerda vs {len(right_images)} direita")
-            raise ValueError("Número desigual de imagens entre pastas esquerda e direita")
-
-        self.logger.info(f"Carregados {len(left_images)} pares de imagens")
-        return left_images, right_images
-
-    def _enhance_image(self, img):
-        """Pré-processa imagem para melhorar detecção de cantos."""
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        # Correção gamma adaptativa
-        gamma = 1.5
-        inv_gamma = 1.0 / gamma
-        table = np.array([((i / 255.0) ** inv_gamma) * 255 for i in range(256)]).astype("uint8")
-        corrected = cv2.LUT(gray, table)
-
-        # Filtro bilateral para suavização preservando bordas
-        filtered = cv2.bilateralFilter(corrected, 9, 75, 75)
-
-        # CLAHE para contraste local adaptativo
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-        enhanced = clahe.apply(filtered)
-
-        return enhanced
-
-    def find_corners(self, images_left, images_right, min_quality=0.15):
-        """Detecta cantos do tabuleiro nas imagens, com validação de qualidade."""
-        objp = self._prepare_object_points()
-        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.0001)
-
-        for idx, (left_path, right_path) in enumerate(zip(images_left, images_right)):
-            img_left = cv2.imread(left_path)
-            img_right = cv2.imread(right_path)
-
-            if img_left is None or img_right is None:
-                self.logger.warning(f"Não foi possível carregar o par {idx} ({left_path}, {right_path})")
-                continue
-
-            enhanced_left = self._enhance_image(img_left)
-            enhanced_right = self._enhance_image(img_right)
-
-            ret_left, corners_left = self._detect_chessboard(enhanced_left)
-            ret_right, corners_right = self._detect_chessboard(enhanced_right)
-
-            if ret_left and ret_right:
-                quality = self._calculate_pair_quality(corners_left, corners_right, img_left.shape)
-                if quality >= min_quality:
-                    self.objpoints.append(objp)
-                    self.imgpoints_left.append(corners_left)
-                    self.imgpoints_right.append(corners_right)
-                    self.logger.info(f"Par {idx} aceito - Qualidade: {quality:.3f}")
-                else:
-                    self.logger.warning(f"Par {idx} rejeitado - Qualidade baixa: {quality:.3f}")
-            else:
-                self.logger.warning(f"Par {idx} rejeitado - Cantos não detectados")
-
-        self.logger.info(f"Detecção concluída: {len(self.objpoints)} pares válidos encontrados")
-
-    def _detect_chessboard(self, img):
-        flags = (cv2.CALIB_CB_ADAPTIVE_THRESH +
-                 cv2.CALIB_CB_NORMALIZE_IMAGE +
-                 cv2.CALIB_CB_FAST_CHECK)
-
-        ret, corners = cv2.findChessboardCorners(img, self.chessboard_size, flags)
-
-        if ret:
-            corners = cv2.cornerSubPix(img, corners, (15, 15), (-1, -1),
-                                       (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 100, 0.0001))
-            if not self._validate_pattern(corners):
-                return False, None
-
-        return ret, corners
-
-    def _validate_pattern(self, corners):
-        """Valida padrão geométrico do tabuleiro (convexidade e espaçamento)."""
-        corners = corners.reshape(-1, 2)
-
-        hull = cv2.convexHull(corners)
-        area_hull = cv2.contourArea(hull)
-        area_bbox = (corners.max(0) - corners.min(0)).prod()
-
-        if area_hull < 0.9 * area_bbox:
-            return False
-
-        grid = corners.reshape(self.chessboard_size[1], self.chessboard_size[0], 2)
-        dx = np.diff(grid, axis=1)
-        dy = np.diff(grid, axis=0)
-
-        if (np.std(dx) / np.mean(dx) > 0.2) or (np.std(dy) / np.mean(dy) > 0.2):
-            return False
-
-        return True
-
-    def _calculate_pair_quality(self, corners_left, corners_right, image_shape):
-        """Calcula qualidade do par de cantos comparando simetria e distribuição."""
-        # Pode ser refinado para medir distâncias, simetria, etc.
-        # Aqui um exemplo simples baseado em spread dos cantos (exemplo hipotético)
-        spread_left = np.ptp(corners_left, axis=0).mean()
-        spread_right = np.ptp(corners_right, axis=0).mean()
-        quality = min(spread_left, spread_right) / max(spread_left, spread_right)
-        return quality
-
-    def calibrate(self):
-        if len(self.objpoints) < 10:
-            self.logger.error("Número insuficiente de pares válidos para calibração (mínimo 10).")
-            raise RuntimeError("Insuficientes pares para calibração.")
-
-        self._calibrate_individual_cameras()
-        self._calibrate_stereo_camera()
-        self._rectify()
-        self._validate()
-        self.logger.info("Calibração completa!")
-
-    def _calibrate_individual_cameras(self):
-        self.logger.info("Calibrando câmeras individualmente...")
-        retL, self.mtx_left, self.dist_left, _, _ = cv2.calibrateCamera(
-            self.objpoints, self.imgpoints_left, self.image_size, None, None, flags=self.calibration_flags)
-        retR, self.mtx_right, self.dist_right, _, _ = cv2.calibrateCamera(
-            self.objpoints, self.imgpoints_right, self.image_size, None, None, flags=self.calibration_flags)
-        self.logger.info(f"RMS esquerda: {retL:.4f}, RMS direita: {retR:.4f}")
-
-    def _calibrate_stereo_camera(self):
-        self.logger.info("Calibrando sistema estéreo...")
-        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 500, 1e-6)
-        flags = (
-            cv2.CALIB_USE_INTRINSIC_GUESS +
-            cv2.CALIB_FIX_ASPECT_RATIO +
-            cv2.CALIB_RATIONAL_MODEL +
-            cv2.CALIB_FIX_K3 +
-            cv2.CALIB_FIX_TANGENT_DIST
-        )
-        ret, _, _, _, _, self.R, self.T, self.E, self.F = cv2.stereoCalibrate(
-            self.objpoints, self.imgpoints_left, self.imgpoints_right,
-            self.mtx_left, self.dist_left, self.mtx_right, self.dist_right,
-            self.image_size, criteria=criteria, flags=flags
-        )
-        self.logger.info(f"RMS calibração estéreo: {ret:.4f}")
-        self._analyze_stereo_geometry()
-
-    def _analyze_stereo_geometry(self):
-        baseline = np.linalg.norm(self.T)
-        angle_rad = np.linalg.norm(cv2.Rodrigues(self.R)[0])
-        angle_deg = np.degrees(angle_rad)
-        self.logger.info(f"Baseline (distância entre câmeras): {baseline*1000:.1f} mm")
-        self.logger.info(f"Ângulo de rotação relativo: {angle_deg:.2f}°")
-
-        if baseline < 0.05:
-            self.logger.warning("Baseline muito pequena, pode comprometer resultados.")
-        elif baseline > 0.3:
-            self.logger.warning("Baseline muito grande, cuidado com paralaxe excessiva.")
-
-        if angle_deg > 10:
-            self.logger.warning("Ângulo de rotação elevado entre câmeras.")
-
-    def _rectify(self, alpha=-1):
-        self.logger.info("Calculando mapas de retificação...")
-        best_alpha, best_coverage = self._find_best_alpha(alpha)
-
-        self.R1, self.R2, self.P1, self.P2, self.Q, _, _ = cv2.stereoRectify(
-            self.mtx_left, self.dist_left, self.mtx_right, self.dist_right,
-            self.image_size, self.R, self.T, alpha=best_alpha,
-            flags=cv2.CALIB_ZERO_DISPARITY
-        )
-
-        self.left_map = cv2.initUndistortRectifyMap(
-            self.mtx_left, self.dist_left, self.R1, self.P1, self.image_size, cv2.CV_32FC1)
-        self.right_map = cv2.initUndistortRectifyMap(
-            self.mtx_right, self.dist_right, self.R2, self.P2, self.image_size, cv2.CV_32FC1)
-
-        self.logger.info(f"Retificação concluída com alpha={best_alpha:.2f} (cobertura: {best_coverage:.1%})")
-
-    def _find_best_alpha(self, alpha):
-        if alpha >= 0:
-            _, _, _, _, _, roi1, roi2 = cv2.stereoRectify(
-                self.mtx_left, self.dist_left, self.mtx_right, self.dist_right,
-                self.image_size, self.R, self.T, alpha=alpha, flags=cv2.CALIB_ZERO_DISPARITY
-            )
-            coverage = self._calculate_coverage(roi1, roi2)
-            return alpha, coverage
-
-        best_alpha = 0.0
-        best_coverage = 0.0
-        for a in np.linspace(-1, 1, 11):
-            _, _, _, _, _, roi1, roi2 = cv2.stereoRectify(
-                self.mtx_left, self.dist_left, self.mtx_right, self.dist_right,
-                self.image_size, self.R, self.T, alpha=a, flags=cv2.CALIB_ZERO_DISPARITY
-            )
-            coverage = self._calculate_coverage(roi1, roi2)
-            if coverage > best_coverage:
-                best_coverage = coverage
-                best_alpha = a
-
-        return best_alpha, best_coverage
-
-    def _calculate_coverage(self, roi1, roi2):
-        area1 = roi1[2] * roi1[3] if roi1[2] > 0 and roi1[3] > 0 else 0
-        area2 = roi2[2] * roi2[3] if roi2[2] > 0 and roi2[3] > 0 else 0
-        total_area = self.image_size[0] * self.image_size[1]
-        return (area1 + area2) / (2 * total_area)
-
-    def _validate(self):
-        self._validate_epipolar()
-        self._validate_reprojection()
-        self.visualize_results()
-
-    def _validate_epipolar(self):
-        mean_error = 0
-        total_points = 0
-
-        for ptsL, ptsR in zip(self.imgpoints_left, self.imgpoints_right):
-            ptsL = ptsL.reshape(-1, 2)
-            ptsR = ptsR.reshape(-1, 2)
-
-            linesR = cv2.computeCorrespondEpilines(ptsL, 1, self.F).reshape(-1, 3)
-            linesL = cv2.computeCorrespondEpilines(ptsR, 2, self.F).reshape(-1, 3)
-
-            for ptR, lineR in zip(ptsR, linesR):
-                dist = abs(lineR[0]*ptR[0] + lineR[1]*ptR[1] + lineR[2]) / np.linalg.norm(lineR[:2])
-                mean_error += dist
-
-            for ptL, lineL in zip(ptsL, linesL):
-                dist = abs(lineL[0]*ptL[0] + lineL[1]*ptL[1] + lineL[2]) / np.linalg.norm(lineL[:2])
-                mean_error += dist
-
-            total_points += 2 * len(ptsL)
-
-        mean_error /= total_points
-        self.logger.info(f"Erro epipolar médio: {mean_error:.4f} pixels")
-        if mean_error > 0.5:
-            self.logger.warning("Erro epipolar elevado!")
-
-    def _validate_reprojection(self):
-        # Método placeholder para reprojeção, pode implementar se desejar
-        pass
-
-    def visualize_results(self):
-        self._plot_3d_configuration()
-        self._plot_rectification_example()
-
-    def _plot_3d_configuration(self):
-        fig = plt.figure(figsize=(12, 8))
-        ax = fig.add_subplot(111, projection='3d')
-
-        self._plot_camera(ax, np.eye(3), np.zeros(3), 'Left Camera')
-        self._plot_camera(ax, self.R, self.T.ravel(), 'Right Camera')
-
-        for objp in self.objpoints:
-            ax.scatter(objp[:, 0], objp[:, 1], objp[:, 2], c='b', s=10)
-
-        ax.set_xlabel('X (m)')
-        ax.set_ylabel('Y (m)')
-        ax.set_zlabel('Z (m)')
-        plt.title('Configuração 3D das Câmeras Estéreo')
-        plt.tight_layout()
-        plt.show()
-
-    def _plot_camera(self, ax, R, t, label):
-        axis_length = 0.05
-        axes = np.array([[0, 0, 0],
-                         [axis_length, 0, 0],
-                         [0, axis_length, 0],
-                         [0, 0, axis_length]])
-
-        t = t.reshape(3, 1)
-        world_axes = (R @ axes.T + t).T
-
-        colors = ['r', 'g', 'b']
-        for i in range(1, 4):
-            ax.plot([world_axes[0, 0], world_axes[i, 0]],
-                    [world_axes[0, 1], world_axes[i, 1]],
-                    [world_axes[0, 2], world_axes[i, 2]],
-                    colors[i - 1])
-
-        ax.text(world_axes[0, 0], world_axes[0, 1], world_axes[0, 2], label)
+        self.roi_left = None
+        self.roi_right = None
 
     def _prepare_object_points(self):
+        """Prepara pontos 3D do tabuleiro de xadrez"""
         objp = np.zeros((self.chessboard_size[0] * self.chessboard_size[1], 3), np.float32)
         objp[:, :2] = np.mgrid[0:self.chessboard_size[0], 0:self.chessboard_size[1]].T.reshape(-1, 2)
         objp *= self.square_size
+        print(f"[DEBUG] Pontos do objeto preparados: {objp.shape}")
+        print(f"[DEBUG] Primeiros 3 pontos: {objp[:3]}")
         return objp
 
-    def run_full_calibration(self, left_dir=LEFT_DIR, right_dir=RIGHT_DIR, min_quality=0.1, max_images=None):
-        left_images, right_images = self.load_images(left_dir, right_dir)
+    def load_images(self, left_images_dir, right_images_dir):
+        """Carrega listas de imagens ordenadas"""
+        left_patterns = ['*.png', '*.jpg', '*.jpeg', '*.bmp']
+        right_patterns = ['*.png', '*.jpg', '*.jpeg', '*.bmp']
+        
+        images_left = []
+        images_right = []
+        
+        for pattern in left_patterns:
+            found_left = sorted(glob.glob(os.path.join(left_images_dir, pattern)))
+            images_left.extend(found_left)
+            if found_left:
+                print(f"[DEBUG] Encontradas {len(found_left)} imagens esquerdas com padrão {pattern}")
+        
+        for pattern in right_patterns:
+            found_right = sorted(glob.glob(os.path.join(right_images_dir, pattern)))
+            images_right.extend(found_right)
+            if found_right:
+                print(f"[DEBUG] Encontradas {len(found_right)} imagens direitas com padrão {pattern}")
+        
+        print(f"[DEBUG] Total de imagens carregadas: {len(images_left)} esquerdas, {len(images_right)} direitas")
+        
+        if len(images_left) != len(images_right):
+            raise RuntimeError(f"Número diferente de imagens: {len(images_left)} esquerda vs {len(images_right)} direita")
+        
+        if len(images_left) == 0:
+            raise RuntimeError("Nenhuma imagem encontrada nos diretórios especificados")
+        
+        # Debug: mostra os primeiros arquivos
+        print(f"[DEBUG] Primeiras 3 imagens esquerdas: {[os.path.basename(img) for img in images_left[:3]]}")
+        print(f"[DEBUG] Primeiras 3 imagens direitas: {[os.path.basename(img) for img in images_right[:3]]}")
+        
+        return images_left, images_right
 
+    def find_corners(self, images_left, images_right, max_images=None):
+        """Encontra cantos do tabuleiro - versão simplificada"""
+        objp = self._prepare_object_points()
+        
+        # Critérios para refinamento subpixel
+        criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 50, 0.001)
+        print(f"[DEBUG] Critérios de refinamento: {criteria}")
+        
+        # Flags simplificadas para detecção de cantos
+        flags = cv2.CALIB_CB_ADAPTIVE_THRESH + cv2.CALIB_CB_NORMALIZE_IMAGE
+        print(f"[DEBUG] Flags de detecção: {flags}")
+        
+        valid_pairs = 0
+        total_pairs = len(images_left)
+        
         if max_images:
-            left_images = left_images[:max_images]
-            right_images = right_images[:max_images]
+            total_pairs = min(total_pairs, max_images)
+        
+        print(f"[INFO] Processando {total_pairs} pares de imagens...")
+        
+        for i, (img_left_path, img_right_path) in enumerate(zip(images_left[:total_pairs], images_right[:total_pairs])):
+            print(f"\n[DEBUG] === Processando par {i+1}/{total_pairs} ===")
+            print(f"[DEBUG] Esquerda: {os.path.basename(img_left_path)}")
+            print(f"[DEBUG] Direita: {os.path.basename(img_right_path)}")
+            
+            # Carrega imagens
+            img_left = cv2.imread(img_left_path)
+            img_right = cv2.imread(img_right_path)
+            
+            if img_left is None:
+                print(f"[ERROR] Não foi possível carregar imagem esquerda: {img_left_path}")
+                continue
+            if img_right is None:
+                print(f"[ERROR] Não foi possível carregar imagem direita: {img_right_path}")
+                continue
+            
+            print(f"[DEBUG] Dimensões esquerda: {img_left.shape}")
+            print(f"[DEBUG] Dimensões direita: {img_right.shape}")
+            
+            # Converte para escala de cinza
+            gray_left = cv2.cvtColor(img_left, cv2.COLOR_BGR2GRAY)
+            gray_right = cv2.cvtColor(img_right, cv2.COLOR_BGR2GRAY)
+            
+            print(f"[DEBUG] Dimensões cinza esquerda: {gray_left.shape}")
+            print(f"[DEBUG] Dimensões cinza direita: {gray_right.shape}")
+            
+            # Salva dimensões da imagem (uma vez)
+            if self.image_size is None:
+                self.image_size = (gray_left.shape[1], gray_left.shape[0])  # (width, height)
+                print(f"[DEBUG] Tamanho da imagem definido: {self.image_size}")
+            
+            # Encontra cantos
+            print(f"[DEBUG] Procurando cantos para tabuleiro {self.chessboard_size}...")
+            retL, corners_left = cv2.findChessboardCorners(gray_left, self.chessboard_size, flags=flags)
+            retR, corners_right = cv2.findChessboardCorners(gray_right, self.chessboard_size, flags=flags)
+            
+            print(f"[DEBUG] Cantos encontrados - Esquerda: {retL}, Direita: {retR}")
+            
+            if retL:
+                print(f"[DEBUG] Quantidade de cantos esquerda: {len(corners_left)}")
+                print(f"[DEBUG] Primeiro canto esquerda: {corners_left[0].flatten()}")
+            
+            if retR:
+                print(f"[DEBUG] Quantidade de cantos direita: {len(corners_right)}")
+                print(f"[DEBUG] Primeiro canto direita: {corners_right[0].flatten()}")
+            
+            if not (retL and retR):
+                print(f"[WARNING] Cantos não encontrados no par {i+1} - Esquerda: {retL}, Direita: {retR}")
+                continue
+            
+            # Refinamento subpixel
+            print(f"[DEBUG] Aplicando refinamento subpixel...")
+            corners_left_refined = cv2.cornerSubPix(gray_left, corners_left, (11, 11), (-1, -1), criteria)
+            corners_right_refined = cv2.cornerSubPix(gray_right, corners_right, (11, 11), (-1, -1), criteria)
+            
+            # Verifica se o refinamento mudou os pontos
+            diff_left = np.mean(np.abs(corners_left - corners_left_refined))
+            diff_right = np.mean(np.abs(corners_right - corners_right_refined))
+            print(f"[DEBUG] Diferença média após refinamento - Esquerda: {diff_left:.4f}, Direita: {diff_right:.4f}")
+            
+            # Adiciona aos datasets
+            self.objpoints.append(objp)
+            self.imgpoints_left.append(corners_left_refined)
+            self.imgpoints_right.append(corners_right_refined)
+            
+            valid_pairs += 1
+            print(f"[INFO] Par {i+1} aceito - Total válidos: {valid_pairs}")
+        
+        print(f"\n[INFO] === RESUMO DETECÇÃO DE CANTOS ===")
+        print(f"[INFO] {valid_pairs} pares válidos de {total_pairs} processados")
+        print(f"[INFO] Taxa de sucesso: {valid_pairs/total_pairs*100:.1f}%")
+        
+        if valid_pairs < 10:
+            print("[WARNING] Poucos pares válidos para calibração confiável!")
+        
+        return valid_pairs
 
-        self.image_size = cv2.imread(left_images[0]).shape[1::-1]
-        self.find_corners(left_images, right_images, min_quality=min_quality)
-        self.calibrate()
+    def calibrate_individual(self):
+        """Calibração individual das câmeras"""
+        if len(self.objpoints) == 0:
+            raise RuntimeError("Nenhum ponto detectado para calibração")
+        
+        print(f"\n[DEBUG] === CALIBRAÇÃO INDIVIDUAL ===")
+        print(f"[DEBUG] Número de conjuntos de pontos: {len(self.objpoints)}")
+        print(f"[DEBUG] Tamanho da imagem: {self.image_size}")
+        
+        # Calibração câmera esquerda
+        print(f"[DEBUG] Iniciando calibração da câmera esquerda...")
+        retL, self.mtx_left, self.dist_left, rvecs_left, tvecs_left = cv2.calibrateCamera(
+            self.objpoints, self.imgpoints_left, self.image_size, None, None)
+        
+        print(f"[DEBUG] Matriz intrínseca esquerda:\n{self.mtx_left}")
+        print(f"[DEBUG] Coeficientes de distorção esquerda: {self.dist_left.flatten()}")
+        print(f"[DEBUG] Número de vetores de rotação esquerda: {len(rvecs_left)}")
+        print(f"[DEBUG] Número de vetores de translação esquerda: {len(tvecs_left)}")
+        
+        # Calibração câmera direita
+        print(f"[DEBUG] Iniciando calibração da câmera direita...")
+        retR, self.mtx_right, self.dist_right, rvecs_right, tvecs_right = cv2.calibrateCamera(
+            self.objpoints, self.imgpoints_right, self.image_size, None, None)
+        
+        print(f"[DEBUG] Matriz intrínseca direita:\n{self.mtx_right}")
+        print(f"[DEBUG] Coeficientes de distorção direita: {self.dist_right.flatten()}")
+        print(f"[DEBUG] Número de vetores de rotação direita: {len(rvecs_right)}")
+        print(f"[DEBUG] Número de vetores de translação direita: {len(tvecs_right)}")
+        
+        print(f"[INFO] Erro RMS câmera esquerda: {retL:.4f}")
+        print(f"[INFO] Erro RMS câmera direita: {retR:.4f}")
+        
+        # Análise dos parâmetros
+        fx_left, fy_left = self.mtx_left[0,0], self.mtx_left[1,1]
+        cx_left, cy_left = self.mtx_left[0,2], self.mtx_left[1,2]
+        fx_right, fy_right = self.mtx_right[0,0], self.mtx_right[1,1]
+        cx_right, cy_right = self.mtx_right[0,2], self.mtx_right[1,2]
+        
+        print(f"[DEBUG] Distância focal esquerda: fx={fx_left:.1f}, fy={fy_left:.1f}")
+        print(f"[DEBUG] Centro principal esquerda: cx={cx_left:.1f}, cy={cy_left:.1f}")
+        print(f"[DEBUG] Distância focal direita: fx={fx_right:.1f}, fy={fy_right:.1f}")
+        print(f"[DEBUG] Centro principal direita: cx={cx_right:.1f}, cy={cy_right:.1f}")
+        
+        # Validação básica das matrizes
+        if retL > 1.0 or retR > 1.0:
+            print("[WARNING] Erro RMS alto nas calibrações individuais!")
+        
+        if abs(fx_left - fy_left) > 50 or abs(fx_right - fy_right) > 50:
+            print("[WARNING] Grande diferença entre fx e fy - possível problema de aspecto!")
+        
+        return retL, retR
+
+    def stereo_calibrate(self):
+        """Calibração estéreo das câmeras"""
+        if self.mtx_left is None or self.mtx_right is None:
+            raise RuntimeError("Calibração individual deve ser executada primeiro")
+        
+        print(f"\n[DEBUG] === CALIBRAÇÃO ESTÉREO ===")
+        print(f"[DEBUG] Iniciando calibração estéreo com {len(self.objpoints)} conjuntos de pontos...")
+        
+        # Critérios de otimização
+        criteria = (cv2.TERM_CRITERIA_MAX_ITER + cv2.TERM_CRITERIA_EPS, 100, 1e-6)
+        print(f"[DEBUG] Critérios de otimização: {criteria}")
+        
+        # Flags para calibração estéreo
+        flags = 0
+        print(f"[DEBUG] Flags de calibração estéreo: {flags}")
+        
+        # Calibração estéreo
+        print(f"[DEBUG] Executando cv2.stereoCalibrate...")
+        ret, mtx_left, dist_left, mtx_right, dist_right, R, T, E, F = cv2.stereoCalibrate(
+            self.objpoints,
+            self.imgpoints_left,
+            self.imgpoints_right,
+            self.mtx_left,
+            self.dist_left,
+            self.mtx_right,
+            self.dist_right,
+            self.image_size,
+            criteria=criteria,
+            flags=flags
+        )
+        
+        # Atualiza parâmetros
+        self.mtx_left = mtx_left
+        self.dist_left = dist_left
+        self.mtx_right = mtx_right
+        self.dist_right = dist_right
+        self.R = R
+        self.T = T
+        self.E = E
+        self.F = F
+        
+        print(f"[DEBUG] Matriz de rotação R:\n{R}")
+        print(f"[DEBUG] Vetor de translação T: {T.flatten()}")
+        print(f"[DEBUG] Matriz essencial E:\n{E}")
+        print(f"[DEBUG] Matriz fundamental F:\n{F}")
+        
+        print(f"[INFO] Erro RMS calibração estéreo: {ret:.4f}")
+        
+        # Validações detalhadas
+        baseline = np.linalg.norm(T)
+        print(f"[INFO] Baseline (distância entre câmeras): {baseline*1000:.1f} mm")
+        
+        # Análise da rotação
+        rotation_angle = np.arccos((np.trace(R) - 1) / 2) * 180 / np.pi
+        print(f"[DEBUG] Ângulo de rotação entre câmeras: {rotation_angle:.2f} graus")
+        
+        # Análise da translação
+        tx, ty, tz = T.flatten()
+        print(f"[DEBUG] Translação - X: {tx*1000:.1f}mm, Y: {ty*1000:.1f}mm, Z: {tz*1000:.1f}mm")
+        
+        if baseline < 0.05:  # Menos que 5cm
+            print("[WARNING] Baseline muito pequena para boa precisão de profundidade")
+        
+        if baseline > 1.0:  # Mais que 1m
+            print("[WARNING] Baseline muito grande - pode causar problemas de correspondência")
+        
+        if abs(ty) > 0.02:  # Desalinhamento vertical > 2cm
+            print("[WARNING] Grande desalinhamento vertical entre as câmeras")
+        
+        if ret > 1.0:
+            print("[WARNING] Erro RMS alto na calibração estéreo!")
+        
+        return ret
+
+    def rectify(self, alpha=0.5):
+        """Retificação estéreo"""
+        if self.R is None or self.T is None:
+            raise RuntimeError("Calibração estéreo deve ser executada primeiro")
+        
+        print(f"\n[DEBUG] === RETIFICAÇÃO ESTÉREO ===")
+        print(f"[DEBUG] Iniciando retificação com alpha={alpha}")
+        
+        # Retificação estéreo
+        R1, R2, P1, P2, Q, roi_left, roi_right = cv2.stereoRectify(
+            self.mtx_left, self.dist_left,
+            self.mtx_right, self.dist_right,
+            self.image_size, self.R, self.T,
+            alpha=alpha,
+            flags=cv2.CALIB_ZERO_DISPARITY
+        )
+        
+        print(f"[DEBUG] Matriz de rotação R1 (esquerda):\n{R1}")
+        print(f"[DEBUG] Matriz de rotação R2 (direita):\n{R2}")
+        print(f"[DEBUG] Matriz de projeção P1 (esquerda):\n{P1}")
+        print(f"[DEBUG] Matriz de projeção P2 (direita):\n{P2}")
+        print(f"[DEBUG] Matriz Q de reprojeção:\n{Q}")
+        
+        # Salva parâmetros
+        self.P1 = P1
+        self.P2 = P2
+        self.Q = Q
+        self.roi_left = roi_left
+        self.roi_right = roi_right
+        
+        print(f"[DEBUG] Gerando mapas de retificação...")
+        
+        # Gera mapas de retificação
+        self.left_map1, self.left_map2 = cv2.initUndistortRectifyMap(
+            self.mtx_left, self.dist_left, R1, P1, self.image_size, cv2.CV_16SC2)
+        
+        self.right_map1, self.right_map2 = cv2.initUndistortRectifyMap(
+            self.mtx_right, self.dist_right, R2, P2, self.image_size, cv2.CV_16SC2)
+        
+        print(f"[DEBUG] Mapas de retificação gerados com sucesso")
+        print(f"[DEBUG] Tipo dos mapas: {type(self.left_map1)}, {type(self.left_map2)}")
+        
+        print(f"[INFO] ROI esquerda: {roi_left}")
+        print(f"[INFO] ROI direita: {roi_right}")
+        
+        # Análise das ROIs
+        roi_left_area = roi_left[2] * roi_left[3] if roi_left[2] > 0 and roi_left[3] > 0 else 0
+        roi_right_area = roi_right[2] * roi_right[3] if roi_right[2] > 0 and roi_right[3] > 0 else 0
+        total_area = self.image_size[0] * self.image_size[1]
+        
+        print(f"[DEBUG] Área ROI esquerda: {roi_left_area} ({roi_left_area/total_area*100:.1f}% da imagem)")
+        print(f"[DEBUG] Área ROI direita: {roi_right_area} ({roi_right_area/total_area*100:.1f}% da imagem)")
+
+    def validate_calibration(self):
+        """Validação da calibração através do erro epipolar"""
+        if self.F is None:
+            raise RuntimeError("Matriz fundamental não calculada")
+        
+        print(f"\n[DEBUG] === VALIDAÇÃO DE CALIBRAÇÃO ===")
+        print(f"[DEBUG] Calculando erro epipolar para {len(self.imgpoints_left)} pares...")
+        
+        total_error = 0
+        total_points = 0
+        errors_per_image = []
+        
+        for idx, (pts_left, pts_right) in enumerate(zip(self.imgpoints_left, self.imgpoints_right)):
+            # Converte formato dos pontos
+            pts_left = pts_left.reshape(-1, 2)
+            pts_right = pts_right.reshape(-1, 2)
+            
+            # Calcula linhas epipolares
+            lines_right = cv2.computeCorrespondEpilines(pts_left.reshape(-1, 1, 2), 1, self.F)
+            lines_left = cv2.computeCorrespondEpilines(pts_right.reshape(-1, 1, 2), 2, self.F)
+            
+            lines_right = lines_right.reshape(-1, 3)
+            lines_left = lines_left.reshape(-1, 3)
+            
+            # Calcula erro epipolar para esta imagem
+            image_error = 0
+            for pt_l, pt_r, line_r, line_l in zip(pts_left, pts_right, lines_right, lines_left):
+                # Distância ponto-linha
+                d_right = abs(line_r[0]*pt_r[0] + line_r[1]*pt_r[1] + line_r[2]) / np.sqrt(line_r[0]**2 + line_r[1]**2)
+                d_left = abs(line_l[0]*pt_l[0] + line_l[1]*pt_l[1] + line_l[2]) / np.sqrt(line_l[0]**2 + line_l[1]**2)
+                image_error += d_left + d_right
+                total_error += d_left + d_right
+                total_points += 2
+            
+            avg_error_this_image = image_error / (len(pts_left) * 2)
+            errors_per_image.append(avg_error_this_image)
+            
+            if idx < 5:  # Mostra detalhes das primeiras 5 imagens
+                print(f"[DEBUG] Imagem {idx+1}: erro médio = {avg_error_this_image:.4f} pixels")
+        
+        mean_error = total_error / total_points
+        std_error = np.std(errors_per_image)
+        min_error = np.min(errors_per_image)
+        max_error = np.max(errors_per_image)
+        
+        print(f"[DEBUG] Estatísticas do erro epipolar:")
+        print(f"[DEBUG] - Erro médio: {mean_error:.4f} pixels")
+        print(f"[DEBUG] - Desvio padrão: {std_error:.4f} pixels")
+        print(f"[DEBUG] - Erro mínimo: {min_error:.4f} pixels")
+        print(f"[DEBUG] - Erro máximo: {max_error:.4f} pixels")
+        
+        print(f"[INFO] Erro médio epipolar: {mean_error:.4f} pixels")
+        
+        if mean_error > 1.0:
+            print("[WARNING] Erro epipolar alto! Calibração pode não estar boa.")
+        elif mean_error < 0.5:
+            print("[INFO] Excelente calibração!")
+        else:
+            print("[INFO] Calibração aceitável.")
+        
+        return mean_error
+
+    def run_full_calibration(self, left_dir, right_dir, max_images=None):
+        """Pipeline completo de calibração"""
+        print(f"\n[DEBUG] === PIPELINE COMPLETO DE CALIBRAÇÃO ===")
+        print(f"[DEBUG] Diretório esquerdo: {left_dir}")
+        print(f"[DEBUG] Diretório direito: {right_dir}")
+        print(f"[DEBUG] Máximo de imagens: {max_images}")
+        print(f"[DEBUG] Tamanho do tabuleiro: {self.chessboard_size}")
+        print(f"[DEBUG] Tamanho do quadrado: {self.square_size}m")
+        
+        # Carrega imagens
+        images_left, images_right = self.load_images(left_dir, right_dir)
+        
+        # Encontra cantos
+        valid_pairs = self.find_corners(images_left, images_right, max_images)
+        
+        if valid_pairs == 0:
+            raise RuntimeError("Nenhum par válido encontrado!")
+        
+        # Calibração individual
+        self.calibrate_individual()
+        
+        # Calibração estéreo
+        self.stereo_calibrate()
+        
+        # Retificação
+        self.rectify()
+        
+        # Validação
+        self.validate_calibration()
+        
+        print(f"\n[INFO] === CALIBRAÇÃO COMPLETA COM SUCESSO! ===")
         return True
 
-    def save_calibration(self, filename):
-        data = {
-            "mtx_left": self.mtx_left,
-            "dist_left": self.dist_left,
-            "mtx_right": self.mtx_right,
-            "dist_right": self.dist_right,
-            "R": self.R,
-            "T": self.T,
-            "E": self.E,
-            "F": self.F,
-            "R1": self.R1,
-            "R2": self.R2,
-            "P1": self.P1,
-            "P2": self.P2,
-            "Q": self.Q,
-            "left_map": self.left_map,
-            "right_map": self.right_map,
-            "chessboard_size": self.chessboard_size,
-            "square_size": self.square_size,
-            "image_size": self.image_size,
+    def save_calibration(self, path):
+        """Salva parâmetros de calibração"""
+        print(f"[DEBUG] Salvando calibração em: {path}")
+        
+        calibration_data = {
+            'mtx_left': self.mtx_left,
+            'dist_left': self.dist_left,
+            'mtx_right': self.mtx_right,
+            'dist_right': self.dist_right,
+            'R': self.R,
+            'T': self.T,
+            'E': self.E,
+            'F': self.F,
+            'P1': self.P1,
+            'P2': self.P2,
+            'Q': self.Q,
+            'left_map1': self.left_map1,
+            'left_map2': self.left_map2,
+            'right_map1': self.right_map1,
+            'right_map2': self.right_map2,
+            'roi_left': self.roi_left,
+            'roi_right': self.roi_right,
+            'image_size': self.image_size,
+            'chessboard_size': self.chessboard_size,
+            'square_size': self.square_size
         }
-        with open(filename, "wb") as f:
-            pickle.dump(data, f)
-        self.logger.info(f"Parâmetros de calibração salvos em {filename}")
+        
+        # Debug: mostra tamanhos dos dados
+        for key, value in calibration_data.items():
+            if hasattr(value, 'shape'):
+                print(f"[DEBUG] {key}: shape={value.shape}, dtype={value.dtype}")
+            else:
+                print(f"[DEBUG] {key}: {type(value)}")
+        
+        with open(path, 'wb') as f:
+            pickle.dump(calibration_data, f)
+        
+        print(f"[INFO] Calibração salva em: {path}")
 
-    def load_calibration(self, filename):
-        with open(filename, "rb") as f:
-            data = pickle.load(f)
-        self.mtx_left = data["mtx_left"]
-        self.dist_left = data["dist_left"]
-        self.mtx_right = data["mtx_right"]
-        self.dist_right = data["dist_right"]
-        self.R = data["R"]
-        self.T = data["T"]
-        self.E = data["E"]
-        self.F = data["F"]
-        self.R1 = data["R1"]
-        self.R2 = data["R2"]
-        self.P1 = data["P1"]
-        self.P2 = data["P2"]
-        self.Q = data["Q"]
-        self.left_map = data["left_map"]
-        self.right_map = data["right_map"]
-        self.chessboard_size = data.get("chessboard_size", self.chessboard_size)
-        self.square_size = data.get("square_size", self.square_size)
-        self.image_size = data.get("image_size", self.image_size)
-        self.logger.info(f"Parâmetros de calibração carregados de {filename}")
+    def load_calibration(self, path):
+        """Carrega parâmetros de calibração"""
+        print(f"[DEBUG] Carregando calibração de: {path}")
+        
+        with open(path, 'rb') as f:
+            calibration_data = pickle.load(f)
+        
+        print(f"[DEBUG] Dados carregados: {list(calibration_data.keys())}")
+        
+        for key, value in calibration_data.items():
+            setattr(self, key, value)
+            if hasattr(value, 'shape'):
+                print(f"[DEBUG] {key}: shape={value.shape}, dtype={value.dtype}")
+        
+        print(f"[INFO] Calibração carregada de: {path}")
 
-    def test_rectification(self, left_img_path, right_img_path):
-        """Exibe imagem retificada de um par para visualização qualitativa."""
-        imgL = cv2.imread(left_img_path)
-        imgR = cv2.imread(right_img_path)
-        if imgL is None or imgR is None:
-            self.logger.error("Imagens para retificação não podem ser carregadas.")
-            return
+    def rectify_images(self, img_left, img_right):
+        """Retifica par de imagens"""
+        if self.left_map1 is None or self.right_map1 is None:
+            raise RuntimeError("Mapas de retificação não foram gerados")
+        
+        print(f"[DEBUG] Retificando imagens com dimensões: {img_left.shape}, {img_right.shape}")
+        
+        rect_left = cv2.remap(img_left, self.left_map1, self.left_map2, cv2.INTER_LINEAR)
+        rect_right = cv2.remap(img_right, self.right_map1, self.right_map2, cv2.INTER_LINEAR)
+        
+        print(f"[DEBUG] Imagens retificadas com dimensões: {rect_left.shape}, {rect_right.shape}")
+        
+        return rect_left, rect_right
+    
 
-        rectL = cv2.remap(imgL, self.left_map[0], self.left_map[1], cv2.INTER_LINEAR)
-        rectR = cv2.remap(imgR, self.right_map[0], self.right_map[1], cv2.INTER_LINEAR)
-
-        stacked = np.hstack((rectL, rectR))
-        for y in range(0, stacked.shape[0], 40):
-            cv2.line(stacked, (0, y), (stacked.shape[1], y), (0, 255, 0), 1)
-
-        cv2.imshow("Imagens Retificadas - Pressione qualquer tecla para fechar", stacked)
+    def test_rectification(self, img_left, img_right, num_lines=10):
+        """Testa retificação desenhando linhas epipolares em imagens individuais"""
+        if self.left_map1 is None or self.right_map1 is None:
+            raise RuntimeError("Mapas de retificação não foram gerados")
+        
+        print(f"[DEBUG] Testando retificação com {num_lines} linhas epipolares")
+        
+        # Retifica as imagens
+        rect_left, rect_right = self.rectify_images(img_left, img_right)
+        
+        # Cria cópias para desenhar
+        display_left = rect_left.copy()
+        display_right = rect_right.copy()
+        
+        # Desenha linhas epipolares horizontais
+        height, width = rect_left.shape[:2]
+        
+        for i in range(num_lines):
+            y = int(height * (i + 1) / (num_lines + 1))
+            
+            # Linha na imagem esquerda
+            cv2.line(display_left, (0, y), (width, y), (0, 255, 0), 2)
+            
+            # Linha na imagem direita
+            cv2.line(display_right, (0, y), (width, y), (0, 255, 0), 2)
+        
+        # Redimensiona para visualização se necessário
+        max_height = 800
+        if height > max_height:
+            scale = max_height / height
+            new_width = int(width * scale)
+            display_left = cv2.resize(display_left, (new_width, max_height))
+            display_right = cv2.resize(display_right, (new_width, max_height))
+        
+        # Mostra as imagens lado a lado
+        cv2.imshow('Rectified Left', display_left)
+        cv2.imshow('Rectified Right', display_right)
+        
+        print(f"[INFO] Imagens retificadas exibidas. Pressione qualquer tecla para continuar...")
         cv2.waitKey(0)
         cv2.destroyAllWindows()
+        
+        return display_left, display_right
+    
