@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mxfile host="app.diagrams.net" modified="2025-01-14T00:00:00.000Z" agent="5.0" etag="xxx" version="24.7.17" type="device">
+  <diagram name="Sistema Visão + Robótica Detalhado" id="sistema-robotica-detalhado">
+    <mxGraphModel dx="1800" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Título Principal -->
+        <mxCell id="titulo" value="Sistema Inteligente de Visão Computacional + Robótica Colaborativa" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=20;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="200" y="10" width="1000" height="40" as="geometry" />
+        </mxCell>
+        
+        <!-- ========== SEÇÃO 1: AQUISIÇÃO DE DADOS ========== -->
+        <mxCell id="secao1_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f0ff;strokeColor=#4d4d4d;strokeWidth=2;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="20" y="70" width="360" height="280" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="secao1_title" value="📡 SEÇÃO 1: AQUISIÇÃO DE DADOS" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="30" y="80" width="340" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Hardware de Câmeras -->
+        <mxCell id="camera_specs" value="📷 Câmeras Estéreo&lt;br&gt;&lt;b&gt;Hardware:&lt;/b&gt;&lt;br&gt;• Resolução: 1920x1080&lt;br&gt;• FPS: 30-60&lt;br&gt;• Baseline: 12cm&lt;br&gt;• Sync: Hardware&lt;br&gt;• Interface: USB 3.0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="120" width="150" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Calibração -->
+        <mxCell id="calibration" value="🔧 Calibração&lt;br&gt;&lt;b&gt;Processo:&lt;/b&gt;&lt;br&gt;• Parâmetros intrínsecos&lt;br&gt;• Parâmetros extrínsecos&lt;br&gt;• Correção de distorção&lt;br&gt;• Retificação estéreo&lt;br&gt;• Validação de precisão" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="210" y="120" width="150" height="110" as="geometry" />
+        </mxCell>
+        
+        <!-- Pré-processamento -->
+        <mxCell id="preprocessing" value="⚙️ Pré-processamento&lt;br&gt;&lt;b&gt;Operações:&lt;/b&gt;&lt;br&gt;• Sincronização temporal&lt;br&gt;• Correção de exposição&lt;br&gt;• Filtros de ruído&lt;br&gt;• Normalização RGB&lt;br&gt;• ROI (Region of Interest)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="250" width="320" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- ========== SEÇÃO 2: PROCESSAMENTO PARALELO ========== -->
+        <mxCell id="secao2_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff0f0;strokeColor=#4d4d4d;strokeWidth=2;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="400" y="70" width="500" height="280" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="secao2_title" value="🧠 SEÇÃO 2: PROCESSAMENTO PARALELO IA + VISÃO 3D" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="410" y="80" width="480" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Ramo A: Classificação -->
+        <mxCell id="branch_a_title" value="🔍 RAMO A: CLASSIFICAÇÃO IA" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#d73027;" vertex="1" parent="1">
+          <mxGeometry x="420" y="120" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="cnn_architecture" value="🧠 CNN + LSTM&lt;br&gt;&lt;b&gt;Arquitetura:&lt;/b&gt;&lt;br&gt;• CNN: ResNet-50 backbone&lt;br&gt;• LSTM: 256 units, 2 layers&lt;br&gt;• Dropout: 0.3&lt;br&gt;• Classes: 8 tipos de peças&lt;br&gt;• Confiança: &gt;95% threshold" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="420" y="150" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="classification_output" value="🏷️ Saída Classificação&lt;br&gt;&lt;b&gt;Resultado:&lt;/b&gt;&lt;br&gt;• ID da peça: [0-7]&lt;br&gt;• Nome: 'Cubo_Vermelho'&lt;br&gt;• Confiança: 0.987&lt;br&gt;• Orientação estimada&lt;br&gt;• Timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="420" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Ramo B: Visão Estéreo -->
+        <mxCell id="branch_b_title" value="📏 RAMO B: VISÃO ESTÉREO 3D" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontStyle=1;fontColor=#4575b4;" vertex="1" parent="1">
+          <mxGeometry x="640" y="120" width="200" height="20" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="stereo_processing" value="👁️‍🗨️ Algoritmo Estéreo&lt;br&gt;&lt;b&gt;Método:&lt;/b&gt;&lt;br&gt;• SGBM (Semi-Global)&lt;br&gt;• Disparidade: 0-128 pixels&lt;br&gt;• Filtro de mediana&lt;br&gt;• Suavização bilateral&lt;br&gt;• Detecção de oclusões" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="150" width="200" height="100" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="depth_output" value="📐 Saída Profundidade&lt;br&gt;&lt;b&gt;Dados 3D:&lt;/b&gt;&lt;br&gt;• Coord. X: 245.7 mm&lt;br&gt;• Coord. Y: -112.3 mm&lt;br&gt;• Coord. Z: 850.2 mm&lt;br&gt;• Incerteza: ±2.1 mm&lt;br&gt;• Nuvem de pontos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="640" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- ========== SEÇÃO 3: FUSÃO E DECISÃO ========== -->
+        <mxCell id="secao3_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0fff0;strokeColor=#4d4d4d;strokeWidth=2;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="920" y="70" width="460" height="280" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="secao3_title" value="🧩 SEÇÃO 3: FUSÃO INTELIGENTE E TOMADA DE DECISÃO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="930" y="80" width="440" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Fusão de Dados -->
+        <mxCell id="data_fusion_advanced" value="🔄 Fusão Multi-Modal&lt;br&gt;&lt;b&gt;Algoritmo:&lt;/b&gt;&lt;br&gt;• Filtro de Kalman&lt;br&gt;• Ponderação por confiança&lt;br&gt;• Validação cruzada&lt;br&gt;• Correção de drift temporal&lt;br&gt;• Outlier detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="940" y="120" width="180" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Sistema de Decisão -->
+        <mxCell id="decision_system" value="🎯 Sistema de Decisão&lt;br&gt;&lt;b&gt;Regras Inteligentes:&lt;/b&gt;&lt;br&gt;• IF Cubo + Z&lt;500mm → Pegar&lt;br&gt;• IF Cilindro → Levar_para_A&lt;br&gt;• IF Cone → Jogo_empilhar&lt;br&gt;• IF Confiança&lt;90% → Rejeitar&lt;br&gt;• Planner de trajetória segura" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="120" width="220" height="100" as="geometry" />
+        </mxCell>
+        
+        <!-- Resultado Final -->
+        <mxCell id="final_decision" value="⚡ Comando Final&lt;br&gt;&lt;b&gt;Estrutura:&lt;/b&gt;&lt;br&gt;• Ação: 'PICK_AND_PLACE'&lt;br&gt;• Posição: [245.7, -112.3, 850.2]&lt;br&gt;• Orientação: [0, 0, 45°]&lt;br&gt;• Velocidade: 150 mm/s&lt;br&gt;• Força máxima: 50N" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="940" y="240" width="420" height="90" as="geometry" />
+        </mxCell>
+        
+        <!-- ========== SEÇÃO 4: EXECUÇÃO ROBÓTICA ========== -->
+        <mxCell id="secao4_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fffff0;strokeColor=#4d4d4d;strokeWidth=2;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="20" y="380" width="1360" height="220" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="secao4_title" value="🤖 SEÇÃO 4: EXECUÇÃO ROBÓTICA E CONTROLE" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="30" y="390" width="1340" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Comunicação -->
+        <mxCell id="communication" value="📡 Comunicação&lt;br&gt;&lt;b&gt;Protocolo:&lt;/b&gt;&lt;br&gt;• TCP/IP: 192.168.1.100:30003&lt;br&gt;• Real-time: 125Hz&lt;br&gt;• Dashboard: 30004&lt;br&gt;• Modbus TCP: 502&lt;br&gt;• Timeout: 100ms" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="440" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- URScript -->
+        <mxCell id="urscript" value="📜 URScript Gerado&lt;br&gt;&lt;b&gt;Comandos:&lt;/b&gt;&lt;br&gt;• movej(pose, a=1.2, v=0.15)&lt;br&gt;• movel(target, a=0.5, v=0.1)&lt;br&gt;• set_digital_out(0, True)&lt;br&gt;• force_mode(...)&lt;br&gt;• Safety checks" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="220" y="440" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Robô UR -->
+        <mxCell id="ur_robot_detailed" value="🤖 Universal Robot&lt;br&gt;&lt;b&gt;Especificações:&lt;/b&gt;&lt;br&gt;• Modelo: UR5e/UR10e&lt;br&gt;• Payload: 5kg/12.5kg&lt;br&gt;• Reach: 850mm/1300mm&lt;br&gt;• Repetibilidade: ±0.03mm&lt;br&gt;• Safety: Força/Velocidade" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="420" y="440" width="180" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Garra/End-effector -->
+        <mxCell id="gripper" value="🔧 End-Effector&lt;br&gt;&lt;b&gt;Garra Inteligente:&lt;/b&gt;&lt;br&gt;• Força adaptativa&lt;br&gt;• Sensores táteis&lt;br&gt;• Abertura: 0-85mm&lt;br&gt;• Força: 20-200N&lt;br&gt;• Feedback posicional" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="620" y="440" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Sensores de Segurança -->
+        <mxCell id="safety_sensors" value="🛡️ Segurança&lt;br&gt;&lt;b&gt;Sistemas:&lt;/b&gt;&lt;br&gt;• Protective stop&lt;br&gt;• Emergency stop&lt;br&gt;• Collision detection&lt;br&gt;• Workspace limits&lt;br&gt;• Human detection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="800" y="440" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Monitoramento -->
+        <mxCell id="monitoring" value="📊 Monitoramento&lt;br&gt;&lt;b&gt;Métricas:&lt;/b&gt;&lt;br&gt;• Posição atual&lt;br&gt;• Velocidade joint&lt;br&gt;• Força/Torque&lt;br&gt;• Temperatura motores&lt;br&gt;• Status operacional" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0f8ff;strokeColor=#4682b4;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="980" y="440" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Resultado Final -->
+        <mxCell id="final_result" value="✅ Resultado Final&lt;br&gt;&lt;b&gt;Ação Executada:&lt;/b&gt;&lt;br&gt;• Peça identificada&lt;br&gt;• Posição calculada&lt;br&gt;• Movimento executado&lt;br&gt;• Tarefa completada&lt;br&gt;• Log gerado" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#c8e6c9;strokeColor=#388e3c;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="440" width="160" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- ========== SEÇÃO 5: ARQUITETURA DE SOFTWARE ========== -->
+        <mxCell id="secao5_bg" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#4d4d4d;strokeWidth=2;opacity=30;" vertex="1" parent="1">
+          <mxGeometry x="20" y="630" width="1360" height="200" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="secao5_title" value="💻 SEÇÃO 5: ARQUITETURA DE SOFTWARE E INTEGRAÇÃO" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1;fontColor=#1f497d;" vertex="1" parent="1">
+          <mxGeometry x="30" y="640" width="1340" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- ROS -->
+        <mxCell id="ros_integration" value="🔗 ROS Integration&lt;br&gt;&lt;b&gt;Nodes:&lt;/b&gt;&lt;br&gt;• /camera_node&lt;br&gt;• /classification_node&lt;br&gt;• /stereo_node&lt;br&gt;• /fusion_node&lt;br&gt;• /ur_driver" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffd54f;strokeColor=#ff8f00;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Python -->
+        <mxCell id="python_stack" value="🐍 Python Stack&lt;br&gt;&lt;b&gt;Libs:&lt;/b&gt;&lt;br&gt;• OpenCV 4.8+&lt;br&gt;• TensorFlow 2.12&lt;br&gt;• NumPy, SciPy&lt;br&gt;• URX (UR control)&lt;br&gt;• Threading" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#81c784;strokeColor=#388e3c;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="200" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Hardware -->
+        <mxCell id="hardware_req" value="🖥️ Hardware&lt;br&gt;&lt;b&gt;Requisitos:&lt;/b&gt;&lt;br&gt;• GPU: RTX 3060+&lt;br&gt;• RAM: 16GB+&lt;br&gt;• CPU: i7-10700K+&lt;br&gt;• SSD: 500GB+&lt;br&gt;• Ethernet: Gigabit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e57373;strokeColor=#d32f2f;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="360" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Performance -->
+        <mxCell id="performance" value="⚡ Performance&lt;br&gt;&lt;b&gt;Métricas:&lt;/b&gt;&lt;br&gt;• FPS: 30 frames/s&lt;br&gt;• Latência: &lt;100ms&lt;br&gt;• Precisão: 95%+&lt;br&gt;• Uptime: 99.9%&lt;br&gt;• Throughput: 120 peças/h" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ba68c8;strokeColor=#7b1fa2;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="520" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Logging -->
+        <mxCell id="logging" value="📝 Logging/Debug&lt;br&gt;&lt;b&gt;Sistemas:&lt;/b&gt;&lt;br&gt;• Logs estruturados&lt;br&gt;• Métricas real-time&lt;br&gt;• Error tracking&lt;br&gt;• Performance profiling&lt;br&gt;• Remote monitoring" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffb74d;strokeColor=#f57c00;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="680" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Interface -->
+        <mxCell id="interface" value="🖱️ Interface&lt;br&gt;&lt;b&gt;Dashboard:&lt;/b&gt;&lt;br&gt;• Live video feed&lt;br&gt;• Status robô&lt;br&gt;• Controle manual&lt;br&gt;• Histórico tarefas&lt;br&gt;• Configurações" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#64b5f6;strokeColor=#1976d2;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="840" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Backup -->
+        <mxCell id="backup" value="💾 Backup/Recovery&lt;br&gt;&lt;b&gt;Estratégias:&lt;/b&gt;&lt;br&gt;• Auto-save configs&lt;br&gt;• Model versioning&lt;br&gt;• Data replication&lt;br&gt;• Failover system&lt;br&gt;• Recovery procedures" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#a5d6a7;strokeColor=#4caf50;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Manutenção -->
+        <mxCell id="maintenance" value="🔧 Manutenção&lt;br&gt;&lt;b&gt;Procedimentos:&lt;/b&gt;&lt;br&gt;• Calibração semanal&lt;br&gt;• Update de modelos&lt;br&gt;• Limpeza de câmeras&lt;br&gt;• Verificação mecânica&lt;br&gt;• Testes funcionais" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffcdd2;strokeColor=#e91e63;fontSize=10;fontStyle=0;align=left;" vertex="1" parent="1">
+          <mxGeometry x="1160" y="680" width="140" height="120" as="geometry" />
+        </mxCell>
+        
+        <!-- Setas Principais de Fluxo -->
+        <!-- Seção 1 para Seção 2 -->
+        <mxCell id="flow1" value="Dados RGB + Estéreo" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;strokeColor=#1f497d;fontSize=11;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="380" y="210" as="sourcePoint" />
+            <mxPoint x="400" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Seção 2 para Seção 3 -->
+        <mxCell id="flow2" value="Classe + Posição 3D" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;strokeColor=#1f497d;fontSize=11;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="900" y="210" as="sourcePoint" />
+            <mxPoint x="920" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Seção 3 para Seção 4 -->
+        <mxCell id="flow3" value="Comando de Movimento" style="endArrow=classic;html=1;rounded=0;strokeWidth=3;strokeColor=#1f497d;fontSize=11;fontStyle=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1150" y="350" as="sourcePoint" />
+            <mxPoint x="1150" y="380" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Seção 4 para Seção 5 -->
+        <mxCell id="flow4" value="Logs e Telemetria" style="endAr

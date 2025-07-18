@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2025-07-14T00:00:00.000Z" agent="5.0" etag="drawio-multiview-cnn" version="24.6.4" type="device">
+  <diagram id="MultiViewCNN_System" name="MultiView CNN System">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Package: advanced_cnn.py -->
+        <mxCell id="package_advanced_cnn" value="advanced_cnn.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="50" y="50" width="480" height="280" as="geometry" />
+        </mxCell>
+        
+        <!-- ResidualSEBlock -->
+        <mxCell id="ResidualSEBlock" value="ResidualSEBlock" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="package_advanced_cnn">
+          <mxGeometry x="20" y="40" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="ResidualSEBlock_attrs" value="- filters: int&#xa;- kernel_size: tuple&#xa;- se_ratio: float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ResidualSEBlock">
+          <mxGeometry y="26" width="200" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="ResidualSEBlock_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ResidualSEBlock">
+          <mxGeometry y="70" width="200" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ResidualSEBlock_methods" value="+ call(inputs): tensor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ResidualSEBlock">
+          <mxGeometry y="78" width="200" height="12" as="geometry" />
+        </mxCell>
+        
+        <!-- RgbViewNet -->
+        <mxCell id="RgbViewNet" value="RgbViewNet" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="package_advanced_cnn">
+          <mxGeometry x="250" y="40" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="RgbViewNet_attrs" value="- num_classes: int&#xa;- dropout_rate: float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="RgbViewNet">
+          <mxGeometry y="26" width="200" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="RgbViewNet_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="RgbViewNet">
+          <mxGeometry y="60" width="200" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="RgbViewNet_methods" value="+ call(inputs): tensor" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="RgbViewNet">
+          <mxGeometry y="68" width="200" height="22" as="geometry" />
+        </mxCell>
+        
+        <!-- Multiview_CNN -->
+        <mxCell id="Multiview_CNN" value="Multiview_CNN" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="package_advanced_cnn">
+          <mxGeometry x="20" y="150" width="430" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Multiview_CNN_attrs" value="- config: Config&#xa;- num_views: int&#xa;- rgb_input_shape: tuple&#xa;- depth_input_shape: tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Multiview_CNN">
+          <mxGeometry y="26" width="430" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="Multiview_CNN_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Multiview_CNN">
+          <mxGeometry y="80" width="430" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="Multiview_CNN_methods" value="+ build_multiview_model(aux_features_dim): Model" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Multiview_CNN">
+          <mxGeometry y="88" width="430" height="22" as="geometry" />
+        </mxCell>
+        
+        <!-- Package: config_advanced.py -->
+        <mxCell id="package_config" value="config_advanced.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="580" y="50" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- Config -->
+        <mxCell id="Config" value="Config" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="package_config">
+          <mxGeometry x="20" y="40" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="Config_attrs" value="+ DATA_DIR: str&#xa;+ IMG_SIZE: tuple&#xa;+ BATCH_SIZE: int&#xa;+ SHAPE2IDX: dict" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Config">
+          <mxGeometry y="26" width="240" height="44" as="geometry" />
+        </mxCell>
+        <mxCell id="Config_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="Config">
+          <mxGeometry y="70" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="Config_methods" value="+ __post_init__(): void" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="Config">
+          <mxGeometry y="78" width="240" height="12" as="geometry" />
+        </mxCell>
+        
+        <!-- Package: preprocessing.py -->
+        <mxCell id="package_preprocessing" value="preprocessing.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="900" y="50" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- MultiViewAugmentor -->
+        <mxCell id="MultiViewAugmentor" value="MultiViewAugmentor" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="package_preprocessing">
+          <mxGeometry x="20" y="40" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="MultiViewAugmentor_attrs" value="- augmentation_pipeline: Sequential&#xa;- probability: float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="MultiViewAugmentor">
+          <mxGeometry y="26" width="240" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="MultiViewAugmentor_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="MultiViewAugmentor">
+          <mxGeometry y="60" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="MultiViewAugmentor_methods" value="+ augment_batch(rgb, depth): tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="MultiViewAugmentor">
+          <mxGeometry y="68" width="240" height="22" as="geometry" />
+        </mxCell>
+        
+        <!-- Package: loading_csv.py -->
+        <mxCell id="package_loading" value="loading_csv.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="1">
+          <mxGeometry x="50" y="380" width="480" height="200" as="geometry" />
+        </mxCell>
+        
+        <!-- ShapeMultiViewLoader -->
+        <mxCell id="ShapeMultiViewLoader" value="ShapeMultiViewLoader" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="package_loading">
+          <mxGeometry x="20" y="40" width="280" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="ShapeMultiViewLoader_attrs" value="- csv_file: str&#xa;- config: Config&#xa;- augmentor: MultiViewAugmentor&#xa;- data_indices: list" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ShapeMultiViewLoader">
+          <mxGeometry y="26" width="280" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="ShapeMultiViewLoader_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="ShapeMultiViewLoader">
+          <mxGeometry y="80" width="280" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="ShapeMultiViewLoader_methods" value="+ __len__(): int&#xa;+ __getitem__(index): dict&#xa;+ load_rgb_views(path): array&#xa;+ train_val_test_split(): tuple" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="ShapeMultiViewLoader">
+          <mxGeometry y="88" width="280" height="42" as="geometry" />
+        </mxCell>
+        
+        <!-- read_exr_depth function -->
+        <mxCell id="read_exr_depth" value="&lt;&lt;function&gt;&gt;&#xa;read_exr_depth" style="whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#666666;fontStyle=1;" vertex="1" parent="package_loading">
+          <mxGeometry x="320" y="60" width="140" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Package: callbacks.py -->
+        <mxCell id="package_callbacks" value="callbacks.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="580" y="250" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- TrainingCallbacks -->
+        <mxCell id="TrainingCallbacks" value="&lt;&lt;utility&gt;&gt;&#xa;TrainingCallbacks" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="package_callbacks">
+          <mxGeometry x="20" y="40" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="TrainingCallbacks_methods" value="+ get_training_callbacks(): list&#xa;+ lr_schedule(epoch, lr): float" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="TrainingCallbacks">
+          <mxGeometry y="40" width="240" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="TrainingCallbacks_line" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" vertex="1" parent="TrainingCallbacks">
+          <mxGeometry y="74" width="240" height="8" as="geometry" />
+        </mxCell>
+        <mxCell id="TrainingCallbacks_note" value="Static methods" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontStyle=2;" vertex="1" parent="TrainingCallbacks">
+          <mxGeometry y="82" width="240" height="8" as="geometry" />
+        </mxCell>
+        
+        <!-- Package: train_advanced.py -->
+        <mxCell id="package_train" value="train_advanced.py" style="shape=folder;fontStyle=1;tabWidth=110;tabHeight=30;tabPosition=left;html=1;boundedLbl=1;labelInHeader=1;container=1;collapsible=0;recursiveResize=0;strokeWidth=1;fillColor=#e6f3ff;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="900" y="250" width="280" height="150" as="geometry" />
+        </mxCell>
+        
+        <!-- TrainingPipeline -->
+        <mxCell id="TrainingPipeline" value="&lt;&lt;main&gt;&gt;&#xa;TrainingPipeline" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=40;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#e6f3ff;strokeColor=#6c8ebf;" vertex="1" parent="package_train">
+          <mxGeometry x="20" y="40" width="240" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="TrainingPipeline_methods" value="+ main(): void&#xa;+ setup_data_loaders(): tuple&#xa;+ build_and_compile_model(): Model&#xa;+ train_model(): History" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="TrainingPipeline">
+          <mxGeometry y="40" width="240" height="50" as="geometry" />
+        </mxCell>
+        
+        <!-- Inheritance -->
+        <mxCell id="inheritance1" value="" style="endArrow=block;endSize=16;endFill=0;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ShapeMultiViewLoader" target="keras_sequence">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="300" y="420" as="sourcePoint" />
+            <mxPoint x="200" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- keras.utils.Sequence -->
+        <mxCell id="keras_sequence" value="keras.utils.Sequence" style="whiteSpace=wrap;html=1;fillColor=#f0f0f0;strokeColor=#666666;fontStyle=3;" vertex="1" parent="1">
+          <mxGeometry x="120" y="330" width="140" height="30" as="geometry" />
+        </mxCell>
+        
+        <!-- Associations -->
+        <mxCell id="assoc1" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Multiview_CNN_attrs" target="Config_attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="530" y="190" as="sourcePoint" />
+            <mxPoint x="580" y="140" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc1_label" value="configures" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc1">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc2" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ShapeMultiViewLoader_attrs" target="MultiViewAugmentor_attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="350" y="460" as="sourcePoint" />
+            <mxPoint x="900" y="120" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="700" y="453" />
+              <mxPoint x="700" y="600" />
+              <mxPoint x="1040" y="600" />
+              <mxPoint x="1040" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc2_label" value="uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc2">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc3" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="RgbViewNet_attrs" target="ResidualSEBlock_attrs">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="300" y="100" as="sourcePoint" />
+            <mxPoint x="70" y="100" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="480" y="108" />
+              <mxPoint x="480" y="30" />
+              <mxPoint x="30" y="30" />
+              <mxPoint x="30" y="108" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc3_label" value="contains" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc3">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Note boxes -->
+        <mxCell id="note1" value="Implementa blocos residuais&#xa;com Squeeze-and-Excitation&#xa;para atenção nos canais" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="50" width="180" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note2" value="Processa 6 vistas RGB + 6 depth&#xa;com LSTM bidirecional&#xa;para classificação de formas" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="140" width="180" height="70" as="geometry" />
+        </mxCell>
+        
+        <mxCell id="note3" value="Carrega dados sincronizados&#xa;RGB + Depth com augmentação&#xa;Herda de keras.utils.Sequence" style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;fillColor=#fff2cc;strokeColor=#d6b656;size=15;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="230" width="180" height="70" as="geometry" />
+        </mxCell>
+        
+        <!-- Note connections -->
+        <mxCell id="note_conn1" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ResidualSEBlock" target="note1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="300" y="115" as="sourcePoint" />
+            <mxPoint x="1220" y="85" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1200" y="115" />
+              <mxPoint x="1200" y="85" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="note_conn2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="Multiview_CNN" target="note2">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="530" y="205" as="sourcePoint" />
+            <mxPoint x="1220" y="175" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1200" y="205" />
+              <mxPoint x="1200" y="175" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="note_conn3" value="" style="endArrow=none;dashed=1;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="ShapeMultiViewLoader" target="note3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="350" y="485" as="sourcePoint" />
+            <mxPoint x="1220" y="265" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1200" y="485" />
+              <mxPoint x="1200" y="265" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- More associations -->
+        <mxCell id="assoc4" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="ShapeMultiViewLoader" target="Config">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="210" y="420" as="sourcePoint" />
+            <mxPoint x="700" y="220" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="210" y="360" />
+              <mxPoint x="400" y="360" />
+              <mxPoint x="400" y="220" />
+              <mxPoint x="700" y="220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc4_label" value="uses" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc4">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc5" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="TrainingPipeline" target="ShapeMultiViewLoader">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1040" y="290" as="sourcePoint" />
+            <mxPoint x="210" y="580" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1040" y="640" />
+              <mxPoint x="210" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc5_label" value="uses data from" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc5">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc6" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="TrainingPipeline_methods" target="Multiview_CNN">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="920" y="315" as="sourcePoint" />
+            <mxPoint x="280" y="360" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="800" y="315" />
+              <mxPoint x="800" y="680" />
+              <mxPoint x="280" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc6_label" value="creates model" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc6">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc7" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="TrainingPipeline" target="TrainingCallbacks">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="1040" y="290" as="sourcePoint" />
+            <mxPoint x="700" y="400" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1040" y="240" />
+              <mxPoint x="850" y="240" />
+              <mxPoint x="850" y="430" />
+              <mxPoint x="700" y="430" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc7_label" value="uses callbacks" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc7">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <mxCell id="assoc8" value="" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="read_exr_depth" target="ShapeMultiViewLoader_methods">
+          <mxGeometry width="160" relative="1" as="geometry">
+            <mxPoint x="460" y="525" as="sourcePoint" />
+            <mxPoint x="70" y="533" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="480" y="505" />
+              <mxPoint x="480" y="550" />
+              <mxPoint x="40" y="550" />
+              <mxPoint x="40" y="509" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="assoc8_label" value="reads depth files" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="assoc8">
+          <mxGeometry x="-0.1" y="-1" relative="1" as="geometry">
+            <mxPoint x="5" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        
+        <!-- Legend -->
+        <mxCell id="legend" value="LEGENDA" style="shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;resizeLast=1;strokeWidth=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="1220" y="320" width="180" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_row1" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="legend">
+          <mxGeometry y="30" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_cell1" value="Classe Principal" style="shape=partialRectangle;connectable=0;fillColor=#f8cecc;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeColor=#b85450;" vertex="1" parent="legend_row1">
+          <mxGeometry width="180" height="30" as="geometry">
+            <mxRectangle width="180" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend_row2" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="legend">
+          <mxGeometry y="60" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_cell2" value="Configuração" style="shape=partialRectangle;connectable=0;fillColor=#fff2cc;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeColor=#d6b656;" vertex="1" parent="legend_row2">
+          <mxGeometry width="180" height="30" as="geometry">
+            <mxRectangle width="180" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="legend_row3" value="" style="shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;fillColor=none;collapsible=0;dropTarget=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;top=0;left=0;right=0;bottom=0;" vertex="1" parent="legend">
+          <mxGeometry y="90" width="180" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="legend_cell3" value="Utilitário/Função" style="shape=partialRectangle;connectable=0;fillColor=#f0f0f0;top=0;left=0;bottom=0;right=0;overflow=hidden;strokeColor=#666666;" vertex="1" parent="legend_row3">
+          <mxGeometry width="180" height="30" as="geometry">
+            <mxRectangle width="180" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

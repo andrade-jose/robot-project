@@ -16,6 +16,6 @@ class URController:
         pose = list(position) + [0, 0, 0]  # Posição + orientação
         self.rtde_c.send(self.setp_names, self.setp_types, pose)
         time.sleep(1)
-    
+        
     def disconnect(self):
         self.rtde_c.disconnect()

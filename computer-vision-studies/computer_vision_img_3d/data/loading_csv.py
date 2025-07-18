@@ -211,6 +211,23 @@ class ShapeMultiViewLoader(Sequence):
         test_df = self.df[self.df['model_name'].isin(test_names)].copy()
 
         return train_df, val_df, test_df
+    
+    def get_generator(self, df, shuffle=False, augment=False):
+        """
+        Gera um novo loader com o mesmo batch_size e include_aux, usando o DataFrame fornecido.
+        
+        Args:
+            df (pd.DataFrame): subconjunto filtrado de dados
+            shuffle (bool): embaralhar as amostras
+            augment (bool): aplicar aumentos de dados
+        """
+        return ShapeMultiViewLoader(
+            df=df,
+            batch_size=self.batch_size,
+            shuffle=shuffle,
+            augment=augment,
+            include_aux=self.include_aux
+        )
 
     @classmethod
     def from_dataframe(cls, df, batch_size=32, shuffle=True, augment=False, include_aux=False):
