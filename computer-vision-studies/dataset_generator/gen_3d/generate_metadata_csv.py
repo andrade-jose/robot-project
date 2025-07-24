@@ -72,8 +72,8 @@ def coletar_jsons_e_gerar_csv(render_root, stl_dir, csv_output_path):
 
 # Exemplo de uso
 if __name__ == "__main__":
-    render_root = r"C:\Venv\OpenCv\datasets\renders"
-    stl_dir = r"C:\Venv\OpenCv\datasets\stl"
-    csv_out = r"C:\Venv\OpenCv\datasets\renders\dataset.csv"
+    render_root = r"C:\Venv\Rep_git\datasets\dataset_tapatan\renders"
+    stl_dir = r"C:\Venv\Rep_git\datasets\dataset_tapatan\stl"
+    csv_out = r"C:\Venv\Rep_git\datasets\dataset_tapatan\dataset.csv"
 
     coletar_jsons_e_gerar_csv(render_root, stl_dir, csv_out)

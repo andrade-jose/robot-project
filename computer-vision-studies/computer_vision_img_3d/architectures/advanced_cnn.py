@@ -63,8 +63,7 @@ class ResidualSEBlock(tf.keras.layers.Layer):
         x = self.add([x, shortcut])
         x = self.relu_out(x)
         
-        return x
-    
+        return x    
 class RgbViewNet(tf.keras.layers.Layer):
     def __init__(self):
         super().__init__()

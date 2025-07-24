@@ -18,7 +18,7 @@ class Config:
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
     # Caminhos para os dados (atualize conforme sua estrutura)
-    DATA_ROOT: str = r"C:\Venv\OpenCv\datasets"
+    DATA_ROOT: str = r"C:\Venv\Rep_git\datasets\dataset_tapatan"
     DATASET_NAME: str = "renders"
     
     # Caminhos completos (calculados automaticamente)
@@ -62,11 +62,10 @@ class Config:
         """Retorna a forma completa da imagem (altura, largura, canais)"""
         return (*self.IMG_SIZE, self.CHANNELS)
     
-    NUM_CLASSES: int =     7          # Número de classes no seu problema
+    NUM_CLASSES: int =     2          # Número de classes no seu problema
 
     SHAPE2IDX: dict = field(default_factory=lambda: {
-    "cone": 0, "cube": 1, "cylinder": 2, "prism": 3,
-    "pyramid": 4, "sphere": 5, "torus": 6
+        "cube": 1, "cylinder": 2
     })
 
     # Parâmetros de treinamento

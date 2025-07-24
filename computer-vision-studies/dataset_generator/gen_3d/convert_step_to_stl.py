@@ -37,8 +37,8 @@ def converter_step_para_stl(caminho_step, caminho_stl, precisao_malha=0.1):
         return False
 
 if __name__ == "__main__":
-    pasta_step = r"C:\Venv\OpenCv\computer-vision-studies\datasets\STEP_blender\step"
-    pasta_stl = r"C:\Venv\OpenCv\computer-vision-studies\datasets\STEP_blender\stl"
+    pasta_step = r"C:\Venv\Rep_git\datasets\step_2\step"
+    pasta_stl = r"C:\Venv\Rep_git\datasets\stl_2"
     precisao_malha = 0.1
 
     if not os.path.exists(pasta_step):

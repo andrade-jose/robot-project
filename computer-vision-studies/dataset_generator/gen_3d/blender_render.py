@@ -5,6 +5,7 @@ import math
 import json
 from mathutils import Vector
 from random import choice
+from random import uniform
 
 # Configurações globais
 RES_X = 256
@@ -14,26 +15,25 @@ DEPTH_FORMAT = 'OPEN_EXR'
 NUM_VIEWS = 6  # máximo de vistas por modelo
 CAMERA_DISTANCE = 3.0
 CAMERA_HEIGHTS = [1.0, 1.5, 2.0]
-CAMERA_ANGLES = [0, 60, 120, 180, 240, 300]  # graus
-# Adiciona lista de cores para fundo (RGBA)
-FUNDOS_CORES = [
-    (1, 1, 1, 1),       # branco
-    (0, 0, 0, 1),       # preto
-    (0.8, 0.2, 0.2, 1), # vermelho
-    (0.2, 0.8, 0.2, 1), # verde
-    (0.2, 0.2, 0.8, 1), # azul
-    (0.9, 0.9, 0.1, 1)  # amarelo
-]
+CAMERA_ANGLES = [0, 60, 120, 240, 300]  # graus
 
-# Adiciona lista de cores para material do objeto (RGBA)
-MATERIAIS_CORES = [
-    (0.8, 0.8, 0.8, 1),  # Cinza claro
-    (0.9, 0.5, 0.2, 1),  # Laranja
-    (0.3, 0.3, 0.3, 1),  # Cinza escuro
-    (0.1, 0.6, 0.9, 1),  # Azul claro
-    (0.7, 0.1, 0.1, 1),  # Vermelho escuro
-    (0.1, 0.7, 0.1, 1)   # Verde escuro
-]
+# Adiciona lista de cores para fundo (RGBA)
+def gerar_variacao_cor(base_color, variação=0.1):
+    """Gera uma variação leve da cor RGBA base"""
+    return tuple(min(max(c + uniform(-variação, variação), 0), 1) for c in base_color)
+
+# Duas cores base
+COR_OBJETO_1 = (0.8, 0.2, 0.2, 1.0)  # vermelho
+COR_OBJETO_2 = (0.2, 0.2, 0.8, 1.0)  # azul
+
+COR_FUNDO_1 = (1, 1, 1, 1)           # branco
+COR_FUNDO_2 = (0, 0, 0, 1)           # preto
+
+def escolher_cor_material():
+    return gerar_variacao_cor(choice([COR_OBJETO_1, COR_OBJETO_2]), variação=0.1)
+
+def escolher_cor_fundo():
+    return gerar_variacao_cor(choice([COR_FUNDO_1, COR_FUNDO_2]), variação=0.05)
 def clear_scene():
     """Limpa a cena completamente"""
     bpy.ops.wm.read_factory_settings(use_empty=True)
@@ -113,8 +113,16 @@ def apply_basic_material(context, color):
             else:
                 obj.data.materials.append(mat)
 
-def setup_camera(angle_deg, height, distance=CAMERA_DISTANCE):
+def setup_camera(angle_deg=None, height=None, distance=CAMERA_DISTANCE, top_view=False):
     """Configura e posiciona a câmera"""
+    if top_view:
+        cam_location = (0, 0, distance)
+        bpy.ops.object.camera_add(location=cam_location)
+        cam = bpy.context.active_object
+        cam.rotation_euler = (math.radians(90), 0, 0)  # Olha para baixo (eixo Z negativo)
+        bpy.context.scene.camera = cam
+        return cam
+
     angle_rad = math.radians(angle_deg)
     x = distance * math.cos(angle_rad)
     y = distance * math.sin(angle_rad)
@@ -129,6 +137,7 @@ def setup_camera(angle_deg, height, distance=CAMERA_DISTANCE):
 
     bpy.context.scene.camera = cam
     return cam
+
 
 def setup_depth_compositor(depth_output_path):
     """Configura o compositor para renderizar mapa de profundidade"""
@@ -167,14 +176,15 @@ def setup_render_engine():
     scene.cycles.use_denoising = True
     scene.cycles.max_bounces = 12
 
-def render_view(model_name, output_dir, angle, height, view_idx):
+def render_view(model_name, output_dir, angle=None, height=None, view_idx=0, top_view=False):
     """Renderiza uma vista específica"""
     scene = bpy.context.scene
     
     
     # Seleciona uma cor aleatória para fundo e material
-    bg_color = choice(FUNDOS_CORES)
-    mat_color = choice(MATERIAIS_CORES)
+    bg_color = escolher_cor_fundo()
+    mat_color = escolher_cor_material()
+
 
     # Aplica cor do fundo
     set_world_background(bg_color)
@@ -190,7 +200,7 @@ def render_view(model_name, output_dir, angle, height, view_idx):
     view_layer.use_pass_z = True
     
     # Configura câmera
-    cam = setup_camera(angle, height)
+    cam = setup_camera(angle, height, top_view=top_view)
 
     # Render RGB
     scene.use_nodes = False
@@ -214,7 +224,7 @@ def render_view(model_name, output_dir, angle, height, view_idx):
 def main():
     print("🔧 Iniciando renderização em lote...")
 
-    BASE_PATH = r"C:\Venv\OpenCv\computer-vision-studies\datasets\STEP_blender"
+    BASE_PATH = r"C:\Venv\Rep_git\datasets\dataset_tapatan_2"
     STL_FOLDER = os.path.join(BASE_PATH, "stl")
     RENDER_FOLDER = os.path.join(BASE_PATH, "renders")
     
@@ -249,8 +259,6 @@ def main():
                 print(f"❌ Falha ao importar: {caminho_stl}")
                 continue
 
-
-
             # Cria diretório de saída
             os.makedirs(pasta_saida, exist_ok=True)
 
@@ -276,6 +284,28 @@ def main():
                     except Exception as e:
                         print(f"⚠️ Erro ao renderizar vista {view_idx}: {str(e)}")
                         continue
+            # Vista de cima (top view)
+            if view_idx <= NUM_VIEWS:
+                try:
+                    rgb, depth, a, h, bg_color, mat_color = render_view(
+                        nome_modelo,
+                        pasta_saida,
+                        view_idx=view_idx,
+                        top_view=True
+                    )
+                    views_info.append({
+                        "view_idx": view_idx,
+                        "rgb_path": os.path.relpath(rgb, RENDER_FOLDER),
+                        "depth_path": os.path.relpath(depth, RENDER_FOLDER),
+                        "camera_angle": "top",
+                        "camera_height": CAMERA_DISTANCE,
+                        "background_color": bg_color,
+                        "material_color": mat_color
+                    })
+                    view_idx += 1
+                except Exception as e:
+                    print(f"⚠️ Erro ao renderizar vista de cima: {str(e)}")
+
 
             print(f"✅ Renderização concluída: {nome_modelo}")
             

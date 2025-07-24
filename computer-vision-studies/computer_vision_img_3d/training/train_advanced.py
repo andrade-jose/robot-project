@@ -227,7 +227,7 @@ def main():
         model_name = f"{architecture}_{'pretrained' if args.use_pretrained else 'scratch'}_{timestamp}"
 
         # Caminho do modelo salvo
-        model_path = os.path.join(config.TRAINED_MODELS_DIR, f"{model_name}.h5")
+        model_path = os.path.join(config.TRAINED_MODELS_DIR, f"{model_name}.keras")
         model.save(model_path)
         logging.info(f"\n✅ Modelo salvo em: {model_path}")
 
