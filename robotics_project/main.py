@@ -1,183 +1,373 @@
-#!/usr/bin/env python3
 """
-Simulador Principal do Sistema Tapatan Robótico
-Executa uma partida completa entre humano e IA com integração visão-robô
+Main de Teste - Tapatan Robótico
+Interface simples para testar movimentação do robô e lógica do jogo
 """
 
 import os
 import sys
-import pickle
-import numpy as np
-from pathlib import Path
-from typing import List
-
-# Ajusta o caminho do projeto
-current_dir = Path(__file__).resolve().parent
-sys.path.insert(0, str(current_dir))
-
-from control.tapatan_robotic import TapatanRobotico
-from config.config import FaseJogo, Jogador
-from stereo_vision.coordinate_transformer import CoordinateTransformer
+from typing import Optional
+from services.game_orchestrator import TapatanOrchestrator, ConfiguracaoOrquestrador
 
 
-class TapatanTestSimulator:
-    """Classe principal do simulador do sistema Tapatan robótico"""
-
+class TapatanTestInterface:
+    """Interface de teste simples para o Tapatan"""
+    
     def __init__(self):
-        self.tapatan = TapatanRobotico()
-        self.coordinate_transformer = CoordinateTransformer()
-        self.configurar_tabuleiro_com_transformacao()
-
-    def configurar_tabuleiro_com_transformacao(self):
-        """Define e transforma as posições do tabuleiro (câmera → robô)"""
-        camera_coords = np.array([
-            [-0.05,  0.05, 0.8], [0.0,  0.05, 0.8], [0.05,  0.05, 0.8],
-            [-0.05,  0.0,  0.8], [0.0,  0.0,  0.8], [0.05,  0.0,  0.8],
-            [-0.05, -0.05, 0.8], [0.0, -0.05, 0.8], [0.05, -0.05, 0.8]
-        ])
-
-        robot_coords = np.array([
-            [0.3, 0.2, 0.01], [0.4, 0.2, 0.01], [0.5, 0.2, 0.01],
-            [0.3, 0.1, 0.01], [0.4, 0.1, 0.01], [0.5, 0.1, 0.01],
-            [0.3, 0.0, 0.01], [0.4, 0.0, 0.01], [0.5, 0.0, 0.01]
-        ])
-
+        self.orquestrador: Optional[TapatanOrchestrator] = None
+        self.config = ConfiguracaoOrquestrador(
+            robot_ip="10.1.5.37",
+            profundidade_ia=3,  # IA mais rápida para testes
+            debug_mode=True,
+            pausa_entre_jogadas=1.0,  # Pausa menor para testes
+            velocidade_normal=0.05,   # Movimento mais lento para visualizar
+            auto_calibrar=False       # Não calibrar automaticamente
+        )
+    
+    def mostrar_banner(self):
+        """Mostra banner inicial"""
+        print("=" * 60)
+        print("🎮 TAPATAN ROBÓTICO - MODO TESTE 🤖")
+        print("=" * 60)
+        print("Testando movimentação do robô e lógica do jogo")
+        print("Robô apenas se posiciona sobre as casas (sem garra)")
+        print("=" * 60)
+        print()
+    
+    def mostrar_tabuleiro(self, estado_jogo):
+        """Mostra o tabuleiro atual de forma visual"""
+        tabuleiro = estado_jogo['tabuleiro']
+        
+        # Mapeamento dos valores
+        simbolos = {0: ' ', 1: '🤖', 2: '👤'}
+        
+        print("\n" + "="*30)
+        print("    TABULEIRO TAPATAN")
+        print("="*30)
+        print(f"  {simbolos[tabuleiro[0]]} | {simbolos[tabuleiro[1]]} | {simbolos[tabuleiro[2]]}")
+        print("  --+---+--")
+        print(f"  {simbolos[tabuleiro[3]]} | {simbolos[tabuleiro[4]]} | {simbolos[tabuleiro[5]]}")
+        print("  --+---+--")
+        print(f"  {simbolos[tabuleiro[6]]} | {simbolos[tabuleiro[7]]} | {simbolos[tabuleiro[8]]}")
+        print("="*30)
+        
+        # Mostrar numeração das posições
+        print("\nNumeração das posições:")
+        print("  0 | 1 | 2")
+        print("  --+---+--")
+        print("  3 | 4 | 5")
+        print("  --+---+--")
+        print("  6 | 7 | 8")
+        print()
+    
+    def mostrar_info_jogo(self, estado_jogo):
+        """Mostra informações do jogo"""
+        jogador_atual = "🤖 Robô" if estado_jogo['jogador_atual'] == 1 else "👤 Humano"
+        fase = "Colocação" if estado_jogo['fase'] == "colocacao" else "Movimento"
+        
+        print(f"👾 Jogador atual: {jogador_atual}")
+        print(f"⚡ Fase: {fase}")
+        print(f"🤖 Peças robô: {estado_jogo['pecas_colocadas'][1]}/3")
+        print(f"👤 Peças humano: {estado_jogo['pecas_colocadas'][2]}/3")
+        
+        if estado_jogo['jogo_terminado']:
+                vencedor = "🤖 Robô" if estado_jogo['vencedor'] == 1 else "👤 Humano"
+                print(f"🏆 VENCEDOR: {vencedor}!")
+        print()
+    
+    def obter_jogada_humano(self, estado_jogo):
+        """Obtém jogada do jogador humano via terminal"""
         try:
-            self.coordinate_transformer.load_transformation()
-            if self.coordinate_transformer.T is None or self.coordinate_transformer.T.size == 0:
-                raise ValueError("Transformação carregada está vazia.")
-            print("✅ Transformação carregada de arquivo")
-        except (FileNotFoundError, ValueError):
-            print("🔧 Calculando nova transformação...")
-            self.coordinate_transformer.set_transformation_from_points(camera_coords, robot_coords)
-            self.coordinate_transformer.save_transformation()
-            print("✅ Transformação calculada e salva")
-
-        coords_robo = np.array([
-            self.coordinate_transformer.transform_point(p) for p in camera_coords
-        ])
-
-        self.tapatan.definir_coordenadas_tabuleiro(coords_robo)
-
-        print("🎯 Matriz de transformação:\n", self.coordinate_transformer.T)
-        print("\n📍 Coordenadas no sistema do robô:")
-        for i, c in enumerate(coords_robo):
-            print(f"  {i}: ({c[0]:.3f}, {c[1]:.3f}, {c[2]:.3f})")
-
-    def imprimir_tabuleiro(self, estado: List[int]):
-        s = {0: '.', 1: 'X', 2: 'O'}
-        print(f"\n{''.join([s[estado[i]] + ('-----' if i % 3 != 2 else '\n') for i in range(9)])}")
-
-    def simular_deteccao_stereo_camera(self, estado: List[int]) -> tuple:
-        coords_camera = {}
-        for i, v in enumerate(estado):
-            if v != 0:
-                ruido = np.random.normal(0, 0.001, 3)
-                coord = np.array([
-                    -0.05 + (i % 3) * 0.05,
-                     0.05 - (i // 3) * 0.05,
-                     0.8
-                ]) + ruido
-                coords_camera[i] = coord
-        return estado, coords_camera
-
-    def transformar_deteccao_para_robo(self, estado: List[int]) -> tuple:
-        classificacao, coords_camera = self.simular_deteccao_stereo_camera(estado)
-        coords_robo = {
-            i: self.coordinate_transformer.transform_point(c)
-            for i, c in coords_camera.items()
-        }
-        resultado = self.tapatan.processar_entrada_visao(classificacao)
-        return resultado, coords_robo
-
-    def executar_movimento_robo(self, origem: int, destino: int):
-        print(f"🤖 Movimento do robô de {origem} para {destino}")
-        seq = self.tapatan.obter_sequencia_movimento(origem, destino)
-        for i, (x, y, z) in enumerate(seq):
-            print(f"  {i+1}. ({x:.3f}, {y:.3f}, {z:.3f})")
-
-    def obter_jogada_humana(self, opcoes: List[tuple]):
-        print("👤 Jogador humano: escolha uma jogada")
-        for i, (o, d) in enumerate(opcoes):
-            print(f"  {i+1}. {o} → {d}")
+            if estado_jogo['fase'] == "colocacao":
+                print("🎯 Sua vez! Escolha uma posição para colocar sua peça (0-8):")
+                while True:
+                    try:
+                        posicao = int(input("Digite a posição: "))
+                        if 0 <= posicao <= 8:
+                            if posicao in estado_jogo['movimentos_validos']:
+                                return {'posicao': posicao}
+                            else:
+                                print("❌ Posição já ocupada! Tente outra.")
+                        else:
+                            print("❌ Posição inválida! Use números de 0 a 8.")
+                    except ValueError:
+                        print("❌ Digite apenas números!")
+            
+            else:  # fase de movimento
+                print("🎯 Sua vez! Escolha origem e destino para mover sua peça:")
+                print("Suas peças estão nas posições:", end=" ")
+                tabuleiro = estado_jogo['tabuleiro']
+                pecas_humano = [i for i, v in enumerate(tabuleiro) if v == 2]
+                print(pecas_humano)
+                
+                while True:
+                    try:
+                        origem = int(input("Digite a posição de origem: "))
+                        if origem not in pecas_humano:
+                            print("❌ Você não tem peça nesta posição!")
+                            continue
+                            
+                        destino = int(input("Digite a posição de destino: "))
+                        if 0 <= destino <= 8:
+                            # Verificar se é movimento válido
+                            movimentos_validos = estado_jogo['movimentos_validos']
+                            movimento_valido = any(mov[0] == origem and mov[1] == destino 
+                                                 for mov in movimentos_validos)
+                            if movimento_valido:
+                                return {'origem': origem, 'destino': destino}
+                            else:
+                                print("❌ Movimento inválido! Só pode mover para posições adjacentes vazias.")
+                        else:
+                            print("❌ Posição inválida! Use números de 0 a 8.")
+                    except ValueError:
+                        print("❌ Digite apenas números!")
+                        
+        except KeyboardInterrupt:
+            print("\n\n👋 Saindo do jogo...")
+            return None
+    
+    def aguardar_confirmacao_robo(self):
+        """Aguarda confirmação de que o robô executou o movimento"""
+        print("🤖 Robô está executando movimento...")
+        input("⏳ Pressione ENTER após o robô completar o movimento...")
+    
+    def menu_principal(self):
+        """Menu principal da interface"""
         while True:
-            entrada = input("Escolha (número ou 'q' para sair): ")
-            if entrada.lower() in ('q', 'quit', 'sair'):
-                return None
+            print("\n" + "="*40)
+            print("MENU PRINCIPAL")
+            print("="*40)
+            print("1. 🚀 Iniciar nova partida")
+            print("2. 🔧 Calibrar sistema")
+            print("3. 📊 Ver status do sistema")
+            print("4. 🚨 Parada de emergência")
+            print("5. 👋 Sair")
+            print("="*40)
+            
             try:
-                idx = int(entrada) - 1
-                if 0 <= idx < len(opcoes):
-                    return opcoes[idx]
-            except ValueError:
-                pass
-            print("❌ Entrada inválida.")
-
-    def executar_jogo(self):
-        print("🎮 Iniciando jogo Tapatan robótico")
-
-        estado = [1, 2, 1, 0, 0, 0, 2, 1, 2]
-        resultado, _ = self.transformar_deteccao_para_robo(estado)
-        self.imprimir_tabuleiro(resultado['estado_tabuleiro'])
-
-        turno = 1
-        while not resultado['jogo_terminado']:
-            print(f"\n🔁 TURNO {turno}")
-            jogador = resultado['jogador_atual']
-
-            if jogador == 'JOGADOR1':
-                jogada = self.tapatan.fazer_jogada_robo()
-                if jogada:
-                    o, d = jogada
-                    self.executar_movimento_robo(o, d)
-                    self.tapatan.jogo.fazer_movimento(o, d)
+                opcao = input("Escolha uma opção: ").strip()
+                
+                if opcao == "1":
+                    self.executar_partida()
+                elif opcao == "2":
+                    self.calibrar_sistema()
+                elif opcao == "3":
+                    self.mostrar_status()
+                elif opcao == "4":
+                    self.parada_emergencia()
+                elif opcao == "5":
+                    print("👋 Até logo!")
+                    break
                 else:
-                    print("❌ IA não encontrou jogadas")
+                    print("❌ Opção inválida!")
+                    
+            except KeyboardInterrupt:
+                print("\n👋 Saindo...")
+                break
+    
+    def executar_partida(self):
+        """Executa uma partida completa"""
+        if not self.orquestrador:
+            print("❌ Sistema não inicializado!")
+            return
+            
+        print("\n🎮 Iniciando nova partida...")
+        
+        if not self.orquestrador.iniciar_partida():
+            print("❌ Erro ao iniciar partida!")
+            return
+        
+        # Loop principal do jogo
+        while True:
+            try:
+                estado_jogo = self.orquestrador.game_service.obter_estado_jogo()
+                
+                # Mostrar estado atual
+                self.mostrar_tabuleiro(estado_jogo)
+                self.mostrar_info_jogo(estado_jogo)
+                
+                # Verificar se jogo terminou
+                if estado_jogo['jogo_terminado']:
+                    print("🎮 Jogo terminado!")
+                    input("Pressione ENTER para continuar...")
                     break
+                
+                # Vez do humano
+                if estado_jogo['jogador_atual'] == 2:
+                    jogada = self.obter_jogada_humano(estado_jogo)
+                    if jogada is None:  # Usuário cancelou
+                        break
+                        
+                    # Processar jogada
+                    if 'posicao' in jogada:
+                        resultado = self.orquestrador.processar_jogada_humano(posicao=jogada['posicao'])
+                    else:
+                        resultado = self.orquestrador.processar_jogada_humano(
+                            origem=jogada['origem'], destino=jogada['destino'])
+                    
+                    if not resultado['sucesso']:
+                        print(f"❌ Erro: {resultado['mensagem']}")
+                        continue
+                        
+                    print("✅ Sua jogada foi executada!")
+                    
+                    # Se há jogada do robô na resposta, mostrar
+                    if 'jogada_robo' in resultado:
+                        jogada_robo = resultado['jogada_robo']['jogada']
+                        if 'posicao' in jogada_robo:
+                            print(f"🤖 Robô colocou peça na posição {jogada_robo['posicao']}")
+                        else:
+                            print(f"🤖 Robô moveu peça de {jogada_robo['origem']} para {jogada_robo['destino']}")
+                        
+                        # Aguardar confirmação do movimento físico
+                        self.aguardar_confirmacao_robo()
+                
+                # Vez do robô (só acontece se não houve jogada automática)
+                elif estado_jogo['jogador_atual'] == 1:
+                    input("🤖 Vez do robô. Pressione ENTER para continuar...")
+                    
+                    resultado = self.orquestrador.executar_jogada_robo()
+                    
+                    if resultado['sucesso']:
+                        jogada = resultado['jogada']
+                        if 'posicao' in jogada:
+                            print(f"🤖 Robô colocou peça na posição {jogada['posicao']}")
+                        else:
+                            print(f"🤖 Robô moveu peça de {jogada['origem']} para {jogada['destino']}")
+                        
+                        # Aguardar confirmação do movimento físico
+                        self.aguardar_confirmacao_robo()
+                    else:
+                        print(f"❌ Erro na jogada do robô: {resultado['mensagem']}")
+                        break
+                
+            except KeyboardInterrupt:
+                print("\n\n🛑 Partida interrompida pelo usuário!")
+                break
+            except Exception as e:
+                print(f"❌ Erro durante a partida: {e}")
+                break
+    
+    def calibrar_sistema(self):
+        """Executa calibração do sistema"""
+        if not self.orquestrador:
+            print("❌ Sistema não inicializado!")
+            return
+            
+        print("\n🔧 Iniciando calibração do sistema...")
+        print("⚠️  O robô vai visitar algumas posições do tabuleiro.")
+        
+        if input("Continuar? (s/N): ").lower().startswith('s'):
+            if self.orquestrador.calibrar_sistema():
+                print("✅ Calibração concluída com sucesso!")
             else:
-                opcoes = resultado['movimentos_validos']
-                if not opcoes:
-                    print("❌ Jogador humano sem jogadas")
-                    break
-                jogada = self.obter_jogada_humana(opcoes)
-                if jogada is None:
-                    print("🚪 Encerrado pelo jogador")
-                    break
-                o, d = jogada
-                self.tapatan.jogo.fazer_movimento(o, d)
-
-            novo_estado = self.tapatan.jogo.obter_estado_tabuleiro()
-            resultado, _ = self.transformar_deteccao_para_robo(novo_estado)
-            self.imprimir_tabuleiro(resultado['estado_tabuleiro'])
-
-            self.tapatan.jogo.alternar_jogador()
-            turno += 1
-
-            if resultado['vencedor']:
-                print(f"🏆 Vencedor: {resultado['vencedor']}")
-                break
-            if turno > 50:
-                print("⚠️ Limite de turnos atingido")
-                break
-
-        print("🎮 Fim da partida")
-        if resultado['vencedor']:
-            v = "ROBÔ" if resultado['vencedor'] == 'JOGADOR1' else "HUMANO"
-            print(f"🏆 {v} venceu!")
+                print("❌ Falha na calibração!")
         else:
-            print("🤝 Empate ou sem vencedor")
+            print("Calibração cancelada.")
+    
+    def mostrar_status(self):
+        """Mostra status completo do sistema"""
+        if not self.orquestrador:
+            print("❌ Sistema não inicializado!")
+            return
+            
+        print("\n📊 STATUS DO SISTEMA")
+        print("="*40)
+        
+        status = self.orquestrador.obter_status_completo()
+        
+        # Status do orquestrador
+        print(f"🎮 Orquestrador: {status['orquestrador']['status']}")
+        print(f"🎯 Jogo ativo: {status['orquestrador']['jogo_ativo']}")
+        
+        # Status do robô
+        if status['robot']:
+            robot_status = status['robot']
+            print(f"🤖 Robô: {'Conectado' if robot_status['connected'] else 'Desconectado'}")
+            if robot_status['current_pose']:
+                pose = robot_status['current_pose']
+                print(f"📍 Posição: X={pose['x']:.3f}, Y={pose['y']:.3f}, Z={pose['z']:.3f}")
+        
+        # Status do jogo
+        if status['jogo']:
+            jogo = status['jogo']
+            print(f"⚡ Fase: {jogo['fase']}")
+            print(f"👾 Jogador atual: {jogo['jogador_atual']}")
+        
+        # Erros
+        if status['orquestrador']['ultimo_erro']:
+            print(f"❌ Último erro: {status['orquestrador']['ultimo_erro']}")
+        
+        print("="*40)
+        input("Pressione ENTER para continuar...")
+    
+    def parada_emergencia(self):
+        """Executa parada de emergência"""
+        if not self.orquestrador:
+            print("❌ Sistema não inicializado!")
+            return
+            
+        print("\n🚨 PARADA DE EMERGÊNCIA")
+        if input("⚠️  Confirma parada de emergência? (s/N): ").lower().startswith('s'):
+            if self.orquestrador.parada_emergencia():
+                print("🚨 PARADA DE EMERGÊNCIA EXECUTADA!")
+            else:
+                print("❌ Falha ao executar parada de emergência!")
+    
+    def inicializar_sistema(self):
+        """Inicializa o sistema completo"""
+        print("🚀 Inicializando sistema Tapatan...")
+        
+        try:
+            self.orquestrador = TapatanOrchestrator(self.config)
+            
+            if self.orquestrador.inicializar():
+                print("✅ Sistema inicializado com sucesso!")
+                return True
+            else:
+                print("❌ Falha na inicialização do sistema!")
+                return False
+                
+        except Exception as e:
+            print(f"❌ Erro na inicialização: {e}")
+            return False
+    
+    def finalizar_sistema(self):
+        """Finaliza o sistema"""
+        if self.orquestrador:
+            print("🔚 Finalizando sistema...")
+            self.orquestrador.finalizar()
+            print("✅ Sistema finalizado!")
+    
+    def executar(self):
+        """Execução principal da interface"""
+        self.mostrar_banner()
+        
+        # Inicializar sistema
+        if not self.inicializar_sistema():
+            print("❌ Não foi possível inicializar o sistema!")
+            return
+        
+        try:
+            # Menu principal
+            self.menu_principal()
+        except Exception as e:
+            print(f"❌ Erro durante execução: {e}")
+        finally:
+            # Finalizar sistema
+            self.finalizar_sistema()
 
 
 def main():
+    """Função principal"""
     try:
-        print("🚀 Iniciando Simulador Tapatan")
-        simulador = TapatanTestSimulator()
-        simulador.executar_jogo()
+        interface = TapatanTestInterface()
+        interface.executar()
     except KeyboardInterrupt:
-        print("\n🛑 Encerrado pelo usuário.")
+        print("\n\n👋 Programa interrompido pelo usuário!")
     except Exception as e:
-        import traceback
-        print(f"❌ Erro: {e}")
-        traceback.print_exc()
+        print(f"❌ Erro fatal: {e}")
+    
+    print("\n🔚 Programa finalizado.")
 
 
 if __name__ == "__main__":
