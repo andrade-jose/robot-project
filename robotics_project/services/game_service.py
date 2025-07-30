@@ -20,6 +20,12 @@ class GameService:
     
     def reiniciar_jogo(self, estado_inicial: list = None):
         """Reinicia o jogo com estado opcional"""
+        if estado_inicial is None:
+            estado_inicial = [
+                1, 2, 1,  
+                0, 0, 0,
+                2, 1, 2   
+            ]
         self.tabuleiro.reiniciar_jogo(estado_inicial)
         self.ai = TapatanAI(self.tabuleiro)  # Reinicializar IA
         self._historico_jogadas.clear()
@@ -230,6 +236,26 @@ class GameService:
         """Retorna coordenadas físicas de uma posição do tabuleiro"""
         return self.tabuleiro.coordenadas_tabuleiro.get(posicao)
     
-    def get_tapatan_board(self, z: float = 0.03) -> Dict[str, Tuple[float, float, float]]:
-        """Retorna dicionário com as casas do tabuleiro Tapatan e coordenadas XYZ físicas."""
-        return gerar_tabuleiro_tapatan(z=z)
+    def get_tapatan_board(self, z: float = 0.03) -> Dict[int, Tuple[float, float, float]]:
+        """Retorna coordenadas XYZ indexadas de 0 a 8 com offset (posição física do tabuleiro)"""
+        mapa_nomes_para_index = {
+            'C1': 0, 'C2': 1, 'C3': 2,
+            'B1': 3, 'B2': 4, 'B3': 5,
+            'A1': 6, 'A2': 7, 'A3': 8
+        }
+
+        coords = gerar_tabuleiro_tapatan(z=z)
+
+        # 🔧 OFFSET = onde o centro do tabuleiro está na mesa
+        offset_x = 0.20   # AJUSTE este valor
+        offset_y = 0.05   # AJUSTE este valor
+
+        return {
+            mapa_nomes_para_index[nome]: (
+                coords[nome][0] + offset_x,
+                coords[nome][1] + offset_y,
+                coords[nome][2]
+            )
+            for nome in mapa_nomes_para_index
+        }
+

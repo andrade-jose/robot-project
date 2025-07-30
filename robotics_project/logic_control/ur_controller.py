@@ -4,7 +4,7 @@ import time
 import math
 
 class URController:
-    def __init__(self, robot_ip="10.1.5.37", speed=0.1, acceleration=0.1):
+    def __init__(self, robot_ip="10.1.4.122", speed=0.1, acceleration=0.1):
         self.robot_ip = robot_ip
         self.speed = speed
         self.acceleration = acceleration
@@ -37,9 +37,7 @@ class URController:
 
     def is_connected(self):
         """Verifica se está conectado ao robô"""
-        return (self.rtde_c and 
-                self.rtde_r and 
-                self.rtde_c.isConnected())
+        return (self.rtde_c and self.rtde_r and self.rtde_c.isConnected())
 
     def validate_pose(self, pose):
         """
@@ -290,7 +288,6 @@ class URController:
                 "em_movimento": self.em_movimento,
                 "robot_mode": self.rtde_r.getRobotMode(),
                 "safety_mode": self.rtde_r.getSafetyMode(),
-                "is_program_running": self.rtde_r.isProgramRunning()
             }
             return status
         except Exception as e:

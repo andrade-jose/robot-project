@@ -15,7 +15,6 @@ class TapatanTestInterface:
     def __init__(self):
         self.orquestrador: Optional[TapatanOrchestrator] = None
         self.config = ConfiguracaoOrquestrador(
-            robot_ip="10.1.5.37",
             profundidade_ia=3,  # IA mais rápida para testes
             debug_mode=True,
             pausa_entre_jogadas=1.0,  # Pausa menor para testes
@@ -44,9 +43,9 @@ class TapatanTestInterface:
         print("    TABULEIRO TAPATAN")
         print("="*30)
         print(f"  {simbolos[tabuleiro[0]]} | {simbolos[tabuleiro[1]]} | {simbolos[tabuleiro[2]]}")
-        print("  --+---+--")
+        print("  ----+-----+----")
         print(f"  {simbolos[tabuleiro[3]]} | {simbolos[tabuleiro[4]]} | {simbolos[tabuleiro[5]]}")
-        print("  --+---+--")
+        print("  ----+-----+----")
         print(f"  {simbolos[tabuleiro[6]]} | {simbolos[tabuleiro[7]]} | {simbolos[tabuleiro[8]]}")
         print("="*30)
         

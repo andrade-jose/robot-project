@@ -32,7 +32,7 @@ class TipoJogada(Enum):
 @dataclass
 class ConfiguracaoOrquestrador:
     """Configurações do orquestrador"""
-    robot_ip: str = "10.1.5.37"
+    robot_ip: str = "10.1.4.122"
     altura_segura: float = 0.3
     altura_pegar: float = 0.05
     velocidade_normal: float = 0.1
@@ -93,10 +93,7 @@ class TapatanOrchestrator:
             # Carregar coordenadas do tabuleiro
             if not self._carregar_coordenadas_tabuleiro():
                 return False
-                
-            # Configurar depósitos de peças
-            self._configurar_depositos_pecas()
-            
+                2
             # Calibração automática se habilitada
             if self.config.auto_calibrar:
                 if not self.calibrar_sistema():
@@ -465,7 +462,7 @@ class TapatanOrchestrator:
         """Finaliza o orquestrador e limpa recursos"""
         try:
             self.status = OrquestradorStatus.FINALIZANDO
-            self.logger.info("🔚 Finalizando orquestrador...")
+            self.logger.info("Finalizando orquestrador...")
             
             # Parar jogo se ativo
             if self.jogo_ativo:
@@ -476,7 +473,7 @@ class TapatanOrchestrator:
                 self.robot_service.move_home()
                 self.robot_service.disconnect()
                 
-            self.logger.info("✅ Orquestrador finalizado")
+            self.logger.info("Orquestrador finalizado")
             
         except Exception as e:
             self.logger.error(f"Erro ao finalizar: {e}")

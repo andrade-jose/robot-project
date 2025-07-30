@@ -60,10 +60,10 @@ class PickPlaceCommand:
     speed_precise: float = 0.05
 
 class RobotService:
-    def __init__(self, robot_ip: str = "10.1.5.37", config_file: Optional[str] = None):
+    def __init__(self, robot_ip: str = "10.1.4.122", config_file: Optional[str] = None):
         self.robot_ip = robot_ip
         self.controller: Optional[URController] = None
-        self.status = RobotStatus.CONNECTED
+        self.status = RobotStatus.DISCONNECTED
         self.last_error: Optional[str] = None
         
         # Configurações padrão
@@ -154,7 +154,7 @@ class RobotService:
                 self.controller.disconnect()
                 self.controller = None
             self.status = RobotStatus.DISCONNECTED
-            self.logger.info("🔌 Robô desconectado")
+            self.logger.info("Robô desconectado")
         except Exception as e:
             self.logger.error(f" Erro ao desconectar: {e}")
 

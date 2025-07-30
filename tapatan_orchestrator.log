@@ -31,3 +31,192 @@
 2025-07-29 13:46:18,108 - RobotService - INFO - Conectando ao robô em 10.1.5.37...
 2025-07-29 13:46:20,112 - RobotService - ERROR -  Erro ao conectar: Timeout connecting to UR dashboard server.
 2025-07-29 13:46:20,113 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-30 08:58:16,585 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 08:58:16,588 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 08:58:17,335 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 08:58:17,335 - RobotService - INFO -  Movendo para posição home
+2025-07-30 08:58:17,335 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 08:58:17,336 - RobotService - ERROR -  Falha no movimento
+2025-07-30 08:58:17,336 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 09:00:26,686 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:00:26,688 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:00:32,277 - RobotService - ERROR -  Erro ao conectar: ur_rtde: Failed to start control script, before timeout of 5 seconds
+2025-07-30 09:00:32,278 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-30 09:02:31,816 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:02:31,820 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:02:32,687 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:02:32,687 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:02:32,687 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:02:43,545 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:02:43,545 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:02:43,545 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:02:43,545 - TapatanOrchestrator - ERROR - Erro na inicialização: 'TapatanOrchestrator' object has no attribute '_configurar_depositos_pecas'
+2025-07-30 09:04:18,940 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:04:18,943 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:04:19,987 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:04:19,987 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:04:19,987 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:04:20,993 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:04:20,993 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:04:20,993 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:04:20,993 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:04:44,154 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 09:04:44,155 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:04:44,155 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:04:45,160 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:04:45,160 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:04:45,160 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:04:46,165 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:04:46,165 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 09:05:19,187 - RobotService - WARNING -  PARADA DE EMERGÊNCIA ATIVADA
+2025-07-30 09:05:19,187 - TapatanOrchestrator - WARNING - PARADA DE EMERGÊNCIA EXECUTADA
+2025-07-30 09:05:26,861 - TapatanOrchestrator - ERROR - Sistema não está pronto para iniciar partida
+2025-07-30 09:05:33,970 - TapatanOrchestrator - ERROR - Sistema não está pronto para iniciar partida
+2025-07-30 09:05:45,457 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:05:45,457 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:05:45,457 - RobotService - ERROR -  Falha no movimento
+2025-07-30 09:12:18,114 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:12:18,117 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:12:18,770 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:12:18,770 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:12:18,771 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:12:19,777 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:12:19,777 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:12:19,777 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:12:19,777 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:26:43,514 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 09:26:43,514 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:26:43,514 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:26:44,521 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:26:45,536 - RobotService - INFO - Robô desconectado
+2025-07-30 09:26:45,537 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 09:26:49,778 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:26:49,780 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:26:50,744 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:26:50,744 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:26:50,744 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:26:51,754 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:26:51,754 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:26:51,754 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:26:51,754 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:27:00,792 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 09:27:00,792 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:27:00,792 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:27:01,810 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:27:01,810 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 09:37:10,322 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 09:37:10,322 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 09:37:10,323 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:37:10,323 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:37:11,335 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:37:12,350 - RobotService - INFO - Robô desconectado
+2025-07-30 09:37:12,350 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 09:37:21,283 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:37:21,286 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:37:22,074 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:37:22,074 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:37:22,074 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:37:23,081 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:37:23,081 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:37:23,081 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:37:23,081 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:37:28,387 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 09:37:28,387 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:37:28,387 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:37:29,396 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:37:29,396 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 09:40:03,554 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 09:40:03,554 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:40:03,555 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:40:04,563 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:40:04,563 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:40:04,563 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:40:05,573 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:40:05,573 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 09:41:52,702 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:41:52,705 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:41:54,037 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:41:54,037 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:41:54,037 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:41:55,041 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:41:55,041 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:41:55,041 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:41:55,041 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:42:07,932 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 09:42:07,933 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:42:07,933 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:42:08,939 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:42:08,940 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:42:08,940 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:42:09,944 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:42:09,944 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 09:46:40,305 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 09:46:40,306 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:46:40,306 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:46:41,313 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:46:42,324 - RobotService - INFO - Robô desconectado
+2025-07-30 09:46:42,324 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 09:46:45,984 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:46:45,986 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:46:47,061 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:46:47,061 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:46:47,061 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:46:48,066 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:46:48,073 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:46:48,073 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:46:48,073 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:46:53,148 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 09:46:53,149 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:46:53,149 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:46:54,165 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:46:55,199 - RobotService - INFO - Robô desconectado
+2025-07-30 09:46:55,199 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 09:46:57,344 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:46:57,351 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:46:58,042 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:46:58,042 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:46:58,042 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:46:59,051 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:46:59,052 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:46:59,052 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:46:59,052 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:47:13,854 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 09:47:13,855 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:47:13,855 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:47:14,892 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:47:14,892 - RobotService - INFO -  Movendo para: Pose(x=0.088, y=0.045, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:47:24,433 - RobotService - ERROR -  Falha no movimento
+2025-07-30 09:47:24,433 - TapatanOrchestrator - ERROR - Falha ao testar posição 0
+2025-07-30 09:55:47,144 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 09:55:47,145 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:55:47,145 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:55:47,145 - RobotService - ERROR -  Falha no movimento
+2025-07-30 09:55:48,151 - RobotService - INFO - Robô desconectado
+2025-07-30 09:55:48,151 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 09:55:54,133 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:55:54,137 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:55:55,185 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:55:55,186 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:55:55,186 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:55:59,347 - RobotService - ERROR -  Falha no movimento
+2025-07-30 09:55:59,348 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 09:56:45,243 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 09:56:45,245 - RobotService - INFO - Conectando ao robô em 10.1.4.122...
+2025-07-30 09:56:45,955 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 09:56:45,955 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:56:45,955 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:56:57,240 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:56:57,240 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 09:56:57,240 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 09:56:57,241 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 09:57:05,397 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 09:57:05,398 - RobotService - INFO -  Movendo para posição home
+2025-07-30 09:57:05,398 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:57:06,407 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:57:06,407 - RobotService - INFO -  Movendo para: Pose(x=0.439, y=0.095, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:57:15,508 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:57:15,508 - RobotService - INFO -  Movendo para: Pose(x=0.498, y=0.155, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:57:19,529 - RobotService - INFO -  Movimento concluído
+2025-07-30 09:57:19,529 - RobotService - INFO -  Movendo para: Pose(x=0.558, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 09:57:20,810 - RobotService - ERROR -  Falha no movimento
+2025-07-30 09:57:20,810 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
