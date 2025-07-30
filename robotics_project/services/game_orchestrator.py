@@ -221,7 +221,8 @@ class TapatanOrchestrator:
             resultado_ia = self.game_service.fazer_jogada_robo(self.config.profundidade_ia)
             
             if not resultado_ia["sucesso"]:
-                return resultado_ia
+                resultado_ia["mensagem"] = str(resultado_ia.get("mensagem", "")) + " (falha no movimento físico)"
+
                 
             # Executar movimento físico do robô
             sucesso_movimento = self._executar_movimento_fisico(resultado_ia["jogada"])

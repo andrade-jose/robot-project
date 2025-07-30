@@ -51,6 +51,19 @@ class TabuleiraTapatan:
         }
         self.coordenadas_tabuleiro = {}
 
+    @staticmethod
+    def verificar_vencedor_tabuleiro(tabuleiro: list) -> Jogador | None:
+        padroes_vitoria = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]
+        ]
+        for padrao in padroes_vitoria:
+            p0, p1, p2 = padrao
+            if tabuleiro[p0] == tabuleiro[p1] == tabuleiro[p2] and tabuleiro[p0] != Jogador.VAZIO:
+                return tabuleiro[p0]
+        return None
+
     def obter_estado_tabuleiro(self) -> list:
         return [jogador.value for jogador in self.tabuleiro]
 
@@ -84,33 +97,49 @@ class TabuleiraTapatan:
                 return self.tabuleiro[padrao[0]]
         return None
 
+
     def obter_pecas_jogador(self, jogador: Jogador) -> list:
         return [i for i, peca in enumerate(self.tabuleiro) if peca == jogador]
 
-    def obter_movimentos_validos(self, jogador: Jogador = None) -> list:
-        if jogador is None:
-            jogador = self.jogador_atual
+    def obter_movimentos_validos(self, jogador: Jogador = None, tabuleiro: list = None) -> list:
+        """
+        Retorna lista de movimentos válidos (origem, destino) para o jogador,
+        considerando o tabuleiro passado ou o estado interno.
+        """
+        tab = tabuleiro if tabuleiro is not None else self.tabuleiro
         if self.fase != FaseJogo.MOVIMENTO:
             return []
+        if jogador is None:
+            jogador = self.jogador_atual
+
         movimentos_validos = []
-        pecas_jogador = self.obter_pecas_jogador(jogador)
+        pecas_jogador = [i for i, peca in enumerate(tab) if peca == jogador]
+
         for pos_origem in pecas_jogador:
             for pos_destino in self.mapa_adjacencia[pos_origem]:
-                if self.tabuleiro[pos_destino] == Jogador.VAZIO:
+                if tab[pos_destino] == Jogador.VAZIO:
                     movimentos_validos.append((pos_origem, pos_destino))
         return movimentos_validos
 
     def alternar_jogador(self):
         self.jogador_atual = Jogador.JOGADOR1 if self.jogador_atual == Jogador.JOGADOR2 else Jogador.JOGADOR2
 
-    def jogo_terminado(self) -> bool:
-        vencedor = self.verificar_vencedor()
-        if vencedor:
-            self.fase = FaseJogo.JOGO_TERMINADO
-            return True
-        if self.fase == FaseJogo.MOVIMENTO and not self.obter_movimentos_validos():
-            self.fase = FaseJogo.JOGO_TERMINADO
-            return True
+    def jogo_terminado(self, tabuleiro: list = None, fase: FaseJogo = None, jogador: Jogador = None) -> bool:
+        tab = tabuleiro if tabuleiro is not None else self.tabuleiro
+        fase_atual = fase if fase is not None else self.fase
+        jogador_atual = jogador if jogador is not None else self.jogador_atual
+
+        # Verifica vencedor
+        for padrao in self.padroes_vitoria:
+            if (tab[padrao[0]] == tab[padrao[1]] == tab[padrao[2]] != Jogador.VAZIO):
+                return True
+
+        # Se estiver na fase de movimento, verifica se há movimentos válidos
+        if fase_atual == FaseJogo.MOVIMENTO:
+            movimentos = self.obter_movimentos_validos(jogador=jogador_atual, tabuleiro=tab)
+            if not movimentos:
+                return True
+
         return False
 
     def reiniciar_jogo(self, estado_inicial: list = None):

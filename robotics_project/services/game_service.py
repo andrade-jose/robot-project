@@ -36,7 +36,7 @@ class GameService:
             'tabuleiro': self.tabuleiro.obter_estado_tabuleiro(),
             'jogador_atual': self.tabuleiro.jogador_atual.value,
             'fase': self.tabuleiro.fase.value,
-            'pecas_colocadas': dict(self.tabuleiro.pecas_colocadas),
+            'pecas_colocadas': {j.value: v for j, v in self.tabuleiro.pecas_colocadas.items()},
             'vencedor': self.obter_vencedor(),
             'jogo_terminado': self.tabuleiro.jogo_terminado(),
             'movimentos_validos': self.obter_movimentos_validos()

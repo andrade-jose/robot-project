@@ -220,3 +220,683 @@
 2025-07-30 09:57:19,529 - RobotService - INFO -  Movendo para: Pose(x=0.558, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
 2025-07-30 09:57:20,810 - RobotService - ERROR -  Falha no movimento
 2025-07-30 09:57:20,810 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-07-30 11:04:30,427 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:04:30,429 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:04:30,430 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:04:30,431 - RobotService - ERROR -  Falha no movimento
+2025-07-30 11:04:31,446 - RobotService - INFO - Robô desconectado
+2025-07-30 11:04:31,446 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:09:10,109 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:09:10,112 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:09:15,028 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:09:15,029 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:09:15,029 - RobotService - INFO -  Modo ultra-seguro HABILITADO
+2025-07-30 11:09:15,029 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:09:15,030 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:15,030 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:09:23,646 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:23,646 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:09:23,646 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:09:23,646 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:09:29,322 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 11:09:29,323 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:09:29,323 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:29,323 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:09:30,339 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:30,344 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:09:30,346 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:09:30,346 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:09:30,347 - RobotService - INFO -  Movendo para: Pose(x=0.344, y=0.048, z=0.265, rx=-0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:30,347 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:36,200 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:36,200 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:09:36,200 - RobotService - INFO -  Movendo para: Pose(x=0.288, y=0.095, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:36,200 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:41,758 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:41,758 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:09:41,769 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:09:41,769 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:09:41,769 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:09:41,769 - RobotService - INFO -  Movendo para: Pose(x=0.319, y=0.125, z=0.130, rx=0.000, ry=3.140, rz=-0.000)
+2025-07-30 11:09:41,769 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:44,449 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:44,449 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:09:44,449 - RobotService - INFO -  Movendo para: Pose(x=0.349, y=0.155, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:44,450 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:47,272 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:47,273 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:09:47,285 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:09:47,285 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:09:47,286 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:09:47,286 - RobotService - INFO -  Movendo para: Pose(x=0.378, y=0.185, z=0.130, rx=0.000, ry=3.140, rz=-0.000)
+2025-07-30 11:09:47,286 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:50,019 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:50,019 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:09:50,019 - RobotService - INFO -  Movendo para: Pose(x=0.408, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:50,020 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:09:52,736 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:52,736 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:09:52,736 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:09:52,736 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:09:52,736 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:09:59,268 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:09:59,268 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 11:11:49,079 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:11:49,081 - RobotService - INFO -  Estatísticas resetadas
+2025-07-30 11:11:49,081 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:11:49,081 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:11:49,081 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:11:50,095 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:11:50,096 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:14:24,334 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:14:24,334 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:14:24,334 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:14:24,334 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:24,334 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:14:25,357 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:26,372 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:14:26,372 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:14:31,251 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:14:31,254 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:14:32,123 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:14:32,123 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:14:32,123 - RobotService - INFO -  Modo ultra-seguro HABILITADO
+2025-07-30 11:14:32,123 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:14:32,124 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:32,124 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:14:33,143 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:33,143 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:14:33,143 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:14:33,144 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:14:41,322 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 11:14:41,323 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:14:41,324 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:41,324 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:14:42,345 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:42,350 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:14:42,356 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:14:42,356 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:14:42,357 - RobotService - INFO -  Movendo para: Pose(x=0.344, y=0.048, z=0.265, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:42,357 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:14:48,044 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:48,044 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:14:48,045 - RobotService - INFO -  Movendo para: Pose(x=0.288, y=0.095, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:48,045 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:14:53,804 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:53,804 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:14:53,832 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:14:53,832 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:14:53,833 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:14:53,833 - RobotService - INFO -  Movendo para: Pose(x=0.319, y=0.125, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:53,833 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:14:56,532 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:56,532 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:14:56,532 - RobotService - INFO -  Movendo para: Pose(x=0.349, y=0.155, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:14:56,532 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:14:59,518 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:14:59,518 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:14:59,531 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:14:59,532 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:14:59,532 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:14:59,532 - RobotService - INFO -  Movendo para: Pose(x=0.378, y=0.185, z=0.130, rx=-0.000, ry=3.140, rz=-0.000)
+2025-07-30 11:14:59,532 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:15:02,450 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:15:02,450 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:15:02,451 - RobotService - INFO -  Movendo para: Pose(x=0.408, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:15:02,451 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:15:05,437 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:15:05,437 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:15:05,437 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:15:05,437 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:15:05,437 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:15:12,620 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:15:12,621 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 11:15:21,447 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:15:21,447 - RobotService - INFO -  Estatísticas resetadas
+2025-07-30 11:15:21,448 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:15:21,448 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:15:21,448 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:15:22,474 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:15:22,474 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:15:24,460 - TapatanOrchestrator - ERROR - Sistema não está pronto para iniciar partida
+2025-07-30 11:15:31,589 - TapatanOrchestrator - ERROR - Sistema não está pronto para iniciar partida
+2025-07-30 11:24:45,595 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:24:45,595 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:24:45,595 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:24:45,595 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:24:45,595 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:24:46,610 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:24:47,622 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:24:47,623 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:24:48,937 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:24:48,940 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:24:50,152 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:24:50,152 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:24:50,152 - RobotService - INFO -  Modo ultra-seguro HABILITADO
+2025-07-30 11:24:50,152 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:24:50,152 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:24:50,152 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:24:51,180 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:24:51,180 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:24:51,180 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:24:51,180 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:24:55,158 - TapatanOrchestrator - ERROR - Erro ao iniciar partida: 'RobotService' object has no attribute 'connected'
+2025-07-30 11:25:11,511 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 11:25:11,511 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:25:11,511 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:11,512 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:25:12,534 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:12,540 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:25:12,540 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:25:12,542 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:25:12,542 - RobotService - INFO -  Movendo para: Pose(x=0.344, y=0.048, z=0.265, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:12,542 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:18,053 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:18,053 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:25:18,053 - RobotService - INFO -  Movendo para: Pose(x=0.288, y=0.095, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:18,053 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:23,485 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:23,485 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:25:23,490 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:25:23,491 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:25:23,491 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:25:23,491 - RobotService - INFO -  Movendo para: Pose(x=0.319, y=0.125, z=0.130, rx=0.000, ry=3.140, rz=-0.000)
+2025-07-30 11:25:23,491 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:26,247 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:26,247 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:25:26,247 - RobotService - INFO -  Movendo para: Pose(x=0.349, y=0.155, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:26,248 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:28,926 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:28,926 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:25:28,932 - RobotService - INFO -  Trajetória planejada com 2 pontos
+2025-07-30 11:25:28,932 - RobotService - INFO -  Executando trajetória planejada com 2 pontos
+2025-07-30 11:25:28,932 - RobotService - INFO -  Executando ponto 1/2
+2025-07-30 11:25:28,932 - RobotService - INFO -  Movendo para: Pose(x=0.378, y=0.185, z=0.130, rx=-0.000, ry=3.140, rz=-0.000)
+2025-07-30 11:25:28,932 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:31,745 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:31,745 - RobotService - INFO -  Executando ponto 2/2
+2025-07-30 11:25:31,745 - RobotService - INFO -  Movendo para: Pose(x=0.408, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:31,745 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:25:34,461 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:34,461 - RobotService - INFO -  Trajetória executada com sucesso!
+2025-07-30 11:25:34,461 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:25:34,462 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:25:34,462 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:25:41,262 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:25:41,262 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 11:25:50,999 - TapatanOrchestrator - ERROR - Erro ao iniciar partida: 'RobotService' object has no attribute 'connected'
+2025-07-30 11:30:42,119 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:30:42,119 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:30:42,120 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:30:42,120 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:30:43,134 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:30:44,146 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:30:44,158 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:30:45,884 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:30:45,886 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-30 11:30:52,563 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:30:52,566 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-30 11:31:48,185 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:31:48,188 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:31:49,392 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:31:49,392 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:31:49,392 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:31:49,392 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:31:49,393 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:31:50,421 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:31:50,421 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:31:50,421 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:31:50,422 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:31:56,008 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:31:56,008 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:31:56,008 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:31:56,009 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:31:57,038 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:31:57,039 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:51:39,832 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:51:39,832 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:51:39,832 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:51:39,832 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:51:39,832 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:51:40,849 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:51:41,865 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:51:41,865 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:51:43,876 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:51:43,880 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:51:44,794 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:51:44,794 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:51:44,794 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:51:44,794 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:51:44,794 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:51:45,819 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:51:45,819 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:51:45,819 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:51:45,819 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:51:50,446 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:51:50,446 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:51:50,447 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:51:50,447 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:51:51,471 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:51:51,471 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:52:10,580 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:52:10,580 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:52:10,580 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:52:10,580 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:52:10,580 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:52:11,602 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:52:12,617 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:52:12,618 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:52:13,868 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:52:13,871 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:52:15,033 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:52:15,033 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:52:15,033 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:52:15,033 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:52:15,033 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:52:16,047 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:52:16,047 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:52:16,048 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:52:16,048 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:52:18,287 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:52:18,287 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:52:18,287 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:52:18,287 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:52:19,308 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:52:19,308 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:56:04,769 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:56:04,769 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:56:04,769 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:56:04,769 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:04,770 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:56:05,791 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:06,807 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:56:06,807 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:56:09,293 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:56:09,296 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:56:10,274 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:56:10,274 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:56:10,274 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:56:10,274 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:10,274 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:56:11,297 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:11,297 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:56:11,297 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:56:11,297 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:56:16,134 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-30 11:56:16,135 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:56:16,135 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:16,136 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:56:17,154 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:17,154 - RobotService - INFO -  Movendo para: Pose(x=0.288, y=0.095, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:17,154 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:56:26,417 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:26,417 - RobotService - INFO -  Movendo para: Pose(x=0.349, y=0.155, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:26,417 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:56:30,418 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:30,418 - RobotService - INFO -  Movendo para: Pose(x=0.408, y=0.215, z=0.130, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:30,419 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-07-30 11:56:34,727 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:34,727 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:56:34,728 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:34,728 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:56:45,412 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:45,412 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-07-30 11:56:49,825 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:56:49,826 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:56:49,826 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:56:49,826 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:56:51,673 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:56:51,673 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 11:58:47,014 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 11:58:47,014 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 11:58:47,014 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:58:47,015 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:58:47,015 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:58:49,974 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:58:51,655 - RobotService - INFO -  Robô desconectado
+2025-07-30 11:58:51,655 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 11:58:53,370 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:58:53,372 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:58:59,333 - RobotService - ERROR -  Erro ao conectar: ur_rtde: Failed to start control script, before timeout of 5 seconds
+2025-07-30 11:58:59,334 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-30 11:59:13,640 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 11:59:13,642 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 11:59:14,399 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 11:59:14,399 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 11:59:14,399 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:59:14,399 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:59:14,400 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:59:15,429 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:59:15,429 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 11:59:15,429 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 11:59:15,429 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 11:59:20,166 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 11:59:20,166 - RobotService - INFO -  Movendo para posição home
+2025-07-30 11:59:20,166 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 11:59:20,167 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 11:59:21,183 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 11:59:21,183 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:02:21,303 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:02:21,303 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:02:21,303 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:02:21,303 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:02:21,303 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:02:22,321 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:02:23,334 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:02:23,334 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:02:25,607 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:02:25,611 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:02:26,942 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:02:26,942 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:02:26,942 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:02:26,942 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:02:26,942 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:02:27,968 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:02:27,968 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:02:27,968 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:02:27,969 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:02:29,388 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:02:29,389 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:02:29,389 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:02:29,389 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:02:30,418 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:02:30,418 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:06:31,734 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:06:31,734 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:06:31,734 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:06:31,734 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:06:31,734 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:06:32,751 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:06:33,763 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:06:33,763 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:06:34,774 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:06:34,778 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:06:35,610 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:06:35,611 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:06:35,611 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:06:35,611 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:06:35,611 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:06:36,626 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:06:36,627 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:06:36,627 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:06:36,627 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:06:39,375 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:06:39,375 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:06:39,375 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:06:39,375 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:06:40,393 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:06:40,393 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:09:44,220 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:09:44,224 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:09:44,882 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:09:44,882 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:09:44,882 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:09:44,882 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:09:44,882 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:09:45,898 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:09:45,898 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:09:45,898 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:09:45,898 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:09:47,614 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:09:47,615 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:09:47,615 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:09:47,615 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:09:48,639 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:09:48,639 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:09:59,312 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:09:59,312 - TapatanOrchestrator - ERROR - Erro no movimento físico: 'NoneType' object is not subscriptable
+2025-07-30 12:13:39,378 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:13:39,378 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:13:39,379 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:13:39,379 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:13:39,379 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:13:40,400 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:13:41,415 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:13:41,415 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:13:42,430 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:13:42,433 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:13:43,381 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:13:43,381 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:13:43,381 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:13:43,381 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:13:43,381 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:13:44,401 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:13:44,401 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:13:44,402 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:13:44,402 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:13:47,403 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:13:47,403 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:13:47,403 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:13:47,403 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:13:48,425 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:13:48,425 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:13:50,040 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:13:50,040 - TapatanOrchestrator - ERROR - Erro no movimento físico: 'NoneType' object is not subscriptable
+2025-07-30 12:18:01,405 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:18:01,405 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:18:01,405 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:18:01,406 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:18:01,406 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:18:02,421 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:18:03,434 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:18:03,434 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:18:04,254 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:18:04,258 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:18:05,342 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:18:05,342 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:18:05,342 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:18:05,342 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:18:05,342 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:18:06,365 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:18:06,365 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:18:06,366 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:18:06,366 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:18:09,504 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:18:09,505 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:18:09,505 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:18:09,505 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:18:10,530 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:18:10,530 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:18:14,412 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:18:14,412 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:18:14,412 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:18:14,412 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:18:14,412 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:18:15,431 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:18:16,442 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:18:16,442 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:21:47,129 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:21:47,132 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:21:48,184 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:21:48,186 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:21:48,186 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:21:48,186 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:21:48,186 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:21:49,217 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:21:49,217 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:21:49,217 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:21:49,218 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:21:51,523 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:21:51,524 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:21:51,524 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:21:51,524 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:21:52,542 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:21:52,542 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:21:53,804 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:21:53,805 - TapatanOrchestrator - ERROR - Erro no movimento físico: 'NoneType' object is not subscriptable
+2025-07-30 12:31:11,825 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:31:11,825 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:31:11,825 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:31:11,825 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:31:11,825 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:31:12,839 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:31:13,853 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:31:13,853 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:31:16,781 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:31:16,785 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:31:17,661 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:31:17,661 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:31:17,662 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:31:17,662 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:31:17,662 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:31:18,687 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:31:18,687 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:31:18,688 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:31:18,688 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:31:20,643 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:31:20,643 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:31:20,643 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:31:20,644 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:31:21,661 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:31:21,661 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:31:22,563 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:31:22,564 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-07-30 12:31:22,564 - RobotService - INFO -      Origem: Pose(x=0.288, y=0.095, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:31:22,565 - RobotService - INFO -      Destino: Pose(x=0.349, y=0.155, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:31:22,565 - RobotService - INFO -      Validação: complete
+2025-07-30 12:31:57,193 - RobotService - INFO -  Pick and place concluído
+2025-07-30 12:31:57,193 - TapatanOrchestrator - INFO - Peça movida de 0 para 4
+2025-07-30 12:33:03,890 - TapatanOrchestrator - INFO - Processando jogada humano: pos=None, orig=8, dest=5
+2025-07-30 12:33:04,891 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:33:04,892 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-07-30 12:33:04,892 - RobotService - INFO -      Origem: Pose(x=0.349, y=0.215, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:33:04,892 - RobotService - INFO -      Destino: Pose(x=0.408, y=0.215, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:33:04,892 - RobotService - INFO -      Validação: complete
+2025-07-30 12:33:38,239 - RobotService - INFO -  Pick and place concluído
+2025-07-30 12:33:38,239 - TapatanOrchestrator - INFO - Peça movida de 7 para 8
+2025-07-30 12:48:37,475 - TapatanOrchestrator - ERROR - Sistema não está pronto para iniciar partida
+2025-07-30 12:48:44,145 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:48:44,145 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:48:44,145 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:48:44,146 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:48:44,146 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:48:51,373 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:48:52,642 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:48:52,642 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:48:55,740 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:48:55,742 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:48:56,407 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:48:56,407 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:48:56,407 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:48:56,407 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:48:56,407 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:48:57,440 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:48:57,441 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:48:57,441 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:48:57,441 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:48:58,987 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:48:58,988 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:48:58,988 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:48:58,988 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:49:00,007 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:49:00,008 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:49:02,722 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:49:02,723 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-07-30 12:49:02,724 - RobotService - INFO -      Origem: Pose(x=0.288, y=0.095, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:49:02,724 - RobotService - INFO -      Destino: Pose(x=0.349, y=0.155, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:49:02,724 - RobotService - INFO -      Validação: complete
+2025-07-30 12:49:36,928 - RobotService - INFO -  Pick and place concluído
+2025-07-30 12:49:36,928 - TapatanOrchestrator - INFO - Peça movida de 0 para 4
+2025-07-30 12:55:13,418 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 12:55:13,419 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 12:55:13,419 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:55:13,419 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:55:13,419 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:55:18,123 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:55:19,137 - RobotService - INFO -  Robô desconectado
+2025-07-30 12:55:19,137 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 12:55:28,500 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:55:28,503 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:55:29,341 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:55:29,341 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:55:29,341 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:55:29,342 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:55:29,342 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:55:29,342 - RobotService - ERROR -  Falha no movimento
+2025-07-30 12:55:29,342 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 12:55:32,053 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:55:32,054 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:55:33,092 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:55:33,092 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:55:33,092 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:55:33,093 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:55:33,093 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:55:33,094 - RobotService - ERROR -  Falha no movimento
+2025-07-30 12:55:33,094 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 12:57:35,317 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 12:57:35,320 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 12:57:36,462 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 12:57:36,462 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 12:57:36,462 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:57:36,462 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:57:36,462 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:57:37,487 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:57:37,487 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-30 12:57:37,487 - TapatanOrchestrator - INFO - Coordenadas do tabuleiro carregadas: 9 posições
+2025-07-30 12:57:37,487 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-30 12:57:42,539 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-07-30 12:57:42,540 - RobotService - INFO -  Movendo para posição home
+2025-07-30 12:57:42,540 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:57:42,540 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 12:57:43,563 - RobotService - INFO -  Movimento concluído com sucesso
+2025-07-30 12:57:43,563 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-07-30 12:57:50,753 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-07-30 12:57:50,754 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-07-30 12:57:50,755 - RobotService - INFO -      Origem: Pose(x=0.288, y=0.095, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:57:50,755 - RobotService - INFO -      Destino: Pose(x=0.349, y=0.155, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 12:57:50,755 - RobotService - INFO -      Validação: complete
+2025-07-30 12:57:55,347 - RobotService - ERROR -  Falha no pick and place
+2025-07-30 12:57:55,347 - TapatanOrchestrator - ERROR - Falha ao mover peça de 0 para 4
+2025-07-30 13:08:22,692 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-30 13:08:22,692 - TapatanOrchestrator - INFO - Jogo parado
+2025-07-30 13:08:22,693 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:08:22,693 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:08:22,693 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:08:22,694 - RobotService - ERROR -  Falha no movimento
+2025-07-30 13:08:23,716 - RobotService - INFO -  Robô desconectado
+2025-07-30 13:08:23,716 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-30 13:08:25,581 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 13:08:25,585 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 13:08:26,355 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 13:08:26,355 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 13:08:26,355 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:08:26,355 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:08:26,355 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:08:26,356 - RobotService - ERROR -  Erro durante movimento: cannot unpack non-iterable float object
+2025-07-30 13:08:26,356 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 13:08:29,746 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 13:08:29,750 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 13:08:30,890 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 13:08:30,890 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 13:08:30,891 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:08:30,891 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:08:30,891 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:08:30,891 - RobotService - ERROR -  Erro durante movimento: cannot unpack non-iterable float object
+2025-07-30 13:08:30,892 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 13:09:50,230 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 13:09:50,234 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 13:09:51,033 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 13:09:51,033 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 13:09:51,033 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:09:51,034 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:09:51,034 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:09:51,035 - RobotService - ERROR -  Falha no movimento
+2025-07-30 13:09:51,035 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 13:09:53,158 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 13:09:53,161 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 13:09:53,998 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 13:09:53,998 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 13:09:53,998 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:09:53,999 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:09:53,999 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:09:54,000 - RobotService - ERROR -  Falha no movimento
+2025-07-30 13:09:54,000 - TapatanOrchestrator - ERROR - Falha ao mover robô para home
+2025-07-30 13:10:16,273 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-30 13:10:16,276 - RobotService - INFO -  Conectando ao robô em 10.1.4.122...
+2025-07-30 13:10:16,973 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-30 13:10:16,973 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-30 13:10:16,973 - RobotService - INFO -  Movendo para posição home
+2025-07-30 13:10:16,973 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-07-30 13:10:16,973 - RobotService - INFO -  Estratégia: ultra_safe, Validação: complete
+2025-07-30 13:10:16,974 - RobotService - ERROR -  Erro durante movimento: cannot unpack non-iterable int object
+2025-07-30 13:10:16,974 - TapatanOrchestrator - ERROR - Falha ao mover robô para home

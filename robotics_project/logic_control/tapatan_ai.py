@@ -44,24 +44,20 @@ class TapatanAI:
         return movimentos
 
     def minimax(self, tabuleiro: list, profundidade: int, maximizando: bool, alpha: float = -float('inf'), beta: float = float('inf')) -> int:
-        """Algoritmo minimax com alpha-beta pruning e melhorias"""
-        # Verificar no cache
         tabuleiro_str = str(tabuleiro)
         cache_key = (tabuleiro_str, profundidade, maximizando)
-        if hasattr(self, '_cache') and cache_key in self._cache:
+        if cache_key in self._cache:
             return self._cache[cache_key]
 
-        # Verificar condições de parada
         score = self.avaliar_tabuleiro(tabuleiro)
-        
-        # Se jogo terminou ou profundidade chegou a 0
-        if abs(score) == 10 or profundidade == 0 or self._jogo_terminado(tabuleiro):
+
+        # Parada: vitória, derrota ou profundidade zero ou fim de jogo no estado
+        if abs(score) == 10 or profundidade == 0 or self.jogo.jogo_terminado(tabuleiro):
             return score
 
         jogador = Jogador.JOGADOR1 if maximizando else Jogador.JOGADOR2
         movimentos = self._ordenar_movimentos(tabuleiro, jogador)
-        
-        # Se não há movimentos possíveis, retornar avaliação atual
+
         if not movimentos:
             return self._avaliar_posicao_avancada(tabuleiro)
 
@@ -73,9 +69,8 @@ class TapatanAI:
                 melhor_valor = max(melhor_valor, valor)
                 alpha = max(alpha, melhor_valor)
                 if beta <= alpha:
-                    break  # Beta cut-off
-            if hasattr(self, '_cache'):
-                self._cache[cache_key] = melhor_valor
+                    break
+            self._cache[cache_key] = melhor_valor
             return melhor_valor
         else:
             pior_valor = float('inf')
@@ -85,9 +80,8 @@ class TapatanAI:
                 pior_valor = min(pior_valor, valor)
                 beta = min(beta, pior_valor)
                 if beta <= alpha:
-                    break  # Alpha cut-off
-            if hasattr(self, '_cache'):
-                self._cache[cache_key] = pior_valor
+                    break
+            self._cache[cache_key] = pior_valor
             return pior_valor
 
     def _fazer_movimento(self, tabuleiro: list, origem: int, destino: int, jogador: int) -> list:

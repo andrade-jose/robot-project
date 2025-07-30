@@ -204,7 +204,9 @@ class TapatanTestInterface:
                             origem=jogada['origem'], destino=jogada['destino'])
                     
                     if not resultado['sucesso']:
-                        print(f"❌ Erro: {resultado['mensagem']}")
+                        print(f"[DEBUG] Tipo de mensagem: {type(resultado['mensagem'])}, conteúdo: {resultado['mensagem']}")
+                        print(f"❌ Erro: {str(resultado.get('mensagem', 'Erro desconhecido'))}")
+
                         continue
                         
                     print("✅ Sua jogada foi executada!")
@@ -243,7 +245,10 @@ class TapatanTestInterface:
                 print("\n\n🛑 Partida interrompida pelo usuário!")
                 break
             except Exception as e:
-                print(f"❌ Erro durante a partida: {e}")
+                 print(f"[DEBUG] Tipo da exceção: {type(e)}, valor: {e}")
+                 
+            except Exception as e:
+                print(f"❌ Erro durante a partida: {str(e) if isinstance(e, BaseException) else repr(e)}")
                 break
     
     def calibrar_sistema(self):
