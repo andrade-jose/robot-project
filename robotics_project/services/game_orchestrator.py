@@ -32,7 +32,7 @@ class TipoJogada(Enum):
 @dataclass
 class ConfiguracaoOrquestrador:
     """Configurações do orquestrador"""
-    robot_ip: str = "10.1.4.122"
+    robot_ip: str = "10.1.5.92"
     altura_segura: float = 0.3
     altura_pegar: float = 0.05
     velocidade_normal: float = 0.1
@@ -41,6 +41,10 @@ class ConfiguracaoOrquestrador:
     pausa_entre_jogadas: float = 2.0
     auto_calibrar: bool = True
     debug_mode: bool = False
+    altura_base_ferro: float = 0.05  # Altura da base onde robô está fixado
+    margem_seguranca: float = 0.02   # Margem de segurança adicional
+    validar_antes_executar: bool = True  # Validar poses antes de executar
+    modo_logs_limpo: bool = True     # Evitar logs redundantes
 
 
 class TapatanOrchestrator:
@@ -133,17 +137,17 @@ class TapatanOrchestrator:
     def _carregar_coordenadas_tabuleiro(self) -> bool:
         """Carrega coordenadas físicas do tabuleiro"""
         try:
-            # Usar coordenadas do GameService
+            # Obter coordenadas do GameService (fonte única)
             self.coordenadas_tabuleiro = self.game_service.get_tapatan_board()
             
             if not self.coordenadas_tabuleiro:
                 self.logger.error("Coordenadas do tabuleiro não encontradas")
                 return False
-                
-            # Configurar no game service
-            self.game_service.definir_coordenadas_tabuleiro(self.coordenadas_tabuleiro)
             
-            self.logger.info(f"Coordenadas do tabuleiro carregadas: {len(self.coordenadas_tabuleiro)} posições")
+            # NOVO: Configurar posições de depósito de peças
+            #self._configurar_deposito_pecas()
+            
+            self.logger.info(f"Coordenadas carregadas: {len(self.coordenadas_tabuleiro)} posições")
             return True
             
         except Exception as e:

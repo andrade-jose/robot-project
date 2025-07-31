@@ -1,43 +1,38 @@
 from rtde_control import RTDEControlInterface
 from rtde_receive import RTDEReceiveInterface
+from config.config_completa import CONFIG
 import time
 import math
 
 class URController:
-    def __init__(self, robot_ip="10.1.4.122", speed=0.1, acceleration=0.1):
-        self.robot_ip = robot_ip
-        self.speed = speed
-        self.acceleration = acceleration
-    
+    def __init__(self, robot_ip=None, speed=None, acceleration=None, config=None):
+        # Usar config ou valores padrão
+        self.config = config or CONFIG['robo']
+        self.robot_ip = robot_ip or self.config.ip
+        self.speed = speed or self.config.velocidade_padrao
+        self.acceleration = acceleration or self.config.aceleracao_padrao
+
         self.rtde_c = RTDEControlInterface(self.robot_ip)
         self.rtde_r = RTDEReceiveInterface(self.robot_ip)
         print(f"✅ Conectado ao robô UR em {self.robot_ip}")
 
-        # Parâmetros de segurança
-        self.pause_between_moves = 1.0  # Aumentado para maior segurança
-        self.safe_height_offset = 0.1   # Altura segura acima do tabuleiro
-        self.min_elbow_tcp_distance = 0.028
+        # Usar configurações da config
+        self.pause_between_moves = self.config.pausa_entre_movimentos
+        self.safe_height_offset = self.config.altura_offset_seguro
+        self.min_elbow_tcp_distance = self.config.distancia_minima_cotovelo_tcp
         self.last_error = None
         self.em_movimento = False
 
-        # Configurações de movimento mais conservadoras
-        self.max_joint_change = 0.3  # Reduzido para movimentos mais suaves
-        self.planning_steps = 10
+        self.max_joint_change = self.config.max_mudanca_junta
+        self.planning_steps = self.config.passos_planejamento
         
-        # Limites de workspace (ajuste conforme seu robô)
-        self.workspace_limits = {
-            'x_min': -0.8, 'x_max': 0.8,
-            'y_min': -0.8, 'y_max': 0.8,
-            'z_min': 0.05, 'z_max': 0.8,  # Z mínimo para evitar colisão com base
-            'rx_min': -math.pi, 'rx_max': math.pi,
-            'ry_min': -math.pi, 'ry_max': math.pi,
-            'rz_min': -math.pi, 'rz_max': math.pi
-        }
+        self.workspace_limits = self.config.limites_workspace
 
-        # Configurações de validação avançada
-        self.enable_safety_validation = True
-        self.max_movement_distance = 1.0  # Distância máxima permitida em um movimento
-        self.validation_retries = 3  # Tentativas de validação antes de falhar
+        self.enable_safety_validation = self.config.habilitar_validacao_seguranca
+        self.max_movement_distance = self.config.distancia_maxima_movimento
+        self.validation_retries = self.config.tentativas_validacao
+        self.base_iron_height = self.config.altura_base_ferro
+        self.shoulder_safety_margin = self.config.margem_seguranca_ombro
 
     def is_connected(self):
         """Verifica se está conectado ao robô"""
@@ -68,6 +63,29 @@ class URController:
             
         except Exception as e:
             print(f"❌ Erro na validação de limites de segurança: {e}")
+            return False
+        
+
+    def validate_shoulder_height_constraint(self, pose):
+        """
+        🔥 NOVA FUNÇÃO: Valida se o ombro não vai abaixo da base de ferro
+        """
+        try:
+            # Calcular posição aproximada do ombro baseada na pose do TCP
+            # Para UR, o ombro fica aproximadamente na altura Z da base + offset do braço
+            estimated_shoulder_z = pose[2] - 0.3  # Ajustar baseado no seu modelo UR
+            
+            min_allowed_z = self.base_iron_height + self.shoulder_safety_margin
+            
+            if estimated_shoulder_z < min_allowed_z:
+                print(f"❌ Ombro muito baixo: {estimated_shoulder_z:.3f}m < {min_allowed_z:.3f}m")
+                return False
+                
+            print(f"✅ Altura do ombro OK: {estimated_shoulder_z:.3f}m")
+            return True
+            
+        except Exception as e:
+            print(f"❌ Erro na validação da altura do ombro: {e}")
             return False
 
     def validate_pose_reachability(self, pose):
@@ -125,6 +143,9 @@ class URController:
             
         # 2. Validação de alcançabilidade
         if not self.validate_pose_reachability(pose):
+            return False
+        
+        if not self.validate_shoulder_height_constraint(pose):
             return False
             
         # 3. 🔥 VALIDAÇÃO OFICIAL UR_RTDE - isPoseWithinSafetyLimits
@@ -242,6 +263,14 @@ class URController:
         elif z > self.workspace_limits['z_max']:
             corrected_pose[2] = self.workspace_limits['z_max'] - 0.01
             corrections_applied.append(f"Z: {z:.3f} → {corrected_pose[2]:.3f}")
+
+        # 4. Correção específica para altura do ombro
+        estimated_shoulder_z = corrected_pose[2] - 0.3
+        min_required_tcp_z = self.base_iron_height + self.shoulder_safety_margin + 0.3
+
+        if estimated_shoulder_z < self.base_iron_height + self.shoulder_safety_margin:
+            corrected_pose[2] = min_required_tcp_z
+            corrections_applied.append(f"TCP elevado para proteger ombro: {pose[2]:.3f} → {corrected_pose[2]:.3f}")
             
         # 2. Correção de orientação - normalizar rotações
         rotation_magnitude = math.sqrt(rx**2 + ry**2 + rz**2)
@@ -282,11 +311,13 @@ class URController:
             
         return corrected_pose
 
-    def move_to_pose_with_smart_correction(self, pose, speed=None, acceleration=None, max_correction_attempts=3):
+    def move_to_pose_with_smart_correction(self, pose, speed=None, acceleration=None, max_correction_attempts=None):
         """
         🔥 FUNÇÃO PRINCIPAL: Movimento inteligente com correção automática
         Tenta mover para a pose, e se rejeitada, aplica correções automáticas
         """
+        if max_correction_attempts is None:
+            max_correction_attempts = self.config.max_tentativas_correcao
         if speed is None:
             speed = self.speed
         if acceleration is None:
@@ -426,8 +457,8 @@ class URController:
             )
             
             # Definir número de pontos baseado na distância
-            num_points = max(2, int(distance / 0.2))  # 1 ponto a cada 20cm
-            num_points = min(num_points, 5)  # Máximo 5 pontos
+            num_points = max(2, int(distance / self.config.passo_pontos_intermediarios))
+            num_points = min(num_points, self.config.max_pontos_intermediarios)
             
             sucesso = self.move_with_intermediate_points(pose, speed, acceleration, num_points)
             if sucesso:
@@ -435,8 +466,8 @@ class URController:
         
         # 3. Último recurso - movimento muito lento e cauteloso
         print("🐌 Tentativa 3: Movimento ultra-cauteloso")
-        slow_speed = min(speed * 0.3, 0.02)  # 30% da velocidade ou 2cm/s
-        slow_accel = min(acceleration * 0.3, 0.02)
+        slow_speed = min(speed * self.config.fator_velocidade_ultra_seguro, self.config.velocidade_movimento_lento)
+        slow_accel = min(acceleration * self.config.fator_velocidade_ultra_seguro, self.config.aceleracao_movimento_lento)
         
         sucesso, _ = self.move_to_pose_with_smart_correction(pose, slow_speed, slow_accel, max_correction_attempts=5)
         
@@ -505,7 +536,7 @@ class URController:
             pose_pegar[2] = altura_pegar
             
             print("🔍 Etapa 2: Validando descida para pegar...")
-            if not self.move_to_pose_safe(pose_pegar, speed=0.05):  # Movimento mais lento
+            if not self.move_to_pose_safe(pose_pegar, speed=self.config.velocidade_precisa):  # Movimento mais lento
                 print("❌ Falha ao descer para pegar peça")
                 return False
                 
@@ -529,7 +560,7 @@ class URController:
             pose_colocar[2] = altura_pegar
             
             print("🔍 Etapa 5: Validando descida para colocar...")
-            if not self.move_to_pose_safe(pose_colocar, speed=0.05):  # Movimento mais lento
+            if not self.move_to_pose_safe(pose_colocar, speed=self.config.velocidade_precisa):  # Movimento mais lento
                 print("❌ Falha ao descer para colocar peça")
                 return False
                 
@@ -596,7 +627,7 @@ class URController:
         """Para movimentos atuais"""
         try:
             if self.rtde_c and self.em_movimento:
-                self.rtde_c.stopL(2.0)  # Para movimento linear com desaceleração
+                self.rtde_c.stopL(self.config.desaceleracao_parada) # Para movimento linear com desaceleração
                 self.em_movimento = False
                 print("🛑 Robô parado com sucesso")
                 return True
@@ -608,8 +639,9 @@ class URController:
     def set_speed_parameters(self, speed, acceleration):
         """Ajusta parâmetros de velocidade"""
         # Limites de segurança mais conservadores
-        self.speed = max(0.005, min(speed, 0.2))  # 5mm/s a 200mm/s
-        self.acceleration = max(0.005, min(acceleration, 0.2))
+        self.speed = max(self.config.velocidade_minima, min(speed, self.config.velocidade_maxima))
+        self.acceleration = max(self.config.aceleracao_minima, min(acceleration, self.config.aceleracao_maxima))
+
         print(f"⚙️ Parâmetros atualizados - Velocidade: {self.speed:.3f}, Aceleração: {self.acceleration:.3f}")
 
     def get_robot_status(self):
@@ -671,3 +703,8 @@ class URController:
         print(f"   Taxa de sucesso: {(aprovadas/len(poses_list)*100):.1f}%")
         
         return resultados
+    
+    def set_iron_base_height(self, height):
+        """Configura a altura da base de ferro"""
+        self.base_iron_height = height
+        print(f"🔧 Altura da base de ferro configurada: {height:.3f}m")

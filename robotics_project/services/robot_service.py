@@ -92,7 +92,7 @@ class ValidationResult:
     error_message: Optional[str] = None
 
 class RobotService:
-    def __init__(self, robot_ip: str = "10.1.4.122", config_file: Optional[str] = None):
+    def __init__(self, robot_ip: str = "10.1.5.92", config_file: Optional[str] = None):
         self.robot_ip = robot_ip
         self.controller: Optional[URController] = None
         self.status = RobotStatus.DISCONNECTED
@@ -124,6 +124,13 @@ class RobotService:
                 "ultra_safe_speed_factor": 0.3,
                 "validation_retries": 3
             },
+
+            "iron_base_constraint": {
+                "enabled": True,
+                "base_height": 0.05,  # Altura da base de ferro
+                "safety_margin": 0.02,
+                "shoulder_offset": 0.3  # Offset estimado do ombro ao TCP
+            },
             
             "workspace_poses": {
                 "center": [0.3, 0.0, 0.2, 0.0, 3.14, 0.0],
@@ -132,6 +139,7 @@ class RobotService:
                 "front": [0.5, 0.0, 0.2, 0.0, 3.14, 0.0],
                 "back": [0.1, 0.0, 0.2, 0.0, 3.14, 0.0]
             }
+
         }
         
         # Carregar configuração se fornecida
@@ -148,6 +156,8 @@ class RobotService:
             "corrections_applied": 0,
             "movements_with_intermediate_points": 0
         }
+        self.verbose_logging = False  # Controla logs detalhados
+        self.log_summary_only = True  # Apenas logs de resumo
 
     def setup_logging(self):
         """Configura sistema de logging"""
@@ -305,7 +315,52 @@ class RobotService:
                 is_valid=False,
                 error_message=f"Erro no teste: {e}"
             )
+        
+    def validate_iron_base_constraint(self, pose: RobotPose) -> bool:
+        """
+        🔥 NOVA: Validação da base de ferro no nível alto
+        """
+        if not self.config["iron_base_constraint"]["enabled"]:
+            return True
+            
+        # Estimar posição do ombro
+        estimated_shoulder_z = pose.z - self.config["iron_base_constraint"]["shoulder_offset"]
+        min_height = (self.config["iron_base_constraint"]["base_height"] + 
+                    self.config["iron_base_constraint"]["safety_margin"])
+        
+        if estimated_shoulder_z < min_height:
+            if self.verbose_logging:
+                self.logger.warning(f"⚠️ Pose rejeitada - ombro muito baixo: {estimated_shoulder_z:.3f}m")
+            return False
+        
+        return True
 
+    def find_alternative_pose(self, problematic_pose: RobotPose) -> Optional[RobotPose]:
+        """
+        🔥 NOVA: Encontra pose alternativa quando original é inviável
+        """
+        if not self.validate_iron_base_constraint(problematic_pose):
+            # Elevar TCP para proteger ombro
+            min_tcp_z = (self.config["iron_base_constraint"]["base_height"] + 
+                        self.config["iron_base_constraint"]["safety_margin"] + 
+                        self.config["iron_base_constraint"]["shoulder_offset"] + 0.05)  # +5cm segurança
+            
+            if problematic_pose.z < min_tcp_z:
+                alternative = RobotPose(
+                    x=problematic_pose.x,
+                    y=problematic_pose.y,
+                    z=min_tcp_z,
+                    rx=problematic_pose.rx,
+                    ry=problematic_pose.ry,
+                    rz=problematic_pose.rz
+                )
+                
+                if self.log_summary_only:
+                    self.logger.info(f"Pose corrigida para proteger ombro: Z {problematic_pose.z:.3f} -> {min_tcp_z:.3f}")
+                
+                return alternative
+        
+        return None
     # ===================  FUNÇÕES DE MOVIMENTO ATUALIZADAS ===================
 
     def move_to_pose(self, pose: RobotPose, speed: Optional[float] = None, 
@@ -318,6 +373,16 @@ class RobotService:
         if not self._check_connection():
             return False
         
+        if not self.validate_iron_base_constraint(pose):
+            alternative_pose = self.find_alternative_pose(pose)
+            if alternative_pose:
+                pose = alternative_pose  # Usar pose corrigida
+            else:
+                self.status = RobotStatus.ERROR
+                self.last_error = "Pose inviável - ombro abaixo da base"
+                self.logger.error("❌ Movimento impossível - limitação da base de ferro")
+                return False
+        
         # Usar configurações padrão se não especificadas
         if movement_strategy is None:
             movement_strategy = MovementStrategy(self.config.get("default_movement_strategy", "smart_correction"))
@@ -327,8 +392,11 @@ class RobotService:
             
         try:
             self.status = RobotStatus.MOVING
-            self.logger.info(f" Movendo para: {pose}")
-            self.logger.info(f" Estratégia: {movement_strategy.value}, Validação: {validation_level.value}")
+            if self.verbose_logging:
+                self.logger.info(f" Movendo para: {pose}")
+                self.logger.info(f" Estratégia: {movement_strategy.value}, Validação: {validation_level.value}")
+            else:
+                self.logger.info(f" Movimento: {movement_strategy.value}")
             
             # Usar velocidades especificadas ou padrão
             move_speed = speed or self.config["speed"]
@@ -404,12 +472,13 @@ class RobotService:
             
             if success:
                 self.status = RobotStatus.IDLE
-                self.logger.info(" Movimento concluído com sucesso")
+                if self.log_summary_only:
+                    self.logger.info(f"Movimento concluído - {movement_strategy.value}")
                 return True
             else:
                 self.status = RobotStatus.ERROR
                 self.last_error = "Falha no movimento"
-                self.logger.error(" Falha no movimento")
+                self.logger.error(f" Movimento falhou - {movement_strategy.value}")
                 return False
                 
         except Exception as e:
@@ -512,18 +581,7 @@ class RobotService:
             try:
                 if cmd.type == MovementType.LINEAR:
                     if cmd.target_pose:
-                        # Validar antes de executar se solicitado
-                        if validation_summary:
-                            validation_result = self.validate_pose(cmd.target_pose, cmd.validation_level)
-                            sequence_result["validations_performed"] += 1
-                            command_result["validation_result"] = asdict(validation_result)
-                            
-                            if not validation_result.is_valid and stop_on_failure:
-                                command_result["error"] = f"Validação falhou: {validation_result.error_message}"
-                                sequence_result["command_results"].append(command_result)
-                                sequence_result["error_summary"].append(f"Comando {i+1}: Validação falhou")
-                                break
-                        
+                        # Validar antes de executar se solicitado      
                         success = self.move_to_pose(
                             cmd.target_pose, 
                             cmd.speed, 
@@ -1008,6 +1066,37 @@ class RobotService:
             "movements_with_intermediate_points": 0
         }
         self.logger.info(" Estatísticas resetadas")
+
+    def set_logging_mode(self, verbose: bool = False, summary_only: bool = True):
+        """
+        🔥 NOVA: Controla modo de logging
+        """
+        self.verbose_logging = verbose
+        self.log_summary_only = summary_only
+        
+        # Configurar também no URController
+        if self.controller:
+            # Desabilitar prints excessivos do URController se possível
+            pass
+        
+        mode = "VERBOSE" if verbose else "RESUMO" if summary_only else "NORMAL"
+        self.logger.info(f"🔧 Modo de logging: {mode}")
+
+    def configure_iron_base(self, height: float, margin: float = 0.02, shoulder_offset: float = 0.3):
+        """
+        🔥 NOVA: Configura parâmetros da base de ferro
+        """
+        self.config["iron_base_constraint"].update({
+            "base_height": height,
+            "safety_margin": margin,
+            "shoulder_offset": shoulder_offset
+        })
+        
+        # Também configurar no URController
+        if self.controller:
+            self.controller.set_iron_base_height(height)
+        
+        self.logger.info(f"🔧 Base de ferro configurada: {height:.3f}m + {margin:.3f}m margem")
 
     # =================== CONTEXT MANAGER ===================
 
