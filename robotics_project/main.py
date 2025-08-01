@@ -6,21 +6,24 @@ Interface simples para testar movimentação do robô e lógica do jogo
 import os
 import sys
 from typing import Optional
-from services.game_orchestrator import TapatanOrchestrator, ConfiguracaoOrquestrador
+from services.game_orchestrator import TapatanOrchestrator
+from config.config_completa import ConfigRobo, ConfigJogo
 
 
 class TapatanTestInterface:
     """Interface de teste simples para o Tapatan"""
     
     def __init__(self):
-        self.orquestrador: Optional[TapatanOrchestrator] = None
-        self.config = ConfiguracaoOrquestrador(
-            profundidade_ia=3,  # IA mais rápida para testes
-            debug_mode=True,
-            pausa_entre_jogadas=1.0,  # Pausa menor para testes
-            velocidade_normal=0.05,   # Movimento mais lento para visualizar
-            auto_calibrar=False       # Não calibrar automaticamente
+        self.config_robo = ConfigRobo(
+            pausa_entre_jogadas=1.0,
+            velocidade_padrao=0.05,
+            auto_calibrar=False
         )
+        self.config_jogo = ConfigJogo(
+            profundidade_ia=3,
+            debug_mode=True,)
+
+        self.orquestrador = TapatanOrchestrator(config_robo=self.config_robo)
     
     def mostrar_banner(self):
         """Mostra banner inicial"""
@@ -171,10 +174,18 @@ class TapatanTestInterface:
             
         print("\n🎮 Iniciando nova partida...")
         
+        if not self.orquestrador.inicializar():
+            print("❌ Erro ao inicializar orquestrador!")
+            return
+        
+        if self.orquestrador.robot_service:
+            self.orquestrador.robot_service.verbose_logging = True
+            self.orquestrador.robot_service.log_summary_only = False
+
         if not self.orquestrador.iniciar_partida():
             print("❌ Erro ao iniciar partida!")
             return
-        
+            
         # Loop principal do jogo
         while True:
             try:
@@ -322,8 +333,8 @@ class TapatanTestInterface:
         print("🚀 Inicializando sistema Tapatan...")
         
         try:
-            self.orquestrador = TapatanOrchestrator(self.config)
-            
+            self.orquestrador = TapatanOrchestrator(self.config_robo)
+
             if self.orquestrador.inicializar():
                 print("✅ Sistema inicializado com sucesso!")
                 return True

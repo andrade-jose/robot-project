@@ -10,8 +10,11 @@ from dataclasses import dataclass
 from enum import Enum
 import logging
 
-from services.robot_service import RobotService, RobotPose, PickPlaceCommand
+from services.robot_service import RobotService, RobotPose, PickPlaceCommand,ValidationLevel,MovementStrategy
 from services.game_service import GameService
+from config.config_completa import ConfigRobo
+from config.config_completa import ConfigJogo
+
 
 
 class OrquestradorStatus(Enum):
@@ -29,50 +32,33 @@ class TipoJogada(Enum):
     FINALIZACAO = "finalizacao"
 
 
-@dataclass
-class ConfiguracaoOrquestrador:
-    """Configurações do orquestrador"""
-    robot_ip: str = "10.1.5.92"
-    altura_segura: float = 0.3
-    altura_pegar: float = 0.05
-    velocidade_normal: float = 0.1
-    velocidade_precisa: float = 0.05
-    profundidade_ia: int = 5
-    pausa_entre_jogadas: float = 2.0
-    auto_calibrar: bool = True
-    debug_mode: bool = False
-    altura_base_ferro: float = 0.05  # Altura da base onde robô está fixado
-    margem_seguranca: float = 0.02   # Margem de segurança adicional
-    validar_antes_executar: bool = True  # Validar poses antes de executar
-    modo_logs_limpo: bool = True     # Evitar logs redundantes
-
 
 class TapatanOrchestrator:
     """Orquestrador principal que coordena jogo e robô"""
     
-    def __init__(self, config: Optional[ConfiguracaoOrquestrador] = None):
-        self.config = config or ConfiguracaoOrquestrador()
+    def __init__(self, config_robo: Optional[ConfigRobo] = None, 
+                 config_jogo: Optional[ConfigJogo] = None):
+        self.config_robo = config_robo or ConfigRobo()
+        self.config_jogo = config_jogo or ConfigJogo()
         self.status = OrquestradorStatus.INICIALIZANDO
-        
-        # Serviços principais
-        self.robot_service: Optional[RobotService] = None
+
+        self.robot_service: Optional[RobotService] = None  # Inicializa depois
         self.game_service = GameService()
-        
-        # Estado do orquestrador
+
+        # Estados
         self.jogo_ativo = False
         self.ultimo_erro: Optional[str] = None
         self.historico_partida: List[Dict] = []
-        
-        # Configurações do tabuleiro (coordenadas físicas)
+
+        # Coordenadas
         self.coordenadas_tabuleiro: Dict[int, Tuple[float, float, float]] = {}
         self.posicao_deposito_pecas: Dict[str, RobotPose] = {}
-        
-        # Setup logging
+
         self.setup_logging()
         
     def setup_logging(self):
         """Configura sistema de logging"""
-        level = logging.DEBUG if self.config.debug_mode else logging.INFO
+        level = logging.DEBUG if self.config_jogo.debug_mode else logging.INFO
         logging.basicConfig(
             level=level,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -99,7 +85,7 @@ class TapatanOrchestrator:
                 return False
                 2
             # Calibração automática se habilitada
-            if self.config.auto_calibrar:
+            if self.config_robo.auto_calibrar:
                 if not self.calibrar_sistema():
                     self.logger.warning("⚠️ Calibração automática falhou, continuando...")
             
@@ -116,7 +102,8 @@ class TapatanOrchestrator:
     def _inicializar_robot(self) -> bool:
         """Inicializa conexão com o robô"""
         try:
-            self.robot_service = RobotService(robot_ip=self.config.robot_ip)
+            self.robot_service = RobotService()
+            self.robot_service.config_robo = self.config_robo
             
             if not self.robot_service.connect():
                 self.logger.error("Falha ao conectar com o robô")
@@ -172,7 +159,10 @@ class TapatanOrchestrator:
             self.status = OrquestradorStatus.JOGANDO
             
             # Mover robô para posição inicial
-            self.robot_service.move_home()
+            self.robot_service.move_to_pose(
+    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
+    enable_intelligent_correction=True
+)
             
             self.logger.info("Partida iniciada! Aguardando primeiro movimento...")
             return True
@@ -202,7 +192,7 @@ class TapatanOrchestrator:
                     return resultado
                     
                 # Executar jogada do robô automaticamente
-                time.sleep(self.config.pausa_entre_jogadas)
+                time.sleep(self.config_robo.pausa_entre_jogadas)
                 resultado_robo = self.executar_jogada_robo()
                 
                 resultado["jogada_robo"] = resultado_robo
@@ -222,7 +212,7 @@ class TapatanOrchestrator:
             self.logger.info("Executando jogada do robô...")
             
             # Obter jogada da IA
-            resultado_ia = self.game_service.fazer_jogada_robo(self.config.profundidade_ia)
+            resultado_ia = self.game_service.fazer_jogada_robo(self.config_jogo.profundidade_ia)
             
             if not resultado_ia["sucesso"]:
                 resultado_ia["mensagem"] = str(resultado_ia.get("mensagem", "")) + " (falha no movimento físico)"
@@ -258,18 +248,39 @@ class TapatanOrchestrator:
         """Executa o movimento físico do robô baseado na jogada"""
         try:
             estado_jogo = self.game_service.obter_estado_jogo()
-            
+
             if estado_jogo["fase"] == "colocacao":
-                return self._executar_colocacao_fisica(jogada["posicao"])
+                posicao = jogada["posicao"]
+                destino = self.coordenadas_tabuleiro.get(posicao)
+
+                if not destino:
+                    self.logger.error(f"Posição física não encontrada para {posicao}")
+                    return False
+
+                pose_destino = RobotPose.from_list([*destino, 0.0, 3.14, 0.0])
+
+                if self.config_robo.validar_antes_executar:
+                    resultado = self.robot_service.validate_pose(pose_destino, validation_level=ValidationLevel.COMPLETE)
+                    if not resultado.is_valid:
+                        self.logger.error(f" Pose inválida para colocação: {resultado.error_message}")
+                        return False
+
+                return self.robot_service.move_to_pose(
+                    pose=pose_destino,
+                    speed=self.config_robo.velocidade_normal,
+                    validation_level=ValidationLevel.COMPLETE,
+                    movement_strategy=MovementStrategy.SMART_CORRECTION,
+                    enable_intelligent_correction=True
+                )
+
             elif estado_jogo["fase"] == "movimento":
                 return self._executar_movimento_fisico_peca(jogada["origem"], jogada["destino"])
-            
+
             return False
-            
+
         except Exception as e:
             self.logger.error(f"Erro no movimento físico: {e}")
             return False
-
     def _executar_colocacao_fisica(self, posicao: int) -> bool:
         """Executa colocação física de peça"""
         try:
@@ -288,10 +299,10 @@ class TapatanOrchestrator:
             comando = PickPlaceCommand(
                 origin=origem,
                 destination=destino,
-                safe_height=self.config.altura_segura,
-                pick_height=self.config.altura_pegar,
-                speed_normal=self.config.velocidade_normal,
-                speed_precise=self.config.velocidade_precisa
+                safe_height=self.config_robo.altura_segura,
+                pick_height=self.config_robo.altura_pegar,
+                speed_normal=self.config_robo.velocidade_normal,
+                speed_precise=self.config_robo.velocidade_precisa
             )
             
             sucesso = self.robot_service.pick_and_place(comando)
@@ -326,10 +337,10 @@ class TapatanOrchestrator:
             comando = PickPlaceCommand(
                 origin=pose_origem,
                 destination=pose_destino,
-                safe_height=self.config.altura_segura,
-                pick_height=self.config.altura_pegar,
-                speed_normal=self.config.velocidade_normal,
-                speed_precise=self.config.velocidade_precisa
+                safe_height=self.config_robo.altura_segura,
+                pick_height=self.config_robo.altura_pegar,
+                speed_normal=self.config_robo.velocidade_normal,
+                speed_precise=self.config_robo.velocidade_precisa
             )
             
             sucesso = self.robot_service.pick_and_place(comando)
@@ -422,7 +433,10 @@ class TapatanOrchestrator:
                         return False
                         
             # Retornar para home
-            self.robot_service.move_home()
+            self.robot_service.move_to_pose(
+    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
+    enable_intelligent_correction=True
+)
             
             self.logger.info("Calibração concluída com sucesso")
             return True
@@ -446,7 +460,10 @@ class TapatanOrchestrator:
             
             # Mover robô para home
             if self.robot_service:
-                self.robot_service.move_home()
+                self.robot_service.move_to_pose(
+    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
+    enable_intelligent_correction=True
+)
                 
             return True
             
@@ -475,7 +492,10 @@ class TapatanOrchestrator:
                 
             # Desconectar robô
             if self.robot_service:
-                self.robot_service.move_home()
+                self.robot_service.move_to_pose(
+    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
+    enable_intelligent_correction=True
+)
                 self.robot_service.disconnect()
                 
             self.logger.info("Orquestrador finalizado")

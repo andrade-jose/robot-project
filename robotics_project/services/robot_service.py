@@ -8,6 +8,8 @@ from pathlib import Path
 import math
 
 from logic_control.ur_controller import URController
+from config.config_completa import ConfigRobo
+from services.game_service import gerar_tabuleiro_tapatan
 
 class RobotStatus(Enum):
     DISCONNECTED = "disconnected"
@@ -92,63 +94,27 @@ class ValidationResult:
     error_message: Optional[str] = None
 
 class RobotService:
-    def __init__(self, robot_ip: str = "10.1.5.92", config_file: Optional[str] = None):
-        self.robot_ip = robot_ip
+    def __init__(self, config_file: Optional[str] = None):
+        # Usar config fornecida ou criar padrão
+        self.config_robo = ConfigRobo()
+        self.robot_ip = self.config_robo.ip
         self.controller: Optional[URController] = None
         self.status = RobotStatus.DISCONNECTED
         self.last_error: Optional[str] = None
+        self.poses = gerar_tabuleiro_tapatan
         
-        #  CONFIGURAÇÕES ATUALIZADAS com novos parâmetros de segurança
-        self.default_config = {
-            "speed": 0.1,
-            "acceleration": 0.1,
-            "safe_height": 0.3,
-            "pick_height": 0.05,
-            "pause_between_moves": 1.0,
-            "home_pose": [0.4, 0.0, 0.4, 0.0, 3.14, 0.0],
-            
-            #  NOVAS CONFIGURAÇÕES DE SEGURANÇA
-            "default_validation_level": "advanced",
-            "default_movement_strategy": "smart_correction",
-            "enable_auto_correction": True,
-            "max_correction_attempts": 3,
-            "intermediate_points_distance_threshold": 0.3,  # Usa pontos intermediários se movimento > 30cm
-            "ultra_safe_mode": False,  # Modo ultra-seguro (muito lento mas máxima segurança)
-            
-            # Configurações de movimento inteligente
-            "smart_movement": {
-                "enable_smart_correction": True,
-                "enable_intermediate_points": True,
-                "max_movement_distance": 1.0,
-                "intermediate_points_step": 0.2,  # 20cm entre pontos
-                "ultra_safe_speed_factor": 0.3,
-                "validation_retries": 3
-            },
-
-            "iron_base_constraint": {
-                "enabled": True,
-                "base_height": 0.05,  # Altura da base de ferro
-                "safety_margin": 0.02,
-                "shoulder_offset": 0.3  # Offset estimado do ombro ao TCP
-            },
-            
-            "workspace_poses": {
-                "center": [0.3, 0.0, 0.2, 0.0, 3.14, 0.0],
-                "left": [0.3, 0.3, 0.2, 0.0, 3.14, 0.0],
-                "right": [0.3, -0.3, 0.2, 0.0, 3.14, 0.0],
-                "front": [0.5, 0.0, 0.2, 0.0, 3.14, 0.0],
-                "back": [0.1, 0.0, 0.2, 0.0, 3.14, 0.0]
-            }
-
-        }
+        # Converter ConfigRobo para formato dict compatível (temporário)
+        self.config = self._convert_config_to_dict()
         
-        # Carregar configuração se fornecida
-        self.config = self.load_config(config_file) if config_file else self.default_config.copy()
+        # Carregar configuração adicional se fornecida
+        if config_file:
+            additional_config = self.load_config(config_file)
+            self.config.update(additional_config)
         
         # Setup logging
         self.setup_logging()
         
-        #  NOVO: Histórico de movimentos para análise
+        # Histórico de movimentos para análise
         self.movement_history: List[Dict] = []
         self.validation_stats = {
             "total_validations": 0,
@@ -156,9 +122,9 @@ class RobotService:
             "corrections_applied": 0,
             "movements_with_intermediate_points": 0
         }
-        self.verbose_logging = False  # Controla logs detalhados
-        self.log_summary_only = True  # Apenas logs de resumo
-
+        self.verbose_logging = False
+        self.log_summary_only = True
+        
     def setup_logging(self):
         """Configura sistema de logging"""
         logging.basicConfig(
@@ -171,16 +137,51 @@ class RobotService:
         )
         self.logger = logging.getLogger('RobotService')
 
+    def _convert_config_to_dict(self) -> Dict:
+        """Converte ConfigRobo para dict mantendo compatibilidade"""
+        return {
+            "speed": self.config_robo.velocidade_padrao,
+            "acceleration": self.config_robo.aceleracao_padrao,
+            "safe_height": self.config_robo.altura_segura,
+            "pick_height": self.config_robo.altura_pegar,
+            "pause_between_moves": self.config_robo.pausa_entre_movimentos,
+            "home_pose": self.config_robo.pose_home,
+            
+            "default_validation_level": self.config_robo.nivel_validacao_padrao,
+            "default_movement_strategy": self.config_robo.estrategia_movimento_padrao,
+            "enable_auto_correction": self.config_robo.habilitar_correcao_automatica,
+            "max_correction_attempts": self.config_robo.max_tentativas_correcao,
+            "intermediate_points_distance_threshold": self.config_robo.distancia_threshold_pontos_intermediarios,
+            "ultra_safe_mode": self.config_robo.modo_ultra_seguro,
+            
+            "smart_movement": {
+                "enable_smart_correction": self.config_robo.habilitar_correcao_inteligente,
+                "enable_intermediate_points": self.config_robo.habilitar_pontos_intermediarios,
+                "max_movement_distance": self.config_robo.distancia_maxima_movimento,
+                "intermediate_points_step": self.config_robo.passo_pontos_intermediarios,
+                "ultra_safe_speed_factor": self.config_robo.fator_velocidade_ultra_seguro,
+                "validation_retries": self.config_robo.tentativas_validacao
+            },
+
+            "iron_base_constraint": {
+                "enabled": self.config_robo.base_ferro_habilitada,
+                "base_height": self.config_robo.altura_base_ferro,
+                "safety_margin": self.config_robo.margem_seguranca_base,
+                "elbow_offset": self.config_robo.offset_cotovelo
+            },
+            
+        }
+
     def load_config(self, config_file: str) -> Dict:
         """Carrega configuração de arquivo JSON"""
         try:
             with open(config_file, 'r') as f:
                 config = json.load(f)
             self.logger.info(f" Configuração carregada de {config_file}")
-            return {**self.default_config, **config}
+            return config
         except Exception as e:
             self.logger.error(f" Erro ao carregar configuração: {e}")
-            return self.default_config.copy()
+            return {}
 
     def save_config(self, config_file: str):
         """Salva configuração atual em arquivo JSON"""
@@ -323,14 +324,14 @@ class RobotService:
         if not self.config["iron_base_constraint"]["enabled"]:
             return True
             
-        # Estimar posição do ombro
-        estimated_shoulder_z = pose.z - self.config["iron_base_constraint"]["shoulder_offset"]
+        # Estimar posição do cotovelo
+        estimated_elbow_z = pose.z - self.config["iron_base_constraint"]["elbow_offset"]
         min_height = (self.config["iron_base_constraint"]["base_height"] + 
                     self.config["iron_base_constraint"]["safety_margin"])
         
-        if estimated_shoulder_z < min_height:
+        if estimated_elbow_z < min_height:
             if self.verbose_logging:
-                self.logger.warning(f"⚠️ Pose rejeitada - ombro muito baixo: {estimated_shoulder_z:.3f}m")
+                self.logger.warning(f"⚠️ Pose rejeitada - cotovelo muito baixo: {estimated_elbow_z:.3f}m")
             return False
         
         return True
@@ -340,10 +341,10 @@ class RobotService:
         🔥 NOVA: Encontra pose alternativa quando original é inviável
         """
         if not self.validate_iron_base_constraint(problematic_pose):
-            # Elevar TCP para proteger ombro
+            # Elevar TCP para proteger cotovelo
             min_tcp_z = (self.config["iron_base_constraint"]["base_height"] + 
                         self.config["iron_base_constraint"]["safety_margin"] + 
-                        self.config["iron_base_constraint"]["shoulder_offset"] + 0.05)  # +5cm segurança
+                        self.config["iron_base_constraint"]["elbow_offset"] + 0.05)  # +5cm segurança
             
             if problematic_pose.z < min_tcp_z:
                 alternative = RobotPose(
@@ -356,7 +357,7 @@ class RobotService:
                 )
                 
                 if self.log_summary_only:
-                    self.logger.info(f"Pose corrigida para proteger ombro: Z {problematic_pose.z:.3f} -> {min_tcp_z:.3f}")
+                    self.logger.info(f"Pose corrigida para proteger cotovelo: Z {problematic_pose.z:.3f} -> {min_tcp_z:.3f}")
                 
                 return alternative
         
@@ -366,35 +367,51 @@ class RobotService:
     def move_to_pose(self, pose: RobotPose, speed: Optional[float] = None, 
                     acceleration: Optional[float] = None,
                     movement_strategy: MovementStrategy = None,
-                    validation_level: ValidationLevel = None) -> bool:
+                    validation_level: ValidationLevel = None,
+                    enable_intelligent_correction: bool = True) -> bool:
         """
-         FUNÇÃO ATUALIZADA: Move robô com estratégias inteligentes de segurança
+        🔥 FUNÇÃO ATUALIZADA: Move robô com correção inteligente integrada
+        Agora usa todas as melhorias do URController
         """
         if not self._check_connection():
             return False
         
+        # 🔥 NOVA: Verificar restrição da base de ferro primeiro
         if not self.validate_iron_base_constraint(pose):
-            alternative_pose = self.find_alternative_pose(pose)
-            if alternative_pose:
-                pose = alternative_pose  # Usar pose corrigida
+            if enable_intelligent_correction:
+                self.logger.info(" Pose conflita com base de ferro - tentando correção automática...")
+                alternative_pose = self.find_alternative_pose(pose)
+                if alternative_pose:
+                    pose = alternative_pose
+                    self.logger.info(f" Pose corrigida para proteger base de ferro")
+                else:
+                    self.status = RobotStatus.ERROR
+                    self.last_error = "Pose inviável - cotovelo abaixo da base"
+                    self.logger.error(" Não foi possível corrigir conflito com base de ferro")
+                    return False
             else:
                 self.status = RobotStatus.ERROR
-                self.last_error = "Pose inviável - ombro abaixo da base"
-                self.logger.error("❌ Movimento impossível - limitação da base de ferro")
+                self.last_error = "Pose conflita com base de ferro e correção está desabilitada"
                 return False
         
         # Usar configurações padrão se não especificadas
         if movement_strategy is None:
-            movement_strategy = MovementStrategy(self.config.get("default_movement_strategy", "smart_correction"))
+            if enable_intelligent_correction:
+                movement_strategy = MovementStrategy.SMART_CORRECTION  # 🔥 NOVO padrão
+            else:
+                movement_strategy = MovementStrategy.DIRECT
         
         if validation_level is None:
             validation_level = ValidationLevel(self.config.get("default_validation_level", "advanced"))
             
         try:
             self.status = RobotStatus.MOVING
+            
+            # Log mais informativo
             if self.verbose_logging:
                 self.logger.info(f" Movendo para: {pose}")
                 self.logger.info(f" Estratégia: {movement_strategy.value}, Validação: {validation_level.value}")
+                self.logger.info(f" Correção inteligente: {'HABILITADA' if enable_intelligent_correction else 'DESABILITADA'}")
             else:
                 self.logger.info(f" Movimento: {movement_strategy.value}")
             
@@ -412,6 +429,7 @@ class RobotService:
                 "target_pose": asdict(pose),
                 "strategy": movement_strategy.value,
                 "validation_level": validation_level.value,
+                "intelligent_correction": enable_intelligent_correction,
                 "speed": move_speed,
                 "acceleration": move_acceleration
             }
@@ -419,13 +437,16 @@ class RobotService:
             success = False
             pose_list = pose.to_list()
             
-            #  EXECUTAR ESTRATÉGIA DE MOVIMENTO
+            # 🔥 EXECUTAR ESTRATÉGIA DE MOVIMENTO ATUALIZADA
             if movement_strategy == MovementStrategy.DIRECT:
                 # Movimento direto (modo legado)
-                success = self.controller.move_to_pose_safe(pose_list, move_speed, move_acceleration, use_smart_correction=False)
+                success = self.controller.move_to_pose_safe(
+                    pose_list, move_speed, move_acceleration, 
+                    use_smart_correction=False
+                )
                 
             elif movement_strategy == MovementStrategy.SMART_CORRECTION:
-                #  NOVO: Movimento com correção automática
+                # 🔥 NOVA: Movimento com correção automática inteligente
                 success, corrected_pose = self.controller.move_to_pose_with_smart_correction(
                     pose_list, move_speed, move_acceleration, 
                     max_correction_attempts=self.config.get("max_correction_attempts", 3)
@@ -433,9 +454,11 @@ class RobotService:
                 if corrected_pose:
                     movement_record["corrected_pose"] = corrected_pose
                     self.validation_stats["corrections_applied"] += 1
-                    
+                    if self.verbose_logging:
+                        self.logger.info(" Correções automáticas aplicadas")
+                        
             elif movement_strategy == MovementStrategy.INTERMEDIATE:
-                #  NOVO: Movimento com pontos intermediários
+                # 🔥 NOVA: Movimento com pontos intermediários
                 current_pose = self.controller.get_current_pose()
                 if current_pose:
                     distance = math.sqrt(
@@ -454,11 +477,14 @@ class RobotService:
                     if success:
                         self.validation_stats["movements_with_intermediate_points"] += 1
                         movement_record["intermediate_points"] = num_points
-                        
+                        if self.verbose_logging:
+                            self.logger.info(f"🚀 Movimento executado com {num_points} pontos intermediários")
+                            
             elif movement_strategy == MovementStrategy.ULTRA_SAFE:
-                #  NOVO: Estratégia ultra-segura (todas as validações e correções)
+                # 🔥 NOVA: Estratégia ultra-segura com todas as validações
                 success = self.controller.move_to_pose_safe(
-                    pose_list, move_speed, move_acceleration, use_smart_correction=True
+                    pose_list, move_speed, move_acceleration, 
+                    use_smart_correction=True
                 )
             
             # Registrar resultado
@@ -473,12 +499,27 @@ class RobotService:
             if success:
                 self.status = RobotStatus.IDLE
                 if self.log_summary_only:
-                    self.logger.info(f"Movimento concluído - {movement_strategy.value}")
+                    self.logger.info(f" Movimento concluído - {movement_strategy.value}")
+                else:
+                    # Verificar precisão se verbose
+                    final_pose = self.get_current_pose()
+                    if final_pose and self.verbose_logging:
+                        distance = math.sqrt(
+                            (pose.x - final_pose.x)**2 +
+                            (pose.y - final_pose.y)**2 +
+                            (pose.z - final_pose.z)**2
+                        )
+                        self.logger.info(f" Precisão do movimento: {distance*1000:.1f}mm")
                 return True
             else:
                 self.status = RobotStatus.ERROR
-                self.last_error = "Falha no movimento"
+                self.last_error = f"Falha no movimento - {movement_strategy.value}"
                 self.logger.error(f" Movimento falhou - {movement_strategy.value}")
+                
+                # 🔥 NOVA: Sugestão automática se falha
+                if enable_intelligent_correction and movement_strategy != MovementStrategy.ULTRA_SAFE:
+                    self.logger.info(" SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()")
+                
                 return False
                 
         except Exception as e:
@@ -536,6 +577,179 @@ class RobotService:
             self.last_error = str(e)
             self.logger.error(f" Erro durante pick and place: {e}")
             return False
+
+    def correct_pose_with_diagnostics(self, pose: RobotPose) -> Dict[str, Any]:
+        """
+        🔥 NOVA FUNÇÃO: Corrige pose com diagnóstico completo
+        Retorna informações detalhadas sobre o que foi corrigido
+        """
+        if not self._check_connection():
+            return {"success": False, "error": "Robô não conectado"}
+        
+        try:
+            self.logger.info(f"🔧 Iniciando correção inteligente para: {pose}")
+            
+            # 1. Diagnóstico completo da pose original
+            pose_list = pose.to_list()
+            diagnostics = self.controller.diagnostic_pose_rejection(pose_list)
+            
+            # 2. Aplicar correção automática
+            corrected_pose_list = self.controller.correct_pose_automatically(pose_list)
+            
+            # 3. Validar pose corrigida
+            is_corrected_valid = False
+            if corrected_pose_list:
+                is_corrected_valid = self.controller.validate_pose_complete(corrected_pose_list)
+            
+            result = {
+                "success": is_corrected_valid,
+                "original_pose": asdict(pose),
+                "corrected_pose": RobotPose.from_list(corrected_pose_list).to_dict() if corrected_pose_list else None,
+                "diagnostics": diagnostics,
+                "corrections_applied": diagnostics.get('sugestoes_correcao', []),
+                "validation_passed": is_corrected_valid,
+                "error_details": diagnostics.get('joints_problematicas', [])
+            }
+            
+            if is_corrected_valid:
+                self.logger.info(" Correção inteligente CONCLUÍDA com sucesso!")
+            else:
+                self.logger.error(" Correção inteligente FALHOU")
+                
+            return result
+            
+        except Exception as e:
+            self.logger.error(f" Erro na correção inteligente: {e}")
+            return {"success": False, "error": str(e)}
+
+    def move_with_intelligent_correction(self, pose: RobotPose, 
+                                    speed: Optional[float] = None,
+                                    acceleration: Optional[float] = None,
+                                    max_attempts: int = 3) -> Dict[str, Any]:
+        """
+        🔥 NOVA FUNÇÃO: Movimento com correção inteligente e relatório detalhado
+        Substitui o move_to_pose quando você quer detalhes da correção
+        """
+        if not self._check_connection():
+            return {"success": False, "error": "Robô não conectado"}
+        
+        start_time = time.time()
+        movement_log = {
+            "original_pose": asdict(pose),
+            "attempts": [],
+            "final_result": {},
+            "total_time": 0,
+            "corrections_applied": []
+        }
+        
+        try:
+            self.status = RobotStatus.MOVING
+            
+            # Usar velocidades especificadas ou padrão
+            move_speed = speed or self.config["speed"]
+            move_acceleration = acceleration or self.config["acceleration"]
+            
+            self.logger.info(f" Movimento INTELIGENTE iniciado para: {pose}")
+            
+            # Usar a nova função do URController
+            success, final_pose = self.controller.move_to_pose_with_smart_correction(
+                pose.to_list(), move_speed, move_acceleration, max_attempts
+            )
+            
+            movement_log["final_result"] = {
+                "success": success,
+                "final_pose": RobotPose.from_list(final_pose).to_dict() if final_pose else None,
+                "execution_time": time.time() - start_time
+            }
+            
+            if success:
+                self.status = RobotStatus.IDLE
+                self.logger.info(" Movimento inteligente CONCLUÍDO!")
+                return {"success": True, "details": movement_log}
+            else:
+                self.status = RobotStatus.ERROR
+                self.last_error = "Movimento inteligente falhou"
+                self.logger.error(" Movimento inteligente FALHOU após todas as tentativas")
+                return {"success": False, "details": movement_log, "error": "Todas as estratégias falharam"}
+                
+        except Exception as e:
+            self.status = RobotStatus.ERROR
+            self.last_error = str(e)
+            self.logger.error(f" Erro no movimento inteligente: {e}")
+            return {"success": False, "error": str(e)}
+
+    def test_and_fix_calibration_poses(self, poses: List[RobotPose]) -> Dict[str, Any]:
+        """
+        🔧 NOVA FUNÇÃO: Testa e corrige poses de calibração
+        Ideal para debugging de sequências de calibração
+        """
+        if not self._check_connection():
+            return {"error": "Robô não conectado"}
+        
+        self.logger.info(f" Testando e corrigindo {len(poses)} poses de calibração")
+        
+        results = {
+            "total_poses": len(poses),
+            "original_valid": 0,
+            "corrected_valid": 0,
+            "impossible_poses": 0,
+            "pose_details": [],
+            "recommendations": []
+        }
+        
+        for i, pose in enumerate(poses):
+            self.logger.info(f" Analisando pose {i+1}/{len(poses)}")
+            
+            pose_result = {
+                "index": i,
+                "original_pose": asdict(pose),
+                "is_original_valid": False,
+                "corrected_pose": None,
+                "is_corrected_valid": False,
+                "corrections_needed": [],
+                "status": "unknown"
+            }
+            
+            try:
+                # 1. Testar pose original
+                pose_list = pose.to_list()
+                pose_result["is_original_valid"] = self.controller.validate_pose_complete(pose_list)
+                
+                if pose_result["is_original_valid"]:
+                    results["original_valid"] += 1
+                    pose_result["status"] = " VÁLIDA"
+                else:
+                    # 2. Tentar correção usando a nova função específica
+                    corrected_pose_list, correction_success = self.controller.fix_calibration_pose(i, pose_list)
+                    
+                    if correction_success:
+                        pose_result["corrected_pose"] = RobotPose.from_list(corrected_pose_list).to_dict()
+                        pose_result["is_corrected_valid"] = True
+                        results["corrected_valid"] += 1
+                        pose_result["status"] = " CORRIGIDA"
+                    else:
+                        results["impossible_poses"] += 1
+                        pose_result["status"] = " IMPOSSÍVEL"
+                
+            except Exception as e:
+                pose_result["status"] = f" ERRO: {str(e)}"
+                results["impossible_poses"] += 1
+            
+            results["pose_details"].append(pose_result)
+        
+        # Gerar recomendações
+        success_rate = ((results["original_valid"] + results["corrected_valid"]) / results["total_poses"]) * 100
+        
+        if success_rate < 80:
+            results["recommendations"].append("Taxa de sucesso baixa - verificar altura da base de ferro")
+        if results["corrected_valid"] > results["original_valid"]:
+            results["recommendations"].append("Muitas correções necessárias - considerar ajustar poses originais")
+        if results["impossible_poses"] > 2:
+            results["recommendations"].append("Poses impossíveis detectadas - verificar limites do workspace")
+        
+        self.logger.info(f" RESULTADO: {results['original_valid']} válidas, {results['corrected_valid']} corrigidas, {results['impossible_poses']} impossíveis")
+        
+        return results
 
     # ===================  NOVAS FUNÇÕES DE SEQUÊNCIA ===================
 
@@ -857,7 +1071,7 @@ class RobotService:
                     corrected = self.controller.correct_pose_automatically(intermediate_pose_list)
                     if corrected and self.controller.validate_pose_complete(corrected):
                         trajectory.append(RobotPose.from_list(corrected))
-                        self.logger.info(f"🔧 Ponto intermediário {i} corrigido")
+                        self.logger.info(f" Ponto intermediário {i} corrigido")
                     else:
                         self.logger.warning(f"⚠️ Ponto intermediário {i} rejeitado")
             
@@ -910,7 +1124,7 @@ class RobotService:
                 success = self.controller.emergency_stop()
                 if success:
                     self.status = RobotStatus.EMERGENCY_STOP
-                    self.logger.warning("🚨 PARADA DE EMERGÊNCIA ATIVADA")
+                    self.logger.warning(" PARADA DE EMERGÊNCIA ATIVADA")
                     return True
             return False
         except Exception as e:
@@ -924,7 +1138,7 @@ class RobotService:
                 success = self.controller.stop()
                 if success:
                     self.status = RobotStatus.IDLE
-                    self.logger.info("🛑 Movimento parado")
+                    self.logger.info(" Movimento parado")
                     return True
             return False
         except Exception as e:
@@ -935,8 +1149,8 @@ class RobotService:
         """Obtém pose predefinida por nome"""
         if pose_name == "home":
             return RobotPose.from_list(self.config["home_pose"])
-        elif pose_name in self.config["workspace_poses"]:
-            return RobotPose.from_list(self.config["workspace_poses"][pose_name])
+        elif pose_name in self.poses:
+            return RobotPose.from_list(self.poses)
         else:
             self.logger.error(f" Pose '{pose_name}' não encontrada")
             return None
@@ -1048,7 +1262,7 @@ class RobotService:
             with open(filename, 'w') as f:
                 json.dump(export_data, f, indent=2)
             
-            self.logger.info(f"📄 Histórico exportado para: {filename}")
+            self.logger.info(f" Histórico exportado para: {filename}")
             return filename
         except Exception as e:
             self.logger.error(f" Erro ao exportar histórico: {e}")
@@ -1082,14 +1296,14 @@ class RobotService:
         mode = "VERBOSE" if verbose else "RESUMO" if summary_only else "NORMAL"
         self.logger.info(f"🔧 Modo de logging: {mode}")
 
-    def configure_iron_base(self, height: float, margin: float = 0.02, shoulder_offset: float = 0.3):
+    def configure_iron_base(self, height: float, margin: float = 0.02, elbow_offset: float = 0.3):
         """
         🔥 NOVA: Configura parâmetros da base de ferro
         """
         self.config["iron_base_constraint"].update({
             "base_height": height,
             "safety_margin": margin,
-            "shoulder_offset": shoulder_offset
+            "elbow_offset": elbow_offset
         })
         
         # Também configurar no URController
@@ -1097,6 +1311,255 @@ class RobotService:
             self.controller.set_iron_base_height(height)
         
         self.logger.info(f"🔧 Base de ferro configurada: {height:.3f}m + {margin:.3f}m margem")
+
+    def debug_pose_detailed(self, pose: RobotPose) -> Dict[str, Any]:
+        """
+        🔍 NOVA FUNÇÃO: Debug detalhado de uma pose específica
+        Mostra exatamente por que uma pose falha
+        """
+        if not self._check_connection():
+            return {"error": "Robô não conectado"}
+        
+        self.logger.info(f"🔍 DEBUG DETALHADO da pose: {pose}")
+        
+        try:
+            pose_list = pose.to_list()
+            
+            # Usar a nova função de diagnóstico do URController
+            diagnostics = self.controller.diagnostic_pose_rejection(pose_list)
+            
+            # Adicionar informações do RobotService
+            debug_info = {
+                "pose_analysis": diagnostics,
+                "robot_status": self.get_status(),
+                "current_pose": self.get_current_pose().to_dict() if self.get_current_pose() else None,
+                "workspace_limits": self.controller.workspace_limits if hasattr(self.controller, 'workspace_limits') else None,
+                "iron_base_config": self.config.get("iron_base_constraint", {}),
+                "safety_settings": {
+                    "validation_level": self.config.get("default_validation_level"),
+                    "movement_strategy": self.config.get("default_movement_strategy"),
+                    "auto_correction": self.config.get("enable_auto_correction"),
+                }
+            }
+            
+            # Calcular distância da pose atual
+            current_pose = self.get_current_pose()
+            if current_pose:
+                distance = math.sqrt(
+                    (pose.x - current_pose.x)**2 +
+                    (pose.y - current_pose.y)**2 +
+                    (pose.z - current_pose.z)**2
+                )
+                debug_info["movement_distance"] = distance
+                
+                if distance > self.config.get("smart_movement", {}).get("max_movement_distance", 0.5):
+                    debug_info["warnings"] = ["Movimento muito grande - considere pontos intermediários"]
+            
+            self.logger.info("🔍 Debug detalhado concluído - verifique o retorno para análise completa")
+            return debug_info
+            
+        except Exception as e:
+            self.logger.error(f" Erro no debug detalhado: {e}")
+            return {"error": str(e)}
+
+    def debug_calibration_sequence(self, poses: List[RobotPose], 
+                                fix_problems: bool = False) -> Dict[str, Any]:
+        """
+        🧪 NOVA FUNÇÃO: Debug completo de sequência de calibração
+        Com opção de corrigir automaticamente os problemas encontrados
+        """
+        if not self._check_connection():
+            return {"error": "Robô não conectado"}
+        
+        self.logger.info(f" DEBUG de sequência de calibração - {len(poses)} poses")
+        
+        debug_results = {
+            "sequence_analysis": {
+                "total_poses": len(poses),
+                "valid_poses": 0,
+                "invalid_poses": 0,
+                "correctable_poses": 0,
+                "impossible_poses": 0
+            },
+            "pose_details": [],
+            "problems_found": [],
+            "solutions_applied": [],
+            "final_sequence": None,
+            "recommendations": []
+        }
+        
+        corrected_sequence = []
+        
+        for i, pose in enumerate(poses):
+            self.logger.info(f"📍 Analisando pose {i+1}: {pose}")
+            
+            pose_debug = {
+                "index": i,
+                "original_pose": asdict(pose),
+                "issues": [],
+                "corrections": [],
+                "final_status": "unknown"
+            }
+            
+            try:
+                # 1. Debug detalhado da pose
+                detailed_debug = self.debug_pose_detailed(pose)
+                
+                # 2. Verificar se pose é válida
+                pose_list = pose.to_list()
+                is_valid = self.controller.validate_pose_complete(pose_list)
+                
+                if is_valid:
+                    debug_results["sequence_analysis"]["valid_poses"] += 1
+                    pose_debug["final_status"] = " VÁLIDA"
+                    corrected_sequence.append(pose)
+                else:
+                    debug_results["sequence_analysis"]["invalid_poses"] += 1
+                    
+                    # 3. Identificar problemas específicos
+                    diagnostics = detailed_debug.get("pose_analysis", {})
+                    
+                    if not diagnostics.get("pose_alcancavel", True):
+                        pose_debug["issues"].append("Cinemática inversa impossível")
+                    
+                    if diagnostics.get("conflitos_base_ferro", False):
+                        pose_debug["issues"].append("Conflito com base de ferro")
+                    
+                    if diagnostics.get("joints_problematicas", []):
+                        pose_debug["issues"].append("Articulações fora dos limites")
+                    
+                    if diagnostics.get("singularidades", False):
+                        pose_debug["issues"].append("Próximo a singularidades")
+                    
+                    # 4. Tentar correção se solicitado
+                    if fix_problems:
+                        self.logger.info(f"🔧 Tentando corrigir pose {i+1}...")
+                        
+                        corrected_pose_list, success = self.controller.fix_calibration_pose(i, pose_list)
+                        
+                        if success:
+                            corrected_pose = RobotPose.from_list(corrected_pose_list)
+                            pose_debug["corrections"].append("Pose corrigida automaticamente")
+                            pose_debug["corrected_pose"] = asdict(corrected_pose)
+                            pose_debug["final_status"] = "🔧 CORRIGIDA"
+                            debug_results["sequence_analysis"]["correctable_poses"] += 1
+                            debug_results["solutions_applied"].append(f"Pose {i+1} corrigida")
+                            corrected_sequence.append(corrected_pose)
+                        else:
+                            pose_debug["final_status"] = " IMPOSSÍVEL"
+                            debug_results["sequence_analysis"]["impossible_poses"] += 1
+                            debug_results["problems_found"].append(f"Pose {i+1} não pode ser corrigida")
+                            
+                            # Adicionar pose segura como fallback
+                            safe_pose = self._generate_safe_fallback_pose(pose)
+                            corrected_sequence.append(safe_pose)
+                            pose_debug["corrections"].append("Substituída por pose segura")
+                    else:
+                        pose_debug["final_status"] = " INVÁLIDA (não corrigida)"
+                    
+            except Exception as e:
+                pose_debug["final_status"] = f" ERRO: {str(e)}"
+                pose_debug["issues"].append(f"Erro na análise: {str(e)}")
+                
+            debug_results["pose_details"].append(pose_debug)
+        
+        # Gerar sequência final se correções foram aplicadas
+        if fix_problems:
+            debug_results["final_sequence"] = [asdict(pose) for pose in corrected_sequence]
+        
+        # Gerar recomendações
+        invalid_rate = (debug_results["sequence_analysis"]["invalid_poses"] / len(poses)) * 100
+        
+        if invalid_rate > 30:
+            debug_results["recommendations"].append("Taxa alta de poses inválidas - revisar configuração do workspace")
+        
+        if debug_results["sequence_analysis"]["impossible_poses"] > 0:
+            debug_results["recommendations"].append("Poses impossíveis detectadas - verificar limites físicos do robô")
+        
+        if any("base de ferro" in str(detail.get("issues", [])) for detail in debug_results["pose_details"]):
+            debug_results["recommendations"].append("Conflitos com base de ferro - considerar elevar altura das poses")
+        
+        # Log resumo
+        self.logger.info(" RESUMO DO DEBUG:")
+        self.logger.info(f"   Válidas: {debug_results['sequence_analysis']['valid_poses']}")
+        self.logger.info(f"   Inválidas: {debug_results['sequence_analysis']['invalid_poses']}")
+        if fix_problems:
+            self.logger.info(f"   Corrigidas: {debug_results['sequence_analysis']['correctable_poses']}")
+            self.logger.info(f"   Impossíveis: {debug_results['sequence_analysis']['impossible_poses']}")
+        
+        return debug_results
+
+    def _generate_safe_fallback_pose(self, problematic_pose: RobotPose) -> RobotPose:
+        """
+        🛡️ FUNÇÃO AUXILIAR: Gera pose segura como fallback
+        """
+        # Usar configuração da base de ferro se disponível
+        iron_config = self.config.get("iron_base_constraint", {})
+        safe_z = iron_config.get("base_height", 0.1) + iron_config.get("safety_margin", 0.05) + 0.1
+        
+        # Criar pose segura mantendo X,Y mas elevando Z
+        safe_pose = RobotPose(
+            x=max(-0.5, min(0.5, problematic_pose.x)),  # Limitar X
+            y=max(-0.3, min(0.3, problematic_pose.y)),  # Limitar Y  
+            z=max(safe_z, 0.3),  # Z seguro
+            rx=0.0,  # Orientação conservadora
+            ry=3.14,  # TCP para baixo
+            rz=0.0
+        )
+        
+        self.logger.info(f" Pose segura gerada: {safe_pose}")
+        return safe_pose
+
+    def benchmark_correction_system(self) -> Dict[str, Any]:
+        """
+        📊 NOVA FUNÇÃO: Benchmark do sistema de correção
+        Testa o sistema com poses conhecidas
+        """
+        if not self._check_connection():
+            return {"error": "Robô não conectado"}
+        
+        self.logger.info(" Iniciando benchmark do sistema de correção")
+        
+        # Usar função do URController
+        benchmark_results = self.controller.benchmark_correction_system()
+        
+        # Adicionar análise do RobotService
+        service_analysis = {
+            "controller_results": benchmark_results,
+            "service_config": {
+                "validation_level": self.config.get("default_validation_level"),
+                "correction_enabled": self.config.get("enable_auto_correction"),
+                "iron_base_enabled": self.config.get("iron_base_constraint", {}).get("enabled", False)
+            },
+            "performance_rating": "unknown",
+            "recommendations": []
+        }
+        
+        # Calcular rating de performance
+        if benchmark_results.get("total", 0) > 0:
+            correction_rate = (benchmark_results.get("corrected_valid", 0) - 
+                            benchmark_results.get("original_valid", 0)) / benchmark_results.get("total", 1) * 100
+            
+            if correction_rate > 50:
+                service_analysis["performance_rating"] = " EXCELENTE"
+            elif correction_rate > 20:
+                service_analysis["performance_rating"] = " BOM"
+            elif correction_rate > 0:
+                service_analysis["performance_rating"] = " REGULAR"
+            else:
+                service_analysis["performance_rating"] = " RUIM"
+            
+            # Recomendações baseadas no desempenho
+            if correction_rate < 10:
+                service_analysis["recommendations"].append("Sistema de correção pouco efetivo - verificar configurações")
+            
+            impossible_rate = benchmark_results.get("impossible", 0) / benchmark_results.get("total", 1) * 100
+            if impossible_rate > 30:
+                service_analysis["recommendations"].append("Muitas poses impossíveis - revisar workspace limits")
+        
+        self.logger.info(f" Benchmark concluído - Rating: {service_analysis['performance_rating']}")
+        
+        return service_analysis
 
     # =================== CONTEXT MANAGER ===================
 

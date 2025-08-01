@@ -247,8 +247,8 @@ class GameService:
         coords = gerar_tabuleiro_tapatan(z=z)
 
         # 🔧 OFFSET = onde o centro do tabuleiro está na mesa
-        offset_x = 0.20   # AJUSTE este valor
-        offset_y = 0.05   # AJUSTE este valor
+        offset_x = 0.15   # AJUSTE este valor
+        offset_y = 0.3   # AJUSTE este valor
 
         return {
             mapa_nomes_para_index[nome]: (

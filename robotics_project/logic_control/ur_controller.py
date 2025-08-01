@@ -1,16 +1,16 @@
 from rtde_control import RTDEControlInterface
 from rtde_receive import RTDEReceiveInterface
-from config.config_completa import CONFIG
+from config.config_completa import ConfigRobo
 import time
 import math
 
 class URController:
     def __init__(self, robot_ip=None, speed=None, acceleration=None, config=None):
         # Usar config ou valores padrão
-        self.config = config or CONFIG['robo']
-        self.robot_ip = robot_ip or self.config.ip
-        self.speed = speed or self.config.velocidade_padrao
-        self.acceleration = acceleration or self.config.aceleracao_padrao
+        self.config = ConfigRobo()
+        self.robot_ip = self.config.ip
+        self.speed = self.config.velocidade_padrao
+        self.acceleration = self.config.aceleracao_padrao
 
         self.rtde_c = RTDEControlInterface(self.robot_ip)
         self.rtde_r = RTDEReceiveInterface(self.robot_ip)
@@ -32,7 +32,7 @@ class URController:
         self.max_movement_distance = self.config.distancia_maxima_movimento
         self.validation_retries = self.config.tentativas_validacao
         self.base_iron_height = self.config.altura_base_ferro
-        self.shoulder_safety_margin = self.config.margem_seguranca_ombro
+        self.elbow_safety_margin = self.config.margem_seguranca_cotovelo
 
     def is_connected(self):
         """Verifica se está conectado ao robô"""
@@ -66,27 +66,143 @@ class URController:
             return False
         
 
-    def validate_shoulder_height_constraint(self, pose):
+    def validate_elbow_height_constraint(self, pose):
         """
-        🔥 NOVA FUNÇÃO: Valida se o ombro não vai abaixo da base de ferro
+        🔥 NOVA FUNÇÃO: Valida se o cotovelo não vai abaixo da base de ferro
         """
         try:
-            # Calcular posição aproximada do ombro baseada na pose do TCP
-            # Para UR, o ombro fica aproximadamente na altura Z da base + offset do braço
-            estimated_shoulder_z = pose[2] - 0.3  # Ajustar baseado no seu modelo UR
+            # Calcular posição aproximada do cotovelo baseada na pose do TCP
+            # Para UR, o cotovelo fica aproximadamente na altura Z da base + offset do braço
+            estimated_elbow_z = pose[2] - 0.3  # Ajustar baseado no seu modelo UR
             
-            min_allowed_z = self.base_iron_height + self.shoulder_safety_margin
+            min_allowed_z = self.base_iron_height + self.elbow_safety_margin
             
-            if estimated_shoulder_z < min_allowed_z:
-                print(f"❌ Ombro muito baixo: {estimated_shoulder_z:.3f}m < {min_allowed_z:.3f}m")
+            if estimated_elbow_z < min_allowed_z:
+                print(f"❌ cotovelo muito baixo: {estimated_elbow_z:.3f}m < {min_allowed_z:.3f}m")
                 return False
                 
-            print(f"✅ Altura do ombro OK: {estimated_shoulder_z:.3f}m")
+            print(f"✅ Altura do cotovelo OK: {estimated_elbow_z:.3f}m")
             return True
             
         except Exception as e:
-            print(f"❌ Erro na validação da altura do ombro: {e}")
+            print(f"❌ Erro na validação da altura do cotovelo: {e}")
             return False
+        
+
+    def diagnostic_pose_rejection(self, pose):
+        """
+        🔥 DIAGNÓSTICO AVANÇADO: Identifica exatamente por que a pose foi rejeitada
+        """
+        print(f"🔍 DIAGNÓSTICO COMPLETO da pose: {[f'{p:.3f}' for p in pose]}")
+        
+        diagnostics = {
+            'pose_original': pose,
+            'pose_alcancavel': False,
+            'joints_calculadas': None,
+            'joints_problematicas': [],
+            'singularidades': False,
+            'conflitos_base_ferro': False,
+            'sugestoes_correcao': []
+        }
+        
+        try:
+            # 1. TESTE: Cinemática Inversa
+            print("1️⃣ Testando cinemática inversa...")
+            joints = self.rtde_c.getInverseKinematics(pose)
+            
+            if joints is None or len(joints) == 0:
+                print("❌ PROBLEMA: Cinemática inversa impossível")
+                diagnostics['sugestoes_correcao'].append("Ajustar posição ou orientação")
+                return diagnostics
+                
+            diagnostics['joints_calculadas'] = joints
+            diagnostics['pose_alcancavel'] = True
+            print(f"✅ Articulações calculadas: {[f'{j:.3f}' for j in joints]}")
+            
+            # 2. TESTE: Limites individuais das articulações
+            print("2️⃣ Verificando limites das articulações...")
+            current_joints = self.get_current_joints()
+            
+            joint_names = ['Base', 'Shoulder', 'Elbow', 'Wrist1', 'Wrist2', 'Wrist3']
+            
+            # Limites típicos UR (ajustar conforme seu modelo)
+            joint_limits = [
+                (-2*3.14159, 2*3.14159),  # Base: 360°
+                (-2*3.14159, 2*3.14159),  # Shoulder: 360° 
+                (-3.14159, 3.14159),      # Elbow: 180°
+                (-2*3.14159, 2*3.14159),  # Wrist1: 360°
+                (-2*3.14159, 2*3.14159),  # Wrist2: 360°
+                (-2*3.14159, 2*3.14159),  # Wrist3: 360°
+            ]
+            
+            for i, (joint_val, (min_lim, max_lim), name) in enumerate(zip(joints, joint_limits, joint_names)):
+                if joint_val < min_lim or joint_val > max_lim:
+                    print(f"❌ {name}: {joint_val:.3f} fora do limite [{min_lim:.3f}, {max_lim:.3f}]")
+                    diagnostics['joints_problematicas'].append((i, name, joint_val, min_lim, max_lim))
+                else:
+                    print(f"✅ {name}: {joint_val:.3f} OK")
+                    
+            # 3. TESTE ESPECÍFICO: Altura do cotovelo com base de ferro
+            print("3️⃣ Verificando conflito com base de ferro...")
+            elbow_angle = joints[1]  # Joint 1 = elbow
+            
+            # Cálculo mais preciso da altura do cotovelo
+            # Para UR, a altura do cotovelo depende do ângulo da junta do cotovelo
+            # Altura aproximada: altura_base + altura_cotovelo_nominal * cos(elbow_angle)
+            altura_cotovelo_estimada = 0.162 * abs(math.cos(elbow_angle))  # 162mm para UR típico
+            altura_cotovelo_real = altura_cotovelo_estimada
+            
+            limite_minimo_cotovelo = self.config.altura_base_ferro + self.config.margem_seguranca_cotovelo
+            
+            if altura_cotovelo_real < limite_minimo_cotovelo:
+                print(f"❌ CONFLITO BASE DE FERRO: cotovelo em {altura_cotovelo_real:.3f}m < {limite_minimo_cotovelo:.3f}m")
+                diagnostics['conflitos_base_ferro'] = True
+                diagnostics['sugestoes_correcao'].append(f"Elevar TCP em {limite_minimo_cotovelo - altura_cotovelo_real + 0.01:.3f}m")
+            else:
+                print(f"✅ Base de ferro OK: cotovelo em {altura_cotovelo_real:.3f}m")
+                
+            # 4. TESTE: Singularidades cinemáticas
+            print("4️⃣ Verificando singularidades...")
+            
+            # Detectar singularidade de punho (wrist singularity)
+            wrist_config = math.sqrt(joints[4]**2 + joints[5]**2)
+            if wrist_config < 0.1:  # Muito próximo de singularidade
+                print("⚠️ AVISO: Próximo à singularidade de punho")
+                diagnostics['singularidades'] = True
+                diagnostics['sugestoes_correcao'].append("Ajustar orientação do TCP")
+                
+            # Detectar singularidade de cotovelo (elbow singularity)
+            if abs(joints[1]) < 0.1 and abs(joints[2]) < 0.1:
+                print("⚠️ AVISO: Próximo à singularidade de cotovelo")
+                diagnostics['singularidades'] = True
+                
+            # 5. TESTE: Mudanças extremas de articulação
+            print("5️⃣ Verificando mudanças extremas...")
+            if current_joints:
+                for i, (current, target, name) in enumerate(zip(current_joints, joints, joint_names)):
+                    mudanca = abs(target - current)
+                    if mudanca > self.config.max_mudanca_junta:
+                        print(f"⚠️ {name}: Mudança grande {mudanca:.3f} > {self.config.max_mudanca_junta:.3f}")
+                        diagnostics['sugestoes_correcao'].append(f"Movimento intermediário para {name}")
+                        
+            # 6. GERAR RELATÓRIO FINAL
+            print("\n📊 RELATÓRIO DE DIAGNÓSTICO:")
+            print(f"   Cinemática possível: {'✅' if diagnostics['pose_alcancavel'] else '❌'}")
+            print(f"   Articulações problemáticas: {len(diagnostics['joints_problematicas'])}")
+            print(f"   Conflito base ferro: {'❌' if diagnostics['conflitos_base_ferro'] else '✅'}")
+            print(f"   Singularidades detectadas: {'⚠️' if diagnostics['singularidades'] else '✅'}")
+            
+            if diagnostics['sugestoes_correcao']:
+                print("🔧 SUGESTÕES DE CORREÇÃO:")
+                for i, sugestao in enumerate(diagnostics['sugestoes_correcao'], 1):
+                    print(f"   {i}. {sugestao}")
+                    
+            return diagnostics
+            
+        except Exception as e:
+            print(f"❌ Erro durante diagnóstico: {e}")
+            diagnostics['sugestoes_correcao'].append("Verificar conexão com robô")
+            return diagnostics
 
     def validate_pose_reachability(self, pose):
         """
@@ -145,7 +261,7 @@ class URController:
         if not self.validate_pose_reachability(pose):
             return False
         
-        if not self.validate_shoulder_height_constraint(pose):
+        if not self.validate_elbow_height_constraint(pose):
             return False
             
         # 3. 🔥 VALIDAÇÃO OFICIAL UR_RTDE - isPoseWithinSafetyLimits
@@ -208,8 +324,7 @@ class URController:
         """Alias para compatibilidade"""
         return self.get_current_pose()
 
-    def get_current_joints(self):
-        """Retorna as posições atuais das juntas"""
+    def get_current_joints(self): 
         if self.is_connected():
             try:
                 joints = self.rtde_r.getActualQ()
@@ -227,20 +342,114 @@ class URController:
         """
         return self.validate_pose_complete(target_pose)
 
+    # SUBSTITUIR a função correct_pose_automatically no URController
+
     def correct_pose_automatically(self, pose):
         """
-        🔥 NOVA FUNÇÃO: Corrige pose automaticamente quando rejeitada
-        Aplica estratégias inteligentes para tornar a pose válida
+        🔥 CORREÇÃO INTELIGENTE BASEADA EM ARTICULAÇÕES
+        Agora usa diagnóstico avançado para correções precisas
         """
-        print(f"🔧 Iniciando correção automática da pose: {[f'{p:.3f}' for p in pose]}")
+        print(f"🔧 Iniciando correção INTELIGENTE da pose: {[f'{p:.3f}' for p in pose]}")
+        
+        # 1. DIAGNÓSTICO COMPLETO
+        diagnostics = self.diagnostic_pose_rejection(pose)
+        
+        if not diagnostics['pose_alcancavel']:
+            print("❌ Pose impossível cinematicamente - tentando correções básicas")
+            return self._correct_basic_workspace(pose)  # Fallback para método antigo
         
         corrected_pose = pose.copy()
         corrections_applied = []
         
-        # 1. Correção de workspace - ajustar coordenadas para limites
+        # 2. CORREÇÃO: Base de ferro (PRIORITÁRIA)
+        if diagnostics['conflitos_base_ferro']:
+            print("🔧 Corrigindo conflito com base de ferro...")
+            
+            # Estratégia: Elevar Z até cotovelo ficar seguro
+            current_z = corrected_pose[2]
+            joints = diagnostics['joints_calculadas']
+            elbow_angle = joints[1]
+            
+            # Calcular Z mínimo necessário
+            altura_cotovelo_necessaria = self.config.altura_base_ferro + self.config.margem_seguranca_cotovelo + 0.01
+            
+            # Aproximação: Z_tcp ≈ altura_cotovelo + offset_tcp_cotovelo
+            # Para configuração típica UR, offset TCP-cotovelo ≈ 0.3m
+            z_minimo_tcp = altura_cotovelo_necessaria + 0.3
+            
+            if current_z < z_minimo_tcp:
+                corrected_pose[2] = z_minimo_tcp
+                corrections_applied.append(f"Z elevado para proteger cotovelo: {current_z:.3f} → {z_minimo_tcp:.3f}")
+        
+        # 3. CORREÇÃO: Articulações problemáticas
+        if diagnostics['joints_problematicas']:
+            print("🔧 Corrigindo articulações fora dos limites...")
+            
+            joints = diagnostics['joints_calculadas'].copy()
+            
+            for joint_idx, name, valor, min_lim, max_lim in diagnostics['joints_problematicas']:
+                # Corrigir articulação para dentro dos limites
+                if valor < min_lim:
+                    joints[joint_idx] = min_lim + 0.05  # Margem de segurança
+                    corrections_applied.append(f"{name}: {valor:.3f} → {joints[joint_idx]:.3f} (limite mín)")
+                elif valor > max_lim:
+                    joints[joint_idx] = max_lim - 0.05  # Margem de segurança  
+                    corrections_applied.append(f"{name}: {valor:.3f} → {joints[joint_idx]:.3f} (limite máx)")
+            
+            # Recalcular pose a partir das articulações corrigidas
+            try:
+                new_pose = self.rtde_c.getForwardKinematics(joints)
+                if new_pose:
+                    corrected_pose = new_pose
+                    corrections_applied.append("Pose recalculada a partir de articulações corrigidas")
+            except Exception as e:
+                print(f"⚠️ Erro na cinemática direta: {e}")
+        
+        # 4. CORREÇÃO: Singularidades
+        if diagnostics['singularidades']:
+            print("🔧 Corrigindo singularidades...")
+            
+            # Ajustar orientação ligeiramente para sair da singularidade
+            orientation_adjustments = [
+                [0.05, 0, 0], [0, 0.05, 0], [0, 0, 0.05],
+                [-0.05, 0, 0], [0, -0.05, 0], [0, 0, -0.05]
+            ]
+            
+            for adjustment in orientation_adjustments:
+                test_pose = corrected_pose.copy()
+                test_pose[3] += adjustment[0]
+                test_pose[4] += adjustment[1]  
+                test_pose[5] += adjustment[2]
+                
+                # Testar se a nova orientação resolve o problema
+                test_joints = self.rtde_c.getInverseKinematics(test_pose)
+                if test_joints and self.rtde_c.isPoseWithinSafetyLimits(test_pose):
+                    corrected_pose = test_pose
+                    corrections_applied.append(f"Orientação ajustada: {adjustment}")
+                    break
+        
+        # 5. CORREÇÃO FINAL: Workspace básico (mantida da versão original)
+        corrected_pose = self._correct_basic_workspace(corrected_pose)
+        
+        # 6. RELATÓRIO DE CORREÇÕES
+        if corrections_applied:
+            print("🔧 Correções aplicadas:")
+            for correction in corrections_applied:
+                print(f"   • {correction}")
+            print(f"🔧 Pose final corrigida: {[f'{p:.3f}' for p in corrected_pose]}")
+        else:
+            print("🔧 Nenhuma correção necessária")
+            
+        return corrected_pose
+
+    def _correct_basic_workspace(self, pose):
+        """Método auxiliar: correções básicas de workspace (código original)"""
+        corrected_pose = pose.copy()
+        corrections_applied = []
+        
         x, y, z, rx, ry, rz = corrected_pose
         
-        # Corrigir X
+        # Corrigir coordenadas para limites
         if x < self.workspace_limits['x_min']:
             corrected_pose[0] = self.workspace_limits['x_min'] + 0.01
             corrections_applied.append(f"X: {x:.3f} → {corrected_pose[0]:.3f}")
@@ -248,7 +457,6 @@ class URController:
             corrected_pose[0] = self.workspace_limits['x_max'] - 0.01
             corrections_applied.append(f"X: {x:.3f} → {corrected_pose[0]:.3f}")
             
-        # Corrigir Y
         if y < self.workspace_limits['y_min']:
             corrected_pose[1] = self.workspace_limits['y_min'] + 0.01
             corrections_applied.append(f"Y: {y:.3f} → {corrected_pose[1]:.3f}")
@@ -256,7 +464,6 @@ class URController:
             corrected_pose[1] = self.workspace_limits['y_max'] - 0.01
             corrections_applied.append(f"Y: {y:.3f} → {corrected_pose[1]:.3f}")
             
-        # Corrigir Z
         if z < self.workspace_limits['z_min']:
             corrected_pose[2] = self.workspace_limits['z_min'] + 0.01
             corrections_applied.append(f"Z: {z:.3f} → {corrected_pose[2]:.3f}")
@@ -264,66 +471,30 @@ class URController:
             corrected_pose[2] = self.workspace_limits['z_max'] - 0.01
             corrections_applied.append(f"Z: {z:.3f} → {corrected_pose[2]:.3f}")
 
-        # 4. Correção específica para altura do ombro
-        estimated_shoulder_z = corrected_pose[2] - 0.3
-        min_required_tcp_z = self.base_iron_height + self.shoulder_safety_margin + 0.3
-
-        if estimated_shoulder_z < self.base_iron_height + self.shoulder_safety_margin:
-            corrected_pose[2] = min_required_tcp_z
-            corrections_applied.append(f"TCP elevado para proteger ombro: {pose[2]:.3f} → {corrected_pose[2]:.3f}")
-            
-        # 2. Correção de orientação - normalizar rotações
+        # Correção de orientação
         rotation_magnitude = math.sqrt(rx**2 + ry**2 + rz**2)
         if rotation_magnitude > math.pi:
-            # Normalizar o vetor de rotação
-            factor = math.pi / rotation_magnitude * 0.95  # 95% do limite
+            factor = math.pi / rotation_magnitude * 0.95
             corrected_pose[3] = rx * factor
             corrected_pose[4] = ry * factor
             corrected_pose[5] = rz * factor
-            corrections_applied.append(f"Rotação normalizada: {rotation_magnitude:.3f} → {math.pi*0.95:.3f}")
-            
-        # 3. Verificar distância de movimento
-        current_pose = self.get_current_pose()
-        if current_pose:
-            distance = math.sqrt(
-                (corrected_pose[0] - current_pose[0])**2 +
-                (corrected_pose[1] - current_pose[1])**2 +
-                (corrected_pose[2] - current_pose[2])**2
-            )
-            
-            if distance > self.max_movement_distance:
-                # Reduzir movimento para limite máximo
-                factor = self.max_movement_distance / distance * 0.95
-                
-                corrected_pose[0] = current_pose[0] + (corrected_pose[0] - current_pose[0]) * factor
-                corrected_pose[1] = current_pose[1] + (corrected_pose[1] - current_pose[1]) * factor
-                corrected_pose[2] = current_pose[2] + (corrected_pose[2] - current_pose[2]) * factor
-                
-                corrections_applied.append(f"Distância reduzida: {distance:.3f}m → {self.max_movement_distance*0.95:.3f}m")
-        
-        if corrections_applied:
-            print("🔧 Correções aplicadas:")
-            for correction in corrections_applied:
-                print(f"   • {correction}")
-            print(f"🔧 Pose corrigida: {[f'{p:.3f}' for p in corrected_pose]}")
-        else:
-            print("🔧 Nenhuma correção de workspace necessária")
+            corrections_applied.append(f"Rotação normalizada")
             
         return corrected_pose
 
     def move_to_pose_with_smart_correction(self, pose, speed=None, acceleration=None, max_correction_attempts=None):
         """
-        🔥 FUNÇÃO PRINCIPAL: Movimento inteligente com correção automática
-        Tenta mover para a pose, e se rejeitada, aplica correções automáticas
+        🔥 MOVIMENTO INTELIGENTE ATUALIZADO com diagnóstico avançado
+        Agora identifica exatamente por que poses são rejeitadas e corrige especificamente
         """
         if max_correction_attempts is None:
-            max_correction_attempts = self.config.max_tentativas_correcao
+            max_correction_attempts = self.config.max_tentativas_correcao_articulacoes
         if speed is None:
             speed = self.speed
         if acceleration is None:
             acceleration = self.acceleration
             
-        print(f"🧠 Iniciando movimento INTELIGENTE para: {[f'{p:.3f}' for p in pose]}")
+        print(f"🧠 MOVIMENTO INTELIGENTE V2.0 para: {[f'{p:.3f}' for p in pose]}")
         
         if not self.is_connected():
             print("❌ Robô não está conectado")
@@ -335,13 +506,29 @@ class URController:
         for tentativa in range(max_correction_attempts):
             print(f"\n--- TENTATIVA {tentativa + 1}/{max_correction_attempts} ---")
             
-            # Testar pose atual
+            # 1. DIAGNÓSTICO COMPLETO (sempre primeiro)
+            if self.config.habilitar_diagnostico_avancado:
+                diagnostics = self.diagnostic_pose_rejection(current_pose)
+                
+                # Se pose é impossível cinematicamente, pular para próxima estratégia
+                if not diagnostics['pose_alcancavel']:
+                    print("❌ Pose cinematicamente impossível - aplicando correções drásticas")
+                    current_pose = self._apply_drastic_corrections(current_pose, original_pose)
+                    continue
+            
+            # 2. VALIDAÇÃO COMPLETA
             if self.validate_pose_complete(current_pose):
                 print("✅ Pose validada! Executando movimento...")
                 
                 try:
                     self.em_movimento = True
-                    success = self.rtde_c.moveL(current_pose, speed, acceleration)
+                    
+                    # NOVO: Tentar múltiplas configurações de articulações se habilitado
+                    success = False
+                    if self.config.usar_multiplas_configuracoes_ik:
+                        success = self._try_multiple_ik_configurations(current_pose, speed, acceleration)
+                    else:
+                        success = self.rtde_c.moveL(current_pose, speed, acceleration)
                     
                     if success:
                         time.sleep(self.pause_between_moves)
@@ -365,14 +552,125 @@ class URController:
                 finally:
                     self.em_movimento = False
                     
-            # Se chegou aqui, pose foi rejeitada - aplicar correções
+            # 3. APLICAR CORREÇÕES INTELIGENTES
             if tentativa < max_correction_attempts - 1:
-                print(f"🔧 Pose rejeitada, aplicando correções...")
-                current_pose = self.correct_pose_automatically(current_pose)
+                print(f"🔧 Pose rejeitada, aplicando correções INTELIGENTES...")
+                
+                # Usar o novo sistema de correção baseado em articulações
+                corrected_pose = self.correct_pose_automatically(current_pose)
+                
+                # Se correção não mudou nada, tentar estratégias alternativas
+                if self._poses_are_equal(corrected_pose, current_pose):
+                    print("🔧 Correção automática não funcionou, tentando estratégias alternativas...")
+                    corrected_pose = self._apply_alternative_corrections(current_pose, tentativa)
+                    
+                current_pose = corrected_pose
             else:
                 print(f"❌ Esgotadas {max_correction_attempts} tentativas de correção")
-                
+                    
         return False, None
+
+    def _try_multiple_ik_configurations(self, pose, speed, acceleration):
+        """NOVO: Tenta diferentes configurações de cinemática inversa"""
+        print("🔄 Tentando múltiplas configurações IK...")
+        
+        # Tentar pequenas variações na orientação para encontrar configuração válida  
+        orientation_variations = [
+            [0, 0, 0],           # Original
+            [0.01, 0, 0],        # Pequena rotação em X
+            [0, 0.01, 0],        # Pequena rotação em Y  
+            [0, 0, 0.01],        # Pequena rotação em Z
+            [-0.01, 0, 0],       # Rotação negativa em X
+            [0, -0.01, 0],       # Rotação negativa em Y
+            [0, 0, -0.01],       # Rotação negativa em Z
+            [0.01, 0.01, 0],     # Combinação XY
+        ]
+        
+        for i, variation in enumerate(orientation_variations):
+            if i >= self.config.max_configuracoes_ik:
+                break
+                
+            test_pose = pose.copy()
+            test_pose[3] += variation[0]
+            test_pose[4] += variation[1] 
+            test_pose[5] += variation[2]
+            
+            try:
+                # Verificar se esta variação é válida
+                if self.rtde_c.isPoseWithinSafetyLimits(test_pose):
+                    print(f"✅ Configuração {i+1} válida - executando...")
+                    success = self.rtde_c.moveL(test_pose, speed, acceleration)
+                    if success:
+                        return True
+                        
+            except Exception as e:
+                continue  # Tentar próxima configuração
+                
+        print("❌ Nenhuma configuração IK funcionou")
+        return False
+
+    def _apply_drastic_corrections(self, pose, original_pose):
+        """NOVO: Correções drásticas para poses impossíveis"""
+        print("🚨 Aplicando correções DRÁSTICAS...")
+        
+        corrected = pose.copy()
+        
+        # 1. Mover para posição mais próxima do centro do workspace
+        center_workspace = [0.4, 0.0, 0.3, 0.0, 3.14, 0.0]
+        
+        # Interpolar 50% em direção ao centro
+        for i in range(3):  # Apenas posição, não orientação
+            corrected[i] = pose[i] * 0.5 + center_workspace[i] * 0.5
+            
+        # 2. Garantir altura mínima segura
+        min_safe_z = self.config.altura_base_ferro + self.config.margem_seguranca_base_ferro + 0.1
+        if corrected[2] < min_safe_z:
+            corrected[2] = min_safe_z
+            
+        print(f"🚨 Pose drasticamente corrigida: {[f'{p:.3f}' for p in corrected]}")
+        return corrected
+
+    def _apply_alternative_corrections(self, pose, attempt_number):
+        """NOVO: Estratégias alternativas baseadas no número da tentativa"""
+        print(f"🔧 Estratégia alternativa #{attempt_number + 1}")
+        
+        corrected = pose.copy()
+        
+        if attempt_number == 0:
+            # Tentativa 1: Elevar significativamente
+            corrected[2] += 0.05
+            print(f"🔧 Elevando Z em 5cm: {corrected[2]:.3f}")
+            
+        elif attempt_number == 1:
+            # Tentativa 2: Mover para posição mais central
+            corrected[0] = 0.4  # X central
+            corrected[1] = 0.0  # Y central
+            corrected[2] = max(corrected[2], 0.3)  # Z seguro
+            print(f"🔧 Movendo para posição central segura")
+            
+        elif attempt_number == 2:
+            # Tentativa 3: Orientação mais conservadora
+            corrected[3] = 0.0   # rx = 0
+            corrected[4] = 3.14  # ry = π (TCP para baixo)
+            corrected[5] = 0.0   # rz = 0
+            print(f"🔧 Orientação conservadora aplicada")
+            
+        else:
+            # Tentativa final: Pose home modificada
+            home_pose = self.config.pose_home.copy()
+            home_pose[0] = pose[0]  # Manter X desejado
+            home_pose[1] = pose[1]  # Manter Y desejado
+            corrected = home_pose
+            print(f"🔧 Usando pose home modificada")
+            
+        return corrected
+
+    def _poses_are_equal(self, pose1, pose2, tolerance=0.001):
+        """AUXILIAR: Verifica se duas poses são iguais dentro da tolerância"""
+        for i in range(6):
+            if abs(pose1[i] - pose2[i]) > tolerance:
+                return False
+        return True
 
     def move_with_intermediate_points(self, target_pose, speed=None, acceleration=None, num_points=3):
         """
@@ -576,6 +874,11 @@ class URController:
         except Exception as e:
             print(f"❌ Erro durante movimento de peça: {e}")
             return False
+        
+    def set_iron_base_height(self, height):
+        """Configura a altura da base de ferro"""
+        self.base_iron_height = height
+        print(f"🔧 Altura da base de ferro configurada: {height:.3f}m")
 
     def enable_safety_mode(self, enable=True):
         """
@@ -704,7 +1007,232 @@ class URController:
         
         return resultados
     
-    def set_iron_base_height(self, height):
-        """Configura a altura da base de ferro"""
-        self.base_iron_height = height
-        print(f"🔧 Altura da base de ferro configurada: {height:.3f}m")
+
+    def test_iron_base_configuration(self):
+        """
+        🧪 TESTE ESPECÍFICO: Valida configuração da base de ferro
+        Use esta função para verificar se as configurações estão corretas
+        """
+        print("🧪 TESTE DE CONFIGURAÇÃO - Base de Ferro")
+        print("=" * 50)
+        
+        # 1. Verificar configurações
+        print(f"📋 Configurações atuais:")
+        print(f"   Altura base ferro: {self.config.altura_base_ferro:.3f}m")
+        print(f"   Margem segurança: {self.config.margem_seguranca_cotovelo:.3f}m")
+        print(f"   Modelo UR: {getattr(self.config, 'modelo_ur', 'Não definido')}")
+        print(f"   Altura cotovelo nominal: {getattr(self.config, 'altura_cotovelo_nominal', 0.162):.3f}m")
+        
+        # 2. Testar poses problemáticas (baseado no seu log)
+        poses_problema = [
+            [0.408, 0.215, 0.420, 0.000, 3.140, 0.000],  # Pose que falhou no log
+            [0.400, 0.200, 0.300, 0.000, 3.140, 0.000],  # Variação mais baixa
+            [0.400, 0.200, 0.130, 0.000, 3.140, 0.000],  # Muito baixa (deve falhar)
+        ]
+        
+        print(f"\n🧪 Testando {len(poses_problema)} poses problemáticas:")
+        
+        for i, pose in enumerate(poses_problema):
+            print(f"\n--- TESTE {i+1}: {[f'{p:.3f}' for p in pose]} ---")
+            
+            # Diagnóstico completo
+            diagnostics = self.diagnostic_pose_rejection(pose)
+            
+            # Teste de correção
+            corrected_pose = self.correct_pose_automatically(pose)
+            
+            # Verificar se correção funcionou
+            if self.rtde_c.isPoseWithinSafetyLimits(corrected_pose):
+                print(f"✅ SUCESSO: Correção funcionou!")
+                print(f"   Original: {[f'{p:.3f}' for p in pose]}")
+                print(f"   Corrigida: {[f'{p:.3f}' for p in corrected_pose]}")
+            else:
+                print(f"❌ FALHA: Correção não resolveu o problema")
+                
+        return True
+
+    def debug_calibration_failure(self, failed_poses):
+        """
+        🔍 DEBUG ESPECÍFICO: Analisa falhas na calibração
+        Use com as poses que falharam na calibração
+        """
+        print("🔍 DEBUG - Análise de Falhas na Calibração")
+        print("=" * 50)
+        
+        if not isinstance(failed_poses, list):
+            failed_poses = [failed_poses]
+            
+        for i, pose in enumerate(failed_poses):
+            print(f"\n🔍 ANALISANDO POSE {i+1}: {[f'{p:.3f}' for p in pose]}")
+            
+            # 1. Diagnóstico detalhado
+            diagnostics = self.diagnostic_pose_rejection(pose)
+            
+            # 2. Tentar todas as estratégias de correção
+            print("\n🔧 TESTANDO ESTRATÉGIAS DE CORREÇÃO:")
+            
+            strategies = [
+                ("Correção Automática", self.correct_pose_automatically),
+                ("Correção Drástica", lambda p: self._apply_drastic_corrections(p, p)),
+                ("Elevação Z +5cm", lambda p: self._elevate_pose(p, 0.05)),
+                ("Elevação Z +10cm", lambda p: self._elevate_pose(p, 0.10)),
+                ("Posição Central", lambda p: self._move_to_center(p)),
+            ]
+            
+            working_strategies = []
+            
+            for strategy_name, strategy_func in strategies:
+                try:
+                    corrected = strategy_func(pose)
+                    if self.rtde_c.isPoseWithinSafetyLimits(corrected):
+                        working_strategies.append((strategy_name, corrected))
+                        print(f"   ✅ {strategy_name}: FUNCIONOU")
+                    else:
+                        print(f"   ❌ {strategy_name}: Falhou")
+                except Exception as e:
+                    print(f"   ❌ {strategy_name}: Erro - {e}")
+                    
+            # 3. Relatório final
+            print(f"\n📊 RELATÓRIO FINAL - Pose {i+1}:")
+            print(f"   Estratégias que funcionaram: {len(working_strategies)}")
+            
+            if working_strategies:
+                print("   💡 SOLUÇÕES ENCONTRADAS:")
+                for strategy_name, corrected_pose in working_strategies:
+                    print(f"      • {strategy_name}: {[f'{p:.3f}' for p in corrected_pose]}")
+            else:
+                print("   ❌ NENHUMA SOLUÇÃO ENCONTRADA - Pose impossível")
+            
+        return working_strategies
+
+    def _elevate_pose(self, pose, elevation):
+        """AUXILIAR: Eleva a pose em Z"""
+        corrected = pose.copy()
+        corrected[2] += elevation
+        return corrected
+
+    def _move_to_center(self, pose):
+        """AUXILIAR: Move pose para posição mais central"""
+        corrected = pose.copy()
+        corrected[0] = 0.4  # X central
+        corrected[1] = 0.0  # Y central
+        corrected[2] = max(corrected[2], 0.3)  # Z mínimo seguro
+        return corrected
+
+    def benchmark_correction_system(self):
+        """
+        📊 BENCHMARK: Testa o sistema de correção com várias poses
+        """
+        print("📊 BENCHMARK - Sistema de Correção")
+        print("=" * 50)
+        
+        # Poses de teste variadas
+        test_poses = [
+            # Poses normais
+            [0.3, 0.0, 0.3, 0.0, 3.14, 0.0],
+            [0.4, 0.1, 0.2, 0.0, 3.14, 0.0], 
+            
+            # Poses problemáticas (muito baixas)
+            [0.4, 0.2, 0.13, 0.0, 3.14, 0.0],
+            [0.5, 0.3, 0.10, 0.0, 3.14, 0.0],
+            
+            # Poses extremas
+            [0.7, 0.3, 0.15, 0.5, 3.14, 0.5],
+            [0.2, -0.3, 0.12, -0.5, 2.5, -0.3],
+            
+            # Poses impossíveis
+            [1.0, 0.8, 0.05, 1.0, 4.0, 2.0],
+        ]
+        
+        results = {
+            'total': len(test_poses),
+            'original_valid': 0,
+            'corrected_valid': 0,
+            'impossible': 0,
+            'details': []
+        }
+        
+        for i, pose in enumerate(test_poses):
+            print(f"\n📊 Teste {i+1}/{len(test_poses)}: {[f'{p:.3f}' for p in pose]}")
+            
+            # Teste original
+            original_valid = self.rtde_c.isPoseWithinSafetyLimits(pose)
+            if original_valid:
+                results['original_valid'] += 1
+                
+            # Teste com correção
+            corrected = self.correct_pose_automatically(pose)
+            corrected_valid = self.rtde_c.isPoseWithinSafetyLimits(corrected)
+            
+            if corrected_valid:
+                results['corrected_valid'] += 1
+                status = "✅ CORRIGIDA"
+            elif original_valid:
+                status = "⚠️ PIOROU"
+            else:
+                results['impossible'] += 1
+                status = "❌ IMPOSSÍVEL"
+                
+            results['details'].append({
+                'pose': pose,
+                'original_valid': original_valid,
+                'corrected_valid': corrected_valid,
+                'status': status
+            })
+            
+            print(f"   Original: {'✅' if original_valid else '❌'} | Corrigida: {'✅' if corrected_valid else '❌'} | {status}")
+        
+        # Relatório final
+        print(f"\n📊 RELATÓRIO FINAL DO BENCHMARK:")
+        print(f"   Total de poses testadas: {results['total']}")
+        print(f"   Originalmente válidas: {results['original_valid']} ({results['original_valid']/results['total']*100:.1f}%)")
+        print(f"   Válidas após correção: {results['corrected_valid']} ({results['corrected_valid']/results['total']*100:.1f}%)")
+        print(f"   Impossíveis: {results['impossible']} ({results['impossible']/results['total']*100:.1f}%)")
+        print(f"   Taxa de melhoria: {((results['corrected_valid'] - results['original_valid'])/results['total']*100):.1f}%")
+        
+        return results
+
+    # FUNÇÃO PARA USAR NO SEU CASO ESPECÍFICO
+    def fix_calibration_pose(self, position_index, target_pose):
+        """
+        🎯 CORREÇÃO ESPECÍFICA: Para usar na calibração
+        Retorna a melhor pose corrigida para uma posição específica
+        """
+        print(f"🎯 Corrigindo pose para posição {position_index}")
+        
+        # 1. Diagnóstico
+        diagnostics = self.diagnostic_pose_rejection(target_pose)
+        
+        # 2. Se pose é válida, retornar original
+        if self.rtde_c.isPoseWithinSafetyLimits(target_pose):
+            print("✅ Pose original já é válida")
+            return target_pose, True
+            
+        # 3. Tentar correção automática
+        corrected = self.correct_pose_automatically(target_pose)
+        if self.rtde_c.isPoseWithinSafetyLimits(corrected):
+            print("✅ Correção automática funcionou")
+            return corrected, True
+            
+        # 4. Estratégias específicas para calibração
+        calibration_strategies = [
+            ("Elevação +3cm", lambda p: self._elevate_pose(p, 0.03)),
+            ("Elevação +5cm", lambda p: self._elevate_pose(p, 0.05)),
+            ("Elevação +8cm", lambda p: self._elevate_pose(p, 0.08)),
+            ("Posição mais central", self._move_to_center),
+        ]
+        
+        for strategy_name, strategy_func in calibration_strategies:
+            try:
+                test_pose = strategy_func(target_pose)
+                if self.rtde_c.isPoseWithinSafetyLimits(test_pose):
+                    print(f"✅ {strategy_name} funcionou")
+                    return test_pose, True
+            except Exception as e:
+                continue
+                
+        print("❌ Nenhuma estratégia funcionou para esta pose")
+        return target_pose, False
+        
+
+    

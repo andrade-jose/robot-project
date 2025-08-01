@@ -330,3 +330,385 @@
 2025-07-31 12:17:18,159 - RobotService - INFO -  Movimento: smart_correction
 2025-07-31 12:17:18,613 - RobotService - ERROR -  Movimento falhou - smart_correction
 2025-07-31 12:17:18,613 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-07-31 12:43:48,533 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-07-31 12:43:48,533 - RobotService - INFO -  Movendo para posição home
+2025-07-31 12:43:48,533 - RobotService - INFO -  Movimento: ultra_safe
+2025-07-31 12:43:48,545 - RobotService - ERROR -  Movimento falhou - ultra_safe
+2025-07-31 12:43:49,553 - RobotService - INFO -  Robô desconectado
+2025-07-31 12:43:49,554 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-07-31 12:43:51,968 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 12:43:51,968 - TapatanOrchestrator - ERROR - Erro ao inicializar robô: RobotService.__init__() got an unexpected keyword argument 'robot_ip'
+2025-07-31 12:52:48,763 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 12:52:48,764 - TapatanOrchestrator - ERROR - Erro ao inicializar robô: RobotService.__init__() got an unexpected keyword argument 'robot_ip'
+2025-07-31 13:01:55,600 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 13:01:55,600 - TapatanOrchestrator - ERROR - Erro ao inicializar robô: RobotService.__init__() got an unexpected keyword argument 'robot_ip'
+2025-07-31 13:02:10,179 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 13:02:10,183 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-07-31 13:02:15,479 - RobotService - ERROR -  Erro ao conectar: ur_rtde: Failed to start control script, before timeout of 5 seconds
+2025-07-31 13:02:15,480 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-31 13:02:25,978 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 13:02:25,981 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-07-31 13:02:31,336 - RobotService - ERROR -  Erro ao conectar: ur_rtde: Failed to start control script, before timeout of 5 seconds
+2025-07-31 13:02:31,336 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-31 14:26:39,267 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 14:26:39,269 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-07-31 14:26:41,273 - RobotService - ERROR -  Erro ao conectar: Timeout connecting to UR dashboard server.
+2025-07-31 14:26:41,273 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-31 14:27:21,616 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 14:27:21,618 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-07-31 14:27:23,627 - RobotService - ERROR -  Erro ao conectar: Timeout connecting to UR dashboard server.
+2025-07-31 14:27:23,628 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-07-31 14:30:15,052 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-07-31 14:30:15,056 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-07-31 14:30:16,400 - RobotService - INFO -  Robô conectado com sucesso
+2025-07-31 14:30:16,400 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-07-31 14:30:16,400 - RobotService - INFO -  Movendo para posição home
+2025-07-31 14:30:16,400 - RobotService - INFO -  Movimento: ultra_safe
+2025-07-31 14:30:28,281 - RobotService - INFO - Movimento concluído - ultra_safe
+2025-07-31 14:30:28,281 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-07-31 14:30:28,281 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-07-31 14:30:28,281 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-07-31 14:30:57,265 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-07-31 14:30:57,265 - RobotService - INFO -  Movendo para posição home
+2025-07-31 14:30:57,266 - RobotService - INFO -  Movimento: ultra_safe
+2025-07-31 14:30:58,299 - RobotService - INFO - Movimento concluído - ultra_safe
+2025-07-31 14:30:58,300 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-07-31 14:30:58,300 - RobotService - INFO -  Movimento: smart_correction
+2025-07-31 14:31:03,868 - RobotService - INFO - Movimento concluído - smart_correction
+2025-07-31 14:31:03,868 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-07-31 14:31:03,868 - RobotService - INFO -  Movimento: smart_correction
+2025-07-31 14:31:07,844 - RobotService - INFO - Movimento concluído - smart_correction
+2025-07-31 14:31:07,844 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-07-31 14:31:07,845 - RobotService - INFO -  Movimento: smart_correction
+2025-07-31 14:31:07,867 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-07-31 14:31:07,867 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-08-01 09:21:08,533 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 09:21:08,535 - RobotService - INFO -  Movendo para posição home
+2025-08-01 09:21:08,535 - RobotService - ERROR -  Robô não está conectado
+2025-08-01 09:21:21,943 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 09:21:21,945 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 09:21:22,158 - RobotService - ERROR -  Erro ao conectar: One of the RTDE input registers are already in use! Currently you must disable the EtherNet/IP adapter, PROFINET or any MODBUS unit configured on the robot. This might change in the future.
+2025-08-01 09:21:22,158 - TapatanOrchestrator - ERROR - Falha ao conectar com o robô
+2025-08-01 10:19:39,384 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:19:39,387 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:19:40,358 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:19:40,358 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:19:40,358 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:19:44,317 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:19:44,317 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:19:44,317 - TapatanOrchestrator - ERROR - Erro na inicialização: 'ConfigJogo' object has no attribute 'auto_calibrar'
+2025-08-01 10:21:37,976 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:21:37,978 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:21:38,638 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:21:38,638 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:21:38,638 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:21:39,679 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:21:39,679 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:21:39,679 - TapatanOrchestrator - ERROR - Erro na inicialização: 'ConfigJogo' object has no attribute 'auto_calibrar'
+2025-08-01 10:23:32,140 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:23:32,143 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:23:32,945 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:23:32,945 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:23:32,945 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:23:33,990 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:23:33,991 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:23:33,991 - TapatanOrchestrator - ERROR - Erro na inicialização: 'ConfigJogo' object has no attribute 'auto_calibrar'
+2025-08-01 10:30:46,436 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:30:46,438 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:30:47,135 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:30:47,135 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:30:47,136 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:30:48,180 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:30:48,180 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:30:48,180 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:36:22,495 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:36:22,499 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:36:23,715 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:36:23,715 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:36:23,715 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:36:24,766 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:36:24,766 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:36:24,766 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:36:24,767 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:37:02,556 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 10:37:02,557 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:37:03,596 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:37:03,599 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:37:08,226 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:37:08,230 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:37:11,556 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:37:11,558 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:37:11,581 - RobotService - ERROR -  Erro durante movimento: 'URController' object has no attribute 'altura_base_ferro'
+2025-08-01 10:37:11,581 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-08-01 10:46:42,374 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 10:46:42,380 - RobotService - ERROR -  Erro durante movimento: 'URController' object has no attribute 'altura_base_ferro'
+2025-08-01 10:46:43,385 - RobotService - INFO -  Robô desconectado
+2025-08-01 10:46:43,385 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 10:46:47,209 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:46:47,211 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:46:47,850 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:46:47,850 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:46:47,850 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:46:47,851 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:46:51,807 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:46:51,807 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:46:51,807 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:46:51,808 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:47:41,565 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 10:47:41,565 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:47:42,598 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:47:43,613 - RobotService - INFO -  Robô desconectado
+2025-08-01 10:47:43,613 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 10:47:48,763 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:47:48,766 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:47:49,403 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:47:49,404 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:47:49,405 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:47:49,405 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:47:50,437 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:47:50,437 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:47:50,437 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:47:50,437 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:47:58,795 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 10:47:58,796 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:47:58,796 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:47:59,829 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:47:59,829 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:47:59,829 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:47:59,830 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:47:59,830 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:48:04,468 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:48:04,468 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:48:04,468 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:48:04,468 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:48:04,469 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:48:07,786 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:48:07,787 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:48:07,787 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:48:07,788 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:48:07,788 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:48:07,797 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 10:48:07,797 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 10:48:07,797 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-08-01 10:52:53,122 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 10:52:53,122 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:52:53,124 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 10:52:53,124 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 10:52:54,130 - RobotService - INFO -  Robô desconectado
+2025-08-01 10:52:54,130 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 10:53:12,340 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:53:12,343 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:53:13,332 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:53:13,332 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:53:13,332 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:53:13,333 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:53:17,298 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:53:17,298 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:53:17,298 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:53:17,299 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:53:29,759 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 10:53:29,759 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:53:29,759 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:53:30,792 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:53:30,792 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:53:30,792 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:53:30,793 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:53:30,793 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:53:35,416 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:53:35,416 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:53:35,416 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:53:35,416 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:53:35,417 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:53:38,730 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:53:38,730 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:53:38,730 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.420
+2025-08-01 10:53:38,731 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:53:38,731 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:53:38,737 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 10:53:38,738 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 10:53:38,738 - TapatanOrchestrator - ERROR - Falha ao testar posição 8
+2025-08-01 10:57:44,537 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:57:44,539 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:57:45,836 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:57:45,836 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:57:45,836 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:57:45,836 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:57:49,800 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:57:49,800 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:57:49,801 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:57:49,801 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:58:00,897 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 10:58:00,898 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:58:00,898 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:58:01,931 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:58:01,931 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:58:01,931 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.400
+2025-08-01 10:58:01,931 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:58:01,931 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:58:07,097 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:58:07,097 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:58:07,097 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.400
+2025-08-01 10:58:07,098 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:58:07,098 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:58:10,525 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:58:10,526 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 10:58:10,526 - RobotService - INFO - Pose corrigida para proteger ombro: Z 0.130 -> 0.400
+2025-08-01 10:58:10,526 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 10:58:10,526 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:58:13,859 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:58:13,859 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 10:58:17,978 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 10:58:17,978 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-08-01 10:58:29,420 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 10:58:30,428 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 10:58:31,307 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 10:58:31,307 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 10:58:31,307 - RobotService - INFO -  Movendo para posição home
+2025-08-01 10:58:31,308 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 10:58:32,341 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 10:58:32,341 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 10:58:32,341 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 10:58:32,342 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 10:58:32,342 - TapatanOrchestrator - INFO - Iniciando nova partida de Tapatan...
+2025-08-01 10:58:32,342 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 10:58:32,342 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-08-01 10:58:32,342 - RobotService - INFO -  Correção inteligente: HABILITADA
+2025-08-01 10:58:33,388 - RobotService - INFO -  Precisão do movimento: 0.0mm
+2025-08-01 10:58:33,388 - TapatanOrchestrator - INFO - Partida iniciada! Aguardando primeiro movimento...
+2025-08-01 10:58:37,360 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-08-01 10:58:37,360 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-08-01 10:58:37,362 - RobotService - INFO -      Origem: Pose(x=0.238, y=0.065, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 10:58:37,362 - RobotService - INFO -      Destino: Pose(x=0.298, y=0.125, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 10:58:37,362 - RobotService - INFO -      Validação: complete
+2025-08-01 10:59:01,626 - RobotService - INFO -  Pick and place concluído
+2025-08-01 10:59:01,627 - TapatanOrchestrator - INFO - Peça movida de 0 para 4
+2025-08-01 10:59:20,889 - TapatanOrchestrator - INFO - Processando jogada humano: pos=None, orig=8, dest=5
+2025-08-01 10:59:21,891 - TapatanOrchestrator - INFO - Executando jogada do robô...
+2025-08-01 10:59:21,892 - RobotService - INFO -  Iniciando pick and place AVANÇADO:
+2025-08-01 10:59:21,892 - RobotService - INFO -      Origem: Pose(x=0.298, y=0.185, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 10:59:21,892 - RobotService - INFO -      Destino: Pose(x=0.358, y=0.185, z=0.030, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 10:59:21,892 - RobotService - INFO -      Validação: complete
+2025-08-01 10:59:44,870 - RobotService - INFO -  Pick and place concluído
+2025-08-01 10:59:44,870 - TapatanOrchestrator - INFO - Peça movida de 7 para 8
+2025-08-01 11:08:38,260 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 11:08:38,261 - TapatanOrchestrator - INFO - Jogo parado
+2025-08-01 11:08:38,261 - RobotService - INFO -  Movendo para: Pose(x=0.400, y=0.000, z=0.400, rx=0.000, ry=3.140, rz=0.000)
+2025-08-01 11:08:38,262 - RobotService - INFO -  Estratégia: smart_correction, Validação: advanced
+2025-08-01 11:08:38,262 - RobotService - INFO -  Correção inteligente: HABILITADA
+2025-08-01 11:08:41,636 - RobotService - INFO -  Precisão do movimento: 0.0mm
+2025-08-01 11:08:43,640 - RobotService - INFO -  Robô desconectado
+2025-08-01 11:08:43,641 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 11:09:10,732 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 11:09:10,733 - TapatanOrchestrator - ERROR - Erro ao inicializar robô: 'ConfigRobo' object has no attribute 'offset_cotovelo'
+2025-08-01 11:10:29,861 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 11:10:29,866 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 11:10:32,928 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 11:10:32,928 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 11:10:32,928 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:10:32,929 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:10:37,791 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:10:37,792 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 11:10:37,792 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 11:10:37,793 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 11:10:49,961 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 11:10:49,962 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:10:49,962 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:10:51,004 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:10:51,004 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:10:51,005 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.400
+2025-08-01 11:10:51,005 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:10:51,005 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:10:57,186 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 11:10:57,186 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:10:57,187 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.400
+2025-08-01 11:10:57,187 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:10:57,187 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:11:01,061 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 11:11:01,061 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:11:01,062 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.400
+2025-08-01 11:11:01,062 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:11:01,062 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:11:04,898 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 11:11:04,898 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:11:09,689 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 11:11:09,689 - TapatanOrchestrator - INFO - Calibração concluída com sucesso
+2025-08-01 11:18:42,525 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 11:18:42,526 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:18:47,653 - RobotService - INFO -  Movimento concluído - smart_correction
+2025-08-01 11:18:49,365 - RobotService - INFO -  Robô desconectado
+2025-08-01 11:18:49,365 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 11:18:57,943 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 11:18:57,947 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 11:19:01,181 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 11:19:01,181 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 11:19:01,182 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:19:01,182 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:19:06,548 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:19:06,548 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 11:19:06,548 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 11:19:06,548 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 11:19:20,837 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 11:19:20,838 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:19:20,838 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:19:21,890 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:19:21,890 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:19:21,890 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.380
+2025-08-01 11:19:21,890 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:19:21,890 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:19:21,898 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 11:19:21,898 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 11:19:21,898 - TapatanOrchestrator - ERROR - Falha ao testar posição 0
+2025-08-01 11:20:35,608 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 11:20:35,608 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:20:35,613 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 11:20:35,613 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 11:20:36,621 - RobotService - INFO -  Robô desconectado
+2025-08-01 11:20:36,621 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 11:20:39,855 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 11:20:39,859 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 11:20:43,484 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 11:20:43,484 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 11:20:43,484 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:20:43,485 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:20:44,578 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:20:44,578 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 11:20:44,578 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 11:20:44,578 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 11:20:48,968 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 11:20:48,968 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:20:48,968 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:20:50,014 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:20:50,014 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:20:50,014 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.380
+2025-08-01 11:20:50,014 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:20:50,014 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:20:50,024 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 11:20:50,025 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 11:20:50,025 - TapatanOrchestrator - ERROR - Falha ao testar posição 0
+2025-08-01 11:32:08,789 - TapatanOrchestrator - INFO - Finalizando orquestrador...
+2025-08-01 11:32:08,791 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:32:08,794 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 11:32:08,795 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 11:32:09,802 - RobotService - INFO -  Robô desconectado
+2025-08-01 11:32:09,803 - TapatanOrchestrator - INFO - Orquestrador finalizado
+2025-08-01 11:32:11,975 - TapatanOrchestrator - INFO - Iniciando orquestrador Tapatan...
+2025-08-01 11:32:11,979 - RobotService - INFO -  Conectando ao robô em 10.1.5.92...
+2025-08-01 11:32:15,088 - RobotService - INFO -  Robô conectado com sucesso
+2025-08-01 11:32:15,089 - RobotService - INFO -  Modo de segurança: HABILITADO
+2025-08-01 11:32:15,089 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:32:15,090 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:32:19,510 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:32:19,512 - TapatanOrchestrator - INFO - Robô inicializado e em posição home
+2025-08-01 11:32:19,512 - TapatanOrchestrator - INFO - Coordenadas carregadas: 9 posições
+2025-08-01 11:32:19,512 - TapatanOrchestrator - INFO - Orquestrador inicializado com sucesso!
+2025-08-01 11:32:27,552 - TapatanOrchestrator - INFO - Iniciando calibração do sistema...
+2025-08-01 11:32:27,553 - RobotService - INFO -  Movendo para posição home
+2025-08-01 11:32:27,553 - RobotService - INFO -  Movimento: ultra_safe
+2025-08-01 11:32:29,515 - RobotService - INFO -  Movimento concluído - ultra_safe
+2025-08-01 11:32:29,515 - RobotService - INFO -  Pose conflita com base de ferro - tentando correção automática...
+2025-08-01 11:32:29,515 - RobotService - INFO - Pose corrigida para proteger cotovelo: Z 0.130 -> 0.400
+2025-08-01 11:32:29,516 - RobotService - INFO -  Pose corrigida para proteger base de ferro
+2025-08-01 11:32:29,516 - RobotService - INFO -  Movimento: smart_correction
+2025-08-01 11:32:30,525 - RobotService - ERROR -  Movimento falhou - smart_correction
+2025-08-01 11:32:30,525 - RobotService - INFO -  SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()
+2025-08-01 11:32:30,525 - TapatanOrchestrator - ERROR - Falha ao testar posição 0
