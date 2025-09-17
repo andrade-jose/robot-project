@@ -317,215 +317,38 @@ class RobotService:
                 error_message=f"Erro no teste: {e}"
             )
         
-    def validate_iron_base_constraint(self, pose: RobotPose) -> bool:
-        """
-        🔥 NOVA: Validação da base de ferro no nível alto
-        """
-        if not self.config["iron_base_constraint"]["enabled"]:
-            return True
-            
-        # Estimar posição do cotovelo
-        estimated_elbow_z = pose.z - self.config["iron_base_constraint"]["elbow_offset"]
-        min_height = (self.config["iron_base_constraint"]["base_height"] + 
-                    self.config["iron_base_constraint"]["safety_margin"])
-        
-        if estimated_elbow_z < min_height:
-            if self.verbose_logging:
-                self.logger.warning(f"⚠️ Pose rejeitada - cotovelo muito baixo: {estimated_elbow_z:.3f}m")
-            return False
-        
-        return True
-
-    def find_alternative_pose(self, problematic_pose: RobotPose) -> Optional[RobotPose]:
-        """
-        🔥 NOVA: Encontra pose alternativa quando original é inviável
-        """
-        if not self.validate_iron_base_constraint(problematic_pose):
-            # Elevar TCP para proteger cotovelo
-            min_tcp_z = (self.config["iron_base_constraint"]["base_height"] + 
-                        self.config["iron_base_constraint"]["safety_margin"] + 
-                        self.config["iron_base_constraint"]["elbow_offset"] + 0.05)  # +5cm segurança
-            
-            if problematic_pose.z < min_tcp_z:
-                alternative = RobotPose(
-                    x=problematic_pose.x,
-                    y=problematic_pose.y,
-                    z=min_tcp_z,
-                    rx=problematic_pose.rx,
-                    ry=problematic_pose.ry,
-                    rz=problematic_pose.rz
-                )
-                
-                if self.log_summary_only:
-                    self.logger.info(f"Pose corrigida para proteger cotovelo: Z {problematic_pose.z:.3f} -> {min_tcp_z:.3f}")
-                
-                return alternative
-        
-        return None
     # ===================  FUNÇÕES DE MOVIMENTO ATUALIZADAS ===================
 
     def move_to_pose(self, pose: RobotPose, speed: Optional[float] = None, 
-                    acceleration: Optional[float] = None,
-                    movement_strategy: MovementStrategy = None,
-                    validation_level: ValidationLevel = None,
-                    enable_intelligent_correction: bool = True) -> bool:
-        """
-        🔥 FUNÇÃO ATUALIZADA: Move robô com correção inteligente integrada
-        Agora usa todas as melhorias do URController
-        """
+                    acceleration: Optional[float] = None) -> bool:
+        """Movimento simplificado - URController faz toda validação"""
         if not self._check_connection():
             return False
         
-        # 🔥 NOVA: Verificar restrição da base de ferro primeiro
-        if not self.validate_iron_base_constraint(pose):
-            if enable_intelligent_correction:
-                self.logger.info(" Pose conflita com base de ferro - tentando correção automática...")
-                alternative_pose = self.find_alternative_pose(pose)
-                if alternative_pose:
-                    pose = alternative_pose
-                    self.logger.info(f" Pose corrigida para proteger base de ferro")
-                else:
-                    self.status = RobotStatus.ERROR
-                    self.last_error = "Pose inviável - cotovelo abaixo da base"
-                    self.logger.error(" Não foi possível corrigir conflito com base de ferro")
-                    return False
-            else:
-                self.status = RobotStatus.ERROR
-                self.last_error = "Pose conflita com base de ferro e correção está desabilitada"
-                return False
-        
-        # Usar configurações padrão se não especificadas
-        if movement_strategy is None:
-            if enable_intelligent_correction:
-                movement_strategy = MovementStrategy.SMART_CORRECTION  # 🔥 NOVO padrão
-            else:
-                movement_strategy = MovementStrategy.DIRECT
-        
-        if validation_level is None:
-            validation_level = ValidationLevel(self.config.get("default_validation_level", "advanced"))
-            
         try:
             self.status = RobotStatus.MOVING
+            self.logger.info(f" Movimento: ultra_safe")
             
-            # Log mais informativo
-            if self.verbose_logging:
-                self.logger.info(f" Movendo para: {pose}")
-                self.logger.info(f" Estratégia: {movement_strategy.value}, Validação: {validation_level.value}")
-                self.logger.info(f" Correção inteligente: {'HABILITADA' if enable_intelligent_correction else 'DESABILITADA'}")
-            else:
-                self.logger.info(f" Movimento: {movement_strategy.value}")
-            
-            # Usar velocidades especificadas ou padrão
-            move_speed = speed or self.config["speed"]
-            move_acceleration = acceleration or self.config["acceleration"]
-            
-            # Atualizar parâmetros do controlador se necessário
-            if speed or acceleration:
-                self.controller.set_speed_parameters(move_speed, move_acceleration)
-            
-            # Registrar movimento no histórico
-            movement_record = {
-                "timestamp": time.time(),
-                "target_pose": asdict(pose),
-                "strategy": movement_strategy.value,
-                "validation_level": validation_level.value,
-                "intelligent_correction": enable_intelligent_correction,
-                "speed": move_speed,
-                "acceleration": move_acceleration
-            }
-            
-            success = False
-            pose_list = pose.to_list()
-            
-            # 🔥 EXECUTAR ESTRATÉGIA DE MOVIMENTO ATUALIZADA
-            if movement_strategy == MovementStrategy.DIRECT:
-                # Movimento direto (modo legado)
-                success = self.controller.move_to_pose_safe(
-                    pose_list, move_speed, move_acceleration, 
-                    use_smart_correction=False
-                )
-                
-            elif movement_strategy == MovementStrategy.SMART_CORRECTION:
-                # 🔥 NOVA: Movimento com correção automática inteligente
-                success, corrected_pose = self.controller.move_to_pose_with_smart_correction(
-                    pose_list, move_speed, move_acceleration, 
-                    max_correction_attempts=self.config.get("max_correction_attempts", 3)
-                )
-                if corrected_pose:
-                    movement_record["corrected_pose"] = corrected_pose
-                    self.validation_stats["corrections_applied"] += 1
-                    if self.verbose_logging:
-                        self.logger.info(" Correções automáticas aplicadas")
-                        
-            elif movement_strategy == MovementStrategy.INTERMEDIATE:
-                # 🔥 NOVA: Movimento com pontos intermediários
-                current_pose = self.controller.get_current_pose()
-                if current_pose:
-                    distance = math.sqrt(
-                        (pose_list[0] - current_pose[0])**2 +
-                        (pose_list[1] - current_pose[1])**2 +
-                        (pose_list[2] - current_pose[2])**2
-                    )
-                    
-                    step_distance = self.config["smart_movement"]["intermediate_points_step"]
-                    num_points = max(2, int(distance / step_distance))
-                    num_points = min(num_points, 5)  # Máximo 5 pontos
-                    
-                    success = self.controller.move_with_intermediate_points(
-                        pose_list, move_speed, move_acceleration, num_points
-                    )
-                    if success:
-                        self.validation_stats["movements_with_intermediate_points"] += 1
-                        movement_record["intermediate_points"] = num_points
-                        if self.verbose_logging:
-                            self.logger.info(f"🚀 Movimento executado com {num_points} pontos intermediários")
-                            
-            elif movement_strategy == MovementStrategy.ULTRA_SAFE:
-                # 🔥 NOVA: Estratégia ultra-segura com todas as validações
-                success = self.controller.move_to_pose_safe(
-                    pose_list, move_speed, move_acceleration, 
-                    use_smart_correction=True
-                )
-            
-            # Registrar resultado
-            movement_record["success"] = success
-            movement_record["duration"] = time.time() - movement_record["timestamp"]
-            self.movement_history.append(movement_record)
-            
-            # Limitar histórico a 100 movimentos
-            if len(self.movement_history) > 100:
-                self.movement_history.pop(0)
+            # ✅ DEIXAR URController fazer TUDO
+            success = self.controller.move_to_pose_safe(
+                pose.to_list(), 
+                speed or self.config["speed"],
+                acceleration or self.config["acceleration"]
+            )
             
             if success:
                 self.status = RobotStatus.IDLE
-                if self.log_summary_only:
-                    self.logger.info(f" Movimento concluído - {movement_strategy.value}")
-                else:
-                    # Verificar precisão se verbose
-                    final_pose = self.get_current_pose()
-                    if final_pose and self.verbose_logging:
-                        distance = math.sqrt(
-                            (pose.x - final_pose.x)**2 +
-                            (pose.y - final_pose.y)**2 +
-                            (pose.z - final_pose.z)**2
-                        )
-                        self.logger.info(f" Precisão do movimento: {distance*1000:.1f}mm")
-                return True
+                self.logger.info(" Movimento concluído")
             else:
                 self.status = RobotStatus.ERROR
-                self.last_error = f"Falha no movimento - {movement_strategy.value}"
-                self.logger.error(f" Movimento falhou - {movement_strategy.value}")
+                self.logger.error(" Movimento falhou")
                 
-                # 🔥 NOVA: Sugestão automática se falha
-                if enable_intelligent_correction and movement_strategy != MovementStrategy.ULTRA_SAFE:
-                    self.logger.info(" SUGESTÃO: Tente usar MovementStrategy.ULTRA_SAFE ou debug_pose_detailed()")
-                
-                return False
-                
+            return success
+            
         except Exception as e:
             self.status = RobotStatus.ERROR
             self.last_error = str(e)
-            self.logger.error(f" Erro durante movimento: {e}")
+            self.logger.error(f" Erro: {e}")
             return False
 
     def move_home(self) -> bool:
@@ -534,11 +357,7 @@ class RobotService:
         self.logger.info(" Movendo para posição home")
         
         # Home sempre usa estratégia ultra-segura
-        return self.move_to_pose(
-            home_pose, 
-            movement_strategy=MovementStrategy.ULTRA_SAFE,
-            validation_level=ValidationLevel.COMPLETE
-        )
+        return self.move_to_pose(home_pose)
 
     def pick_and_place(self, pick_place_cmd: PickPlaceCommand) -> bool:
         """

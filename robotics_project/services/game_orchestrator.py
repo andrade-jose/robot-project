@@ -159,10 +159,7 @@ class TapatanOrchestrator:
             self.status = OrquestradorStatus.JOGANDO
             
             # Mover robô para posição inicial
-            self.robot_service.move_to_pose(
-    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
-    enable_intelligent_correction=True
-)
+            self.robot_service.move_home()
             
             self.logger.info("Partida iniciada! Aguardando primeiro movimento...")
             return True
@@ -267,10 +264,7 @@ class TapatanOrchestrator:
 
                 return self.robot_service.move_to_pose(
                     pose=pose_destino,
-                    speed=self.config_robo.velocidade_normal,
-                    validation_level=ValidationLevel.COMPLETE,
-                    movement_strategy=MovementStrategy.SMART_CORRECTION,
-                    enable_intelligent_correction=True
+                    speed=self.config_robo.velocidade_normal
                 )
 
             elif estado_jogo["fase"] == "movimento":
@@ -428,15 +422,12 @@ class TapatanOrchestrator:
                     coord = self.coordenadas_tabuleiro[pos]
                     pose_teste = RobotPose(coord[0], coord[1], coord[2] + 0.1, 0.0, 3.14, 0.0)
                     
-                    if not self.robot_service.move_to_pose(pose_teste, speed=0.05):
+                    if not self.robot_service.move_to_pose(pose_teste, 0.05):
                         self.logger.error(f"Falha ao testar posição {pos}")
                         return False
                         
             # Retornar para home
-            self.robot_service.move_to_pose(
-    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
-    enable_intelligent_correction=True
-)
+            self.robot_service.move_home()
             
             self.logger.info("Calibração concluída com sucesso")
             return True
@@ -460,10 +451,7 @@ class TapatanOrchestrator:
             
             # Mover robô para home
             if self.robot_service:
-                self.robot_service.move_to_pose(
-    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
-    enable_intelligent_correction=True
-)
+                self.robot_service.move_home()
                 
             return True
             
@@ -492,10 +480,7 @@ class TapatanOrchestrator:
                 
             # Desconectar robô
             if self.robot_service:
-                self.robot_service.move_to_pose(
-    pose=RobotPose.from_list(self.robot_service.config_robo.pose_home),
-    enable_intelligent_correction=True
-)
+                self.robot_service.move_home()
                 self.robot_service.disconnect()
                 
             self.logger.info("Orquestrador finalizado")

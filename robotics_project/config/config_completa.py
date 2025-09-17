@@ -8,7 +8,7 @@ import math
 @dataclass
 class ConfigRobo:
     # === CONEXÃO ===
-    ip: str = "10.1.5.92"
+    ip: str = "10.1.7.30"
     porta: int = 30004
     
     # === MOVIMENTO BÁSICO ===
@@ -177,7 +177,7 @@ class ConfigRobo:
         
         # === POSES PREDEFINIDAS ===
         if self.pose_home is None:
-            self.pose_home = [0.4, 0.0, 0.4, 0.0, 3.14, 0.0]
+            self.pose_home = [0.3, 0.0, 0.25, 0.0, 3.14, 0.0]
             
         if self.poses_workspace is None:
             self.poses_workspace = {
@@ -191,9 +191,9 @@ class ConfigRobo:
         # === LIMITES DE WORKSPACE (FORMATO URCONTROLLER) ===
         if self.limites_workspace is None:
             self.limites_workspace = {
-                'x_min': -0.8, 'x_max': 0.8,
-                'y_min': -0.8, 'y_max': 0.8,
-                'z_min': 0.05, 'z_max': 0.8,
+                'x_min': -0.5, 'x_max': 0.5,
+                'y_min': -0.5, 'y_max': 0.5,
+                'z_min': 0.05, 'z_max': 0.6,
                 'rx_min': -3.14159, 'rx_max': 3.14159,
                 'ry_min': -3.14159, 'ry_max': 3.14159,
                 'rz_min': -3.14159, 'rz_max': 3.14159
@@ -300,24 +300,25 @@ class ConfigRobo:
         # =============== POSES DE WORKSPACE PARA TAPATAN ===============
         self.poses_workspace = {
             # Poses do tabuleiro Tapatan (3x3)
-            "tapatan_0": [0.3, 0.2, 0.1, 0.0, 3.14, 0.0],    # posição 0
-            "tapatan_1": [0.3, 0.0, 0.1, 0.0, 3.14, 0.0],    # posição 1
-            "tapatan_2": [0.3, -0.2, 0.1, 0.0, 3.14, 0.0],   # posição 2
-            "tapatan_3": [0.4, 0.2, 0.1, 0.0, 3.14, 0.0],    # posição 3
-            "tapatan_4": [0.4, 0.0, 0.1, 0.0, 3.14, 0.0],    # posição 4 (centro)
-            "tapatan_5": [0.4, -0.2, 0.1, 0.0, 3.14, 0.0],   # posição 5
-            "tapatan_6": [0.5, 0.2, 0.1, 0.0, 3.14, 0.0],    # posição 6
-            "tapatan_7": [0.5, 0.0, 0.1, 0.0, 3.14, 0.0],    # posição 7
-            "tapatan_8": [0.5, -0.2, 0.1, 0.0, 3.14, 0.0],   # posição 8
-            
-            # Posições de depósito de peças
-            "deposito_jogador1": [0.2, 0.3, 0.1, 0.0, 3.14, 0.0],  # peças do robô
-            "deposito_jogador2": [0.2, -0.3, 0.1, 0.0, 3.14, 0.0], # peças removidas
-            
-            # Posições de segurança
-            "observacao": [0.3, 0.0, 0.4, 0.0, 3.14, 0.0],  # posição para observar tabuleiro
-            "espera": [0.1, 0.0, 0.3, 0.0, 3.14, 0.0]       # posição de espera
-        }
+                # Poses do tabuleiro Tapatan (3x3) - REDIMENSIONADO PARA UR3e
+                "tapatan_0": [0.25, 0.15, 0.15, 0.0, 3.14, 0.0],   # ✅ ALCANÇÁVEL
+                "tapatan_1": [0.25, 0.0, 0.15, 0.0, 3.14, 0.0],    
+                "tapatan_2": [0.25, -0.15, 0.15, 0.0, 3.14, 0.0],   
+                "tapatan_3": [0.35, 0.15, 0.15, 0.0, 3.14, 0.0],   # ✅ DENTRO DO ALCANCE
+                "tapatan_4": [0.35, 0.0, 0.15, 0.0, 3.14, 0.0],    
+                "tapatan_5": [0.35, -0.15, 0.15, 0.0, 3.14, 0.0],   
+                "tapatan_6": [0.45, 0.15, 0.15, 0.0, 3.14, 0.0],   # ✅ LIMITE SEGURO
+                "tapatan_7": [0.45, 0.0, 0.15, 0.0, 3.14, 0.0],    
+                "tapatan_8": [0.45, -0.15, 0.15, 0.0, 3.14, 0.0],   
+                
+                # Posições de depósito - MAIS PRÓXIMAS
+                "deposito_jogador1": [0.2, 0.25, 0.15, 0.0, 3.14, 0.0],  # ✅ Y reduzido
+                "deposito_jogador2": [0.2, -0.25, 0.15, 0.0, 3.14, 0.0], # ✅ Y reduzido
+                
+                # Posições de segurança - AJUSTADAS
+                "observacao": [0.3, 0.0, 0.3, 0.0, 3.14, 0.0],     # ✅ SEGURA
+                "espera": [0.15, 0.0, 0.25, 0.0, 3.14, 0.0]        # ✅ PRÓXIMA À BASE
+            }
         
         # =============== CONFIGURAÇÕES ESPECÍFICAS TAPATAN ===============
         self.tapatan_config = {
@@ -328,58 +329,66 @@ class ConfigRobo:
             "estrategia_movimento_tapatan": "smart_correction",  # estratégia específica para Tapatan
             "usar_pontos_intermediarios_tapatan": True
         }
-
     def _ajustar_configuracoes_ambiente(self):
-        """Ajusta configurações baseado no ambiente (simulação vs robô real)"""
-        
         # Detectar ambiente de simulação
         if self.ip == "127.0.0.1" or "sim" in self.ip.lower() or "localhost" in self.ip.lower():
             print("🔧 Detectado ambiente de SIMULAÇÃO - ajustando configurações")
-            
-            # Configurações mais permissivas para simulação
-            self.margem_seguranca_base_ferro = 0.01
-            self.habilitar_diagnostico_avancado = True
-            self.executar_benchmark_inicializacao = True
-            self.velocidade_maxima = 0.5  # Mais rápido na simulação
-            self.max_tentativas_correcao_articulacoes = 3  # Menos tentativas
-            
+            # ... configurações simulação
         else:
             print("🔧 Detectado ROBÔ REAL - configurações de segurança máxima")
+            # ... configurações padrão
             
-            # Configurações mais conservadoras para robô real
-            self.margem_seguranca_base_ferro = 0.05
-            self.velocidade_maxima = 0.15  # Mais conservador
-            self.max_tentativas_correcao_articulacoes = 5  # Mais tentativas
-            self.habilitar_diagnostico_avancado = True  # Sempre ativo para análise
-
+        # ✅ NOVO: AJUSTES ESPECÍFICOS PARA UR3e
+        if self.modelo_ur == "UR3e":
+            print("🔧 Aplicando configurações específicas UR3e")
+            
+            # Reduzir distância máxima de movimento para UR3e
+            self.distancia_maxima_movimento = 0.8  # Era 1.0m
+            
+            # Ajustar velocidades para UR3e (menor e mais preciso)
+            self.velocidade_maxima = 0.1  # Era 0.15-0.2
+            self.velocidade_padrao = 0.05  # Era 0.1
+            
+            # Margem de segurança maior para UR3e
+            self.margem_seguranca_base_ferro = 0.03  # Era 0.02
+            
+            # Pontos intermediários mais frequentes
+            self.passo_pontos_intermediarios = 0.08  # Era 0.1-0.2
     def _validar_configuracoes_criticas(self):
-        """Valida e corrige configurações que podem causar problemas"""
+        # ... validações existentes ...
         
-        # Validar altura da base de ferro
-        if self.altura_base_ferro <= 0:
-            print("⚠️ AVISO: altura_base_ferro deve ser > 0, corrigindo para 0.05m")
-            self.altura_base_ferro = 0.05
+        # ✅ NOVO: VALIDAÇÃO ESPECÍFICA PARA UR3e
+        if self.modelo_ur == "UR3e":
+            # Validar limites do workspace para UR3e
+            max_reach_ur3e = 0.5  # Alcance máximo UR3e
             
-        # Validar margens de segurança
-        if self.margem_seguranca_base_ferro <= 0:
-            print("⚠️ AVISO: margem_seguranca_base_ferro deve ser > 0, corrigindo para 0.02m")
-            self.margem_seguranca_base_ferro = 0.02
+            if abs(self.limites_workspace['x_max']) > max_reach_ur3e:
+                print(f"⚠️ AVISO: x_max muito grande para UR3e, ajustando para ±{max_reach_ur3e}m")
+                self.limites_workspace['x_min'] = -max_reach_ur3e
+                self.limites_workspace['x_max'] = max_reach_ur3e
+                
+            if abs(self.limites_workspace['y_max']) > max_reach_ur3e:
+                print(f"⚠️ AVISO: y_max muito grande para UR3e, ajustando para ±{max_reach_ur3e}m")
+                self.limites_workspace['y_min'] = -max_reach_ur3e
+                self.limites_workspace['y_max'] = max_reach_ur3e
+                
+            if self.limites_workspace['z_max'] > 0.6:
+                print(f"⚠️ AVISO: z_max muito alto para UR3e, ajustando para 0.6m")
+                self.limites_workspace['z_max'] = 0.6
             
-        # Validar limites de velocidade
-        if self.velocidade_minima >= self.velocidade_maxima:
-            print("⚠️ AVISO: velocidade_minima >= velocidade_maxima, corrigindo")
-            self.velocidade_minima = self.velocidade_maxima * 0.1
-            
-        # Validar workspace
+            # Validar pose home para UR3e
+            home_distance = (self.pose_home[0]**2 + self.pose_home[1]**2)**0.5
+            if home_distance > max_reach_ur3e * 0.7:  # 70% do alcance máximo
+                print(f"⚠️ AVISO: pose_home muito distante para UR3e, ajustando")
+                factor = (max_reach_ur3e * 0.7) / home_distance
+                self.pose_home[0] *= factor
+                self.pose_home[1] *= factor
+                print(f"   Nova pose home: {[f'{p:.3f}' for p in self.pose_home[:3]]}")
+        
+        # Validar workspace original
         if self.limites_workspace['z_min'] < 0:
             print("⚠️ AVISO: z_min < 0 pode causar problemas, ajustando para 0.01m")
             self.limites_workspace['z_min'] = 0.01
-            
-        # Validar altura segura vs altura base ferro
-        altura_minima_segura = self.altura_base_ferro + self.margem_seguranca_base_ferro + 0.1
-        if self.altura_segura < altura_minima_segura:
-            print(f"⚠️ AVISO: altura_segura muito baixa, ajustando para {altura_minima_segura:.3f}m")
-            self.altura_segura = altura_minima_segura
 
     def _calcular_configuracoes_derivadas(self):
         """Calcula configurações que dependem de outras"""

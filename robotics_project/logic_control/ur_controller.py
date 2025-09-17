@@ -261,8 +261,8 @@ class URController:
         if not self.validate_pose_reachability(pose):
             return False
         
-        if not self.validate_elbow_height_constraint(pose):
-            return False
+        #if not self.validate_elbow_height_constraint(pose):
+        #    return False
             
         # 3. 🔥 VALIDAÇÃO OFICIAL UR_RTDE - isPoseWithinSafetyLimits
         if not self.validate_pose_safety_limits(pose):
