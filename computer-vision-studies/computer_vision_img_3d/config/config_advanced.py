@@ -18,6 +18,7 @@ class Config:
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     
     # Caminhos para os dados (atualize conforme sua estrutura)
+
     DATA_ROOT: str = r"C:\Venv\Rep_git\datasets\dataset_tapatan"
     DATASET_NAME: str = "renders"
     
