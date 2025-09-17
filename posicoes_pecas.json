@@ -1,0 +1,10 @@
+{
+  "sistema_calibrado": true,
+  "dimensoes": {
+    "largura_mm": 200,
+    "altura_mm": 150,
+    "altura_fixa_mm": 80
+  },
+  "posicoes_pecas": {},
+  "timestamp": 1758037085.5460107
+}
